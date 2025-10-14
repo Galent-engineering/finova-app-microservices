@@ -1,0 +1,12 @@
+com\finova\user\dto\RegisterRequest.class
+com\finova\user\controller\UserController.class
+com\finova\user\model\User.class
+com\finova\user\dto\LoginRequest.class
+com\finova\user\dto\UserProfileDTO.class
+com\finova\user\config\SecurityConfig.class
+com\finova\user\dto\LoginResponse.class
+com\finova\user\UserServiceApplication.class
+com\finova\user\service\UserService.class
+com\finova\user\repository\UserRepository.class
+com\finova\user\service\JwtService.class
+com\finova\user\service\AuthService.class

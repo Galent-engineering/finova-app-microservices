@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finova Retirement - Microservices Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">F</div>
+                <span>Finova Retirement - Microservices</span>
+            </div>
+            <div class="header-actions">
+                <span class="service-status" id="service-status">
+                    <i class="fas fa-spinner fa-spin"></i> Checking Services...
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#" class="nav-link active" data-section="dashboard">Dashboard</a></li>
+            <li><a href="#" class="nav-link" data-section="accounts">Accounts</a></li>
+            <li><a href="#" class="nav-link" data-section="planning">Planning Tools</a></li>
+            <li><a href="#" class="nav-link" data-section="services">Service Status</a></li>
+        </ul>
+    </nav>
+
+    <!-- Loading Indicator -->
+    <div id="loading" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading data from microservices...</p>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboard-section" class="section active">
+        <div class="dashboard-container">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h1>Welcome to Finova Retirement Planning</h1>
+                <p>Your comprehensive retirement planning dashboard</p>
+            </div>
+
+            <!-- Dashboard Data - Main Focus -->
+            <div class="dashboard-grid">
+                <!-- Monthly Income Card -->
+                <div class="dashboard-card highlight-card">
+                    <div class="card-header">
+                        <h3>Estimated Monthly Income</h3>
+                        <small>At Retirement</small>
+                    </div>
+                    <div class="card-content">
+                        <div class="amount-display" id="monthly-income">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Current Balance Card -->
+                <div class="dashboard-card highlight-card">
+                    <div class="card-header">
+                        <h3>Current Balance</h3>
+                        <small>Total Retirement Savings</small>
+                    </div>
+                    <div class="card-content">
+                        <div class="amount-display" id="current-balance">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Status Card -->
+                <div class="dashboard-card status-card highlight-card">
+                    <div class="card-header">
+                        <h3>Retirement Readiness</h3>
+                        <small>Assessment</small>
+                    </div>
+                    <div class="card-content">
+                        <div class="status-display" id="retirement-status">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Section -->
+            <div class="quick-actions-section">
+                <h2>Quick Actions</h2>
+                <div class="actions-grid">
+                    <a href="#" class="action-card" onclick="switchToSection('accounts')">
+                        <div class="action-icon">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="action-content">
+                            <h3>Manage Accounts</h3>
+                            <p>View and manage your retirement accounts</p>
+                        </div>
+                    </a>
+                    <a href="#" class="action-card" onclick="switchToSection('planning')">
+                        <div class="action-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="action-content">
+                            <h3>Planning Tools</h3>
+                            <p>Use calculators and planning resources</p>
+                        </div>
+                    </a>
+                    <a href="#" class="action-card" onclick="switchToSection('services')">
+                        <div class="action-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="action-content">
+                            <h3>System Status</h3>
+                            <p>View microservices health and information</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Service Status Cards - Moved to bottom -->
+            <div class="system-info-section">
+                <h2>System Information</h2>
+                <p class="system-info-description">Microservices status - for technical monitoring</p>
+                <div class="service-status-grid">
+                    <div class="service-card" id="user-service-card">
+                        <div class="service-header">
+                            <i class="fas fa-user"></i>
+                            <h3>User Service</h3>
+                        </div>
+                        <div class="service-status-indicator">
+                            <span class="status-dot loading"></span>
+                            <span class="status-text">Checking...</span>
+                        </div>
+                        <div class="service-port">Port: 8081</div>
+                    </div>
+
+                    <div class="service-card" id="account-service-card">
+                        <div class="service-header">
+                            <i class="fas fa-piggy-bank"></i>
+                            <h3>Account Service</h3>
+                        </div>
+                        <div class="service-status-indicator">
+                            <span class="status-dot loading"></span>
+                            <span class="status-text">Checking...</span>
+                        </div>
+                        <div class="service-port">Port: 8082</div>
+                    </div>
+
+                    <div class="service-card" id="planning-service-card">
+                        <div class="service-header">
+                            <i class="fas fa-calculator"></i>
+                            <h3>Planning Service</h3>
+                        </div>
+                        <div class="service-status-indicator">
+                            <span class="status-dot loading"></span>
+                            <span class="status-text">Checking...</span>
+                        </div>
+                        <div class="service-port">Port: 8083</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accounts Section -->
+    <div id="accounts-section" class="section">
+        <div class="main-content">
+            <h1>Account Management</h1>
+            <div class="data-source">Data from: Account Service (localhost:8082)</div>
+            
+            <!-- Account Management Tabs -->
+            <div class="account-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="overview">Overview</button>
+                    <button class="tab-btn" data-tab="accounts">Manage Accounts</button>
+                    <button class="tab-btn" data-tab="contributions">Manage Contributions</button>
+                </div>
+                
+                <!-- Overview Tab -->
+                <div id="accounts-overview-tab" class="tab-content active">
+                    <div class="accounts-grid">
+                        <div class="account-card">
+                            <h3>Retirement Accounts</h3>
+                            <div id="retirement-accounts">Loading...</div>
+                        </div>
+                        
+                        <div class="account-card">
+                            <h3>Contributions Summary</h3>
+                            <div id="contributions-summary">Loading...</div>
+                        </div>
+                        
+                        <div class="account-card">
+                            <h3>Income Sources</h3>
+                            <div id="income-sources">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Manage Accounts Tab -->
+                <div id="accounts-tab" class="tab-content">
+                    <div class="management-container">
+                        <div class="management-header">
+                            <h3>Retirement Accounts</h3>
+                            <button id="add-account-btn" class="add-btn">+ Add New Account</button>
+                        </div>
+                        <div id="accounts-list">Loading accounts...</div>
+                        
+                        <!-- Add Account Form (Hidden by default) -->
+                        <div id="add-account-form" class="form-modal" style="display: none;">
+                            <div class="modal-content">
+                                <span class="close-modal">&times;</span>
+                                <h3>Add New Retirement Account</h3>
+                                <form id="new-account-form">
+                                    <div class="form-group">
+                                        <label for="account-name">Account Name</label>
+                                        <input type="text" id="account-name" required placeholder="e.g., 401(k) - Company Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="account-type">Account Type</label>
+                                        <select id="account-type" required>
+                                            <option value="">Select Type</option>
+                                            <option value="401K">401(k)</option>
+                                            <option value="403B">403(b)</option>
+                                            <option value="IRA_TRADITIONAL">Traditional IRA</option>
+                                            <option value="IRA_ROTH">Roth IRA</option>
+                                            <option value="PENSION">Pension</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="current-balance">Current Balance ($)</label>
+                                        <input type="number" id="account-current-balance" min="0" step="0.01" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="employer">Employer/Institution</label>
+                                        <input type="text" id="employer" placeholder="e.g., Finova Corp">
+                                    </div>
+                                    <div class="form-buttons">
+                                        <button type="button" class="cancel-btn">Cancel</button>
+                                        <button type="submit" class="save-btn">Save Account</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Manage Contributions Tab -->
+                <div id="contributions-tab" class="tab-content">
+                    <div class="management-container">
+                        <div class="management-header">
+                            <h3>Contribution Settings</h3>
+                            <button id="add-contribution-btn" class="add-btn">+ Add Contribution</button>
+                        </div>
+                        <div id="contributions-list">Loading contributions...</div>
+                        
+                        <!-- Add Contribution Form (Hidden by default) -->
+                        <div id="add-contribution-form" class="form-modal" style="display: none;">
+                            <div class="modal-content">
+                                <span class="close-modal">&times;</span>
+                                <h3>Add New Contribution</h3>
+                                <form id="new-contribution-form">
+                                    <div class="form-group">
+                                        <label for="contribution-type">Contribution Type</label>
+                                        <select id="contribution-type" required>
+                                            <option value="">Select Type</option>
+                                            <option value="EMPLOYEE_PRETAX">Pre-tax (Traditional)</option>
+                                            <option value="EMPLOYEE_ROTH">Roth</option>
+                                            <option value="EMPLOYER_MATCH">Employer Match</option>
+                                            <option value="CATCHUP">Catch-up (Age 50+)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="monthly-amount">Monthly Amount ($)</label>
+                                        <input type="number" id="monthly-amount" min="0" step="25" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="percentage">Percentage of Salary (%)</label>
+                                        <input type="number" id="percentage" min="0" max="100" step="0.5">
+                                    </div>
+                                    <div class="form-buttons">
+                                        <button type="button" class="cancel-btn">Cancel</button>
+                                        <button type="submit" class="save-btn">Save Contribution</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Planning Tools Section -->
+    <div id="planning-section" class="section">
+        <div class="main-content">
+            <h1>Planning Tools</h1>
+            <div class="data-source">Data from: Planning Service (localhost:8083)</div>
+            
+            <!-- Planning Tools Tabs -->
+            <div class="planning-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="overview">Overview</button>
+                    <button class="tab-btn" data-tab="calculator">Retirement Calculator</button>
+                    <button class="tab-btn" data-tab="scenarios">What-If Scenarios</button>
+                    <button class="tab-btn" data-tab="social-security">Social Security</button>
+                </div>
+                
+                <!-- Overview Tab -->
+                <div id="overview-tab" class="tab-content active">
+                    <div class="planning-grid">
+                        <div class="planning-card">
+                            <h3>Retirement Plan</h3>
+                            <div id="retirement-plan">Loading...</div>
+                        </div>
+                        
+                        <div class="planning-card">
+                            <h3>Social Security</h3>
+                            <div id="social-security">Loading...</div>
+                        </div>
+                        
+                        <div class="planning-card">
+                            <h3>Investment Strategy</h3>
+                            <div id="investment-strategy">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Calculator Tab -->
+                <div id="calculator-tab" class="tab-content">
+                    <div class="calculator-container">
+                        <div class="calculator-form">
+                            <h3>Retirement Calculator</h3>
+                            <form id="retirement-calculator-form">
+                                <div class="form-group">
+                                    <label for="current-age">Current Age</label>
+                                    <input type="number" id="current-age" value="42" min="18" max="75" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="retirement-age">Retirement Age</label>
+                                    <input type="number" id="retirement-age" value="65" min="50" max="75" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="current-balance">Current Savings ($)</label>
+                                    <input type="number" id="current-balance" value="106965" min="0" step="100" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="monthly-contribution">Monthly Contribution ($)</label>
+                                    <input type="number" id="monthly-contribution" value="650" min="0" step="25" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="annual-return">Expected Annual Return (%)</label>
+                                    <input type="number" id="annual-return" value="7" min="1" max="15" step="0.1" required>
+                                </div>
+                                <button type="submit" class="calculate-btn">Calculate Retirement Plan</button>
+                            </form>
+                        </div>
+                        <div class="calculator-results">
+                            <h3>Projected Results</h3>
+                            <div id="calculator-output">
+                                <p>Enter your information and click "Calculate" to see your retirement projections.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scenarios Tab -->
+                <div id="scenarios-tab" class="tab-content">
+                    <div class="scenarios-container">
+                        <h3>What-If Scenarios</h3>
+                        <p>Compare different retirement scenarios to see how changes in your planning affect your future.</p>
+                        <button id="load-scenarios-btn" class="scenarios-btn">Load Scenarios</button>
+                        <div id="scenarios-results" class="scenarios-grid">
+                            <!-- Scenarios will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Security Tab -->
+                <div id="social-security-tab" class="tab-content">
+                    <div class="social-security-container">
+                        <h3>Social Security Benefits Calculator</h3>
+                        <form id="social-security-form">
+                            <div class="form-group">
+                                <label for="annual-income">Current Annual Income ($)</label>
+                                <input type="number" id="annual-income" value="75000" min="0" step="1000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="years-worked">Years Worked</label>
+                                <input type="number" id="years-worked" value="20" min="0" max="50" required>
+                            </div>
+                            <button type="submit" class="calculate-btn">Calculate Benefits</button>
+                        </form>
+                        <div id="social-security-results">
+                            <!-- Results will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <div id="services-section" class="section">
+        <div class="main-content">
+            <h1>Microservices Status</h1>
+            <div class="services-info">
+                <div class="info-card">
+                    <h3>Architecture Overview</h3>
+                    <p>This application uses a microservices architecture with:</p>
+                    <ul>
+                        <li><strong>API Gateway:</strong> localhost:8080 (Single entry point)</li>
+                        <li><strong>User Service:</strong> localhost:8081 (Authentication & profiles)</li>
+                        <li><strong>Account Service:</strong> localhost:8082 (Accounts & contributions)</li>
+                        <li><strong>Planning Service:</strong> localhost:8083 (Calculators & planning)</li>
+                        <li><strong>Eureka Server:</strong> localhost:8761 (Service discovery)</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3>API Endpoints</h3>
+                    <div id="api-endpoints">
+                        <div class="endpoint-group">
+                            <h4>Via API Gateway (Recommended)</h4>
+                            <div class="endpoint">GET /api/users/health</div>
+                            <div class="endpoint">GET /api/accounts/health</div>
+                            <div class="endpoint">GET /api/planning/health</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Finova Retirement - Microservices Architecture</p>
+            <div class="tech-stack">
+                <span>Frontend: HTML/JS</span> | 
+                <span>Backend: Spring Boot Microservices</span> | 
+                <span>Gateway: Spring Cloud Gateway</span> | 
+                <span>Discovery: Eureka</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

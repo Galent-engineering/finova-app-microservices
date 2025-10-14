@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Connection Test - Finova Retirement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-button {
+            background: #1E88E5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .test-button:hover {
+            background: #1565C0;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 3px;
+        }
+        .success {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+        }
+        .error {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            color: #c62828;
+        }
+        .info {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            color: #1565c0;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Service Connection Test</h1>
+        <p>This page helps debug connectivity issues between the frontend and microservices.</p>
+
+        <!-- API Gateway Test -->
+        <div class="test-section">
+            <h3>API Gateway (Port 8080)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/actuator/health', 'gateway-actuator')">Test /actuator/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/health', 'gateway-health')">Test /health</button>
+            <div id="gateway-actuator" class="result"></div>
+            <div id="gateway-health" class="result"></div>
+        </div>
+
+        <!-- User Service Test -->
+        <div class="test-section">
+            <h3>User Service (Port 8081)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8081/api/users/health', 'user-health')">Test /api/users/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8081/actuator/health', 'user-actuator')">Test /actuator/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/users/health', 'user-via-gateway')">Test via Gateway</button>
+            <div id="user-health" class="result"></div>
+            <div id="user-actuator" class="result"></div>
+            <div id="user-via-gateway" class="result"></div>
+        </div>
+
+        <!-- Account Service Test -->
+        <div class="test-section">
+            <h3>Account Service (Port 8082)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8082/api/accounts/health', 'account-health')">Test /api/accounts/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8082/actuator/health', 'account-actuator')">Test /actuator/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/accounts/health', 'account-via-gateway')">Test via Gateway</button>
+            <div id="account-health" class="result"></div>
+            <div id="account-actuator" class="result"></div>
+            <div id="account-via-gateway" class="result"></div>
+        </div>
+
+        <!-- Planning Service Test -->
+        <div class="test-section">
+            <h3>Planning Service (Port 8083)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8083/api/planning/health', 'planning-health')">Test /api/planning/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8083/actuator/health', 'planning-actuator')">Test /actuator/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/planning/health', 'planning-via-gateway')">Test via Gateway</button>
+            <div id="planning-health" class="result"></div>
+            <div id="planning-actuator" class="result"></div>
+            <div id="planning-via-gateway" class="result"></div>
+        </div>
+
+        <!-- Data Endpoints Test -->
+        <div class="test-section">
+            <h3>Data Endpoints</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/dashboard/1', 'dashboard-data')">Test Dashboard Data</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/accounts/user/1', 'user-accounts')">Test User Accounts</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/planning/retirement-plan/1', 'retirement-plan')">Test Retirement Plan</button>
+            <div id="dashboard-data" class="result"></div>
+            <div id="user-accounts" class="result"></div>
+            <div id="retirement-plan" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>Test All Services</h3>
+            <button class="test-button" onclick="testAllServices()">🚀 Test All Services</button>
+            <div id="all-services-result" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        async function testEndpoint(url, resultId) {
+            const resultDiv = document.getElementById(resultId);
+            resultDiv.innerHTML = '<div class="info">Testing... ⏳</div>';
+            
+            try {
+                console.log(`Testing: ${url}`);
+                const startTime = Date.now();
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    signal: AbortSignal.timeout(5000)
+                });
+                
+                const endTime = Date.now();
+                const responseTime = endTime - startTime;
+                
+                if (response.ok) {
+                    const contentType = response.headers.get('content-type');
+                    let data;
+                    
+                    if (contentType && contentType.includes('application/json')) {
+                        data = await response.json();
+                    } else {
+                        data = await response.text();
+                    }
+                    
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ SUCCESS (${response.status}) - ${responseTime}ms<br>
+                            <strong>URL:</strong> ${url}<br>
+                            <strong>Response:</strong>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            ❌ HTTP ERROR ${response.status}: ${response.statusText}<br>
+                            <strong>URL:</strong> ${url}<br>
+                            <strong>Response Time:</strong> ${responseTime}ms
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error(`Error testing ${url}:`, error);
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        ❌ NETWORK ERROR: ${error.message}<br>
+                        <strong>URL:</strong> ${url}<br>
+                        <strong>Error Type:</strong> ${error.name}<br>
+                        <strong>Possible Causes:</strong><br>
+                        • Service not running<br>
+                        • CORS policy blocking request<br>
+                        • Network connectivity issue<br>
+                        • Wrong endpoint URL
+                    </div>
+                `;
+            }
+        }
+
+        async function testAllServices() {
+            const resultDiv = document.getElementById('all-services-result');
+            resultDiv.innerHTML = '<div class="info">Testing all services... This may take a moment... ⏳</div>';
+            
+            const tests = [
+                { name: 'API Gateway Actuator', url: 'http://localhost:8080/actuator/health' },
+                { name: 'User Service Health', url: 'http://localhost:8081/api/users/health' },
+                { name: 'Account Service Health', url: 'http://localhost:8082/api/accounts/health' },
+                { name: 'Planning Service Health', url: 'http://localhost:8083/api/planning/health' },
+                { name: 'User via Gateway', url: 'http://localhost:8080/api/users/health' },
+                { name: 'Account via Gateway', url: 'http://localhost:8080/api/accounts/health' },
+                { name: 'Planning via Gateway', url: 'http://localhost:8080/api/planning/health' }
+            ];
+            
+            let results = [];
+            
+            for (const test of tests) {
+                try {
+                    const response = await fetch(test.url, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' },
+                        signal: AbortSignal.timeout(3000)
+                    });
+                    
+                    results.push({
+                        name: test.name,
+                        url: test.url,
+                        status: response.ok ? 'SUCCESS' : `ERROR ${response.status}`,
+                        success: response.ok
+                    });
+                } catch (error) {
+                    results.push({
+                        name: test.name,
+                        url: test.url,
+                        status: `FAILED: ${error.message}`,
+                        success: false
+                    });
+                }
+            }
+            
+            const successCount = results.filter(r => r.success).length;
+            const totalCount = results.length;
+            
+            let html = `<div class="${successCount === totalCount ? 'success' : 'error'}">
+                <h4>Test Results: ${successCount}/${totalCount} services accessible</h4>
+                <ul>`;
+            
+            results.forEach(result => {
+                html += `<li>${result.success ? '✅' : '❌'} <strong>${result.name}:</strong> ${result.status}</li>`;
+            });
+            
+            html += '</ul>';
+            
+            if (successCount === 0) {
+                html += `
+                    <h4>🚨 No Services Accessible</h4>
+                    <p><strong>Troubleshooting Steps:</strong></p>
+                    <ol>
+                        <li>Verify all microservices are running (check console output)</li>
+                        <li>Check if ports 8080, 8081, 8082, 8083 are available</li>
+                        <li>Try accessing services directly in browser: <a href="http://localhost:8083/api/planning/health" target="_blank">http://localhost:8083/api/planning/health</a></li>
+                        <li>Check for CORS configuration in services</li>
+                        <li>Ensure API Gateway is properly configured</li>
+                    </ol>
+                `;
+            } else if (successCount < totalCount) {
+                html += `
+                    <h4>⚠️ Partial Connectivity</h4>
+                    <p>Some services are accessible. Check failed services and ensure they are running and properly configured.</p>
+                `;
+            } else {
+                html += `
+                    <h4>🎉 All Services Accessible!</h4>
+                    <p>All microservices are responding correctly. The main frontend should work properly now.</p>
+                `;
+            }
+            
+            html += '</div>';
+            resultDiv.innerHTML = html;
+        }
+        
+        // Auto-run a basic connectivity test when page loads
+        window.addEventListener('load', function() {
+            console.log('Service Connection Test Page Loaded');
+            setTimeout(() => {
+                testAllServices();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

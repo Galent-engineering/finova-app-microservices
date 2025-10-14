@@ -1,0 +1,55 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        # User Service Routes (Static URLs)
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/users/**,/api/auth/**
+
+        # Account Service Routes (Static URLs)
+        - id: account-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/accounts/**,/api/contributions/**,/api/income-sources/**,/api/dashboard/**
+
+        # Planning Service Routes (Static URLs)
+        - id: planning-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/planning/**,/api/calculators/**
+
+# Completely disable Eureka for API Gateway to avoid startup issues
+eureka:
+  client:
+    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway,prometheus
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+
+# Simplified Gateway - no circuit breakers for now
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.netty: DEBUG

@@ -1,0 +1,39 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  security:
+    user:
+      name: configuser
+      password: configpass123
+      roles: ADMIN
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared-configs
+        default-label: main
+  profiles:
+    active: native
+
+# Config Server runs independently - no Eureka registration needed
+# Other services will connect to Config Server directly via URL
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.config: DEBUG

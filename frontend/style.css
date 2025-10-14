@@ -1,0 +1,955 @@
+/* ==========================================================================
+   Finova Retirement - Microservices Frontend Styles
+   ========================================================================== */
+
+/* Root Variables */
+:root {
+    --finova-orange: #FF6A35;
+    --finova-orange-light: #FF8B66;
+    --finova-orange-dark: #E55A2B;
+    --finova-blue: #1E88E5;
+    --finova-blue-dark: #1565C0;
+    --finova-blue-light: #42A5F5;
+    --finova-teal: #26A69A;
+    --finova-gray-dark: #424242;
+    --finova-gray-medium: #757575;
+    --finova-gray-light: #E0E0E0;
+    --finova-gray-lighter: #F5F5F5;
+    --white: #FFFFFF;
+    --success-green: #4CAF50;
+    --warning-yellow: #FF9800;
+    --error-red: #F44336;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--finova-gray-dark);
+    background-color: var(--finova-gray-lighter);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--finova-gray-dark);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+/* Header */
+.header {
+    background: var(--white);
+    border-bottom: 1px solid var(--finova-gray-light);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--finova-orange);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.logo span {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--finova-gray-dark);
+}
+
+.service-status {
+    color: var(--finova-gray-medium);
+    font-size: 0.9rem;
+}
+
+.service-status.all-up {
+    color: var(--success-green);
+}
+
+.service-status.some-down {
+    color: var(--warning-yellow);
+}
+
+/* Navigation */
+.main-nav {
+    background: var(--finova-gray-lighter);
+    border-bottom: 1px solid var(--finova-gray-light);
+}
+
+.main-nav ul {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    list-style: none;
+    display: flex;
+    gap: 0;
+}
+
+.main-nav li {
+    margin: 0;
+}
+
+.main-nav a {
+    display: block;
+    padding: 1rem 1.5rem;
+    color: var(--finova-gray-medium);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: var(--finova-blue);
+    background: var(--white);
+    border-bottom-color: var(--finova-blue);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.loading-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-spinner {
+    text-align: center;
+    color: var(--finova-blue);
+}
+
+.loading-spinner i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Sections */
+.section {
+    display: none;
+    min-height: calc(100vh - 200px);
+}
+
+.section.active {
+    display: block;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem 0;
+}
+
+.welcome-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--finova-gray-dark);
+}
+
+.welcome-section p {
+    color: var(--finova-gray-medium);
+    font-size: 1.1rem;
+}
+
+/* Service Status Grid */
+.service-status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.service-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.service-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.service-header i {
+    font-size: 1.5rem;
+    color: var(--finova-blue);
+}
+
+.service-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--finova-gray-light);
+}
+
+.status-dot.loading {
+    background: var(--warning-yellow);
+    animation: pulse 1.5s infinite;
+}
+
+.status-dot.up {
+    background: var(--success-green);
+}
+
+.status-dot.down {
+    background: var(--error-red);
+}
+
+.service-port {
+    color: var(--finova-gray-medium);
+    font-size: 0.9rem;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.dashboard-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.dashboard-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    margin-bottom: 1.5rem;
+}
+
+.card-header h3 {
+    color: var(--finova-gray-dark);
+    font-size: 1.2rem;
+}
+
+.card-header small {
+    color: var(--finova-gray-medium);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.amount-display {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--finova-blue);
+}
+
+.status-display {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--success-green);
+}
+
+/* Data Source Indicator */
+.data-source {
+    background: var(--finova-blue-light);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+
+/* Account and Planning Grids */
+.accounts-grid,
+.planning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.account-card,
+.planning-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+/* Services Info */
+.services-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.info-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.info-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info-card li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--finova-gray-light);
+}
+
+.info-card li:last-child {
+    border-bottom: none;
+}
+
+.endpoint-group {
+    margin-bottom: 1.5rem;
+}
+
+.endpoint {
+    background: var(--finova-gray-lighter);
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-family: monospace;
+    margin: 0.5rem 0;
+    color: var(--finova-blue);
+}
+
+/* Footer */
+.footer {
+    background: var(--finova-gray-dark);
+    color: var(--white);
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.tech-stack {
+    margin-top: 1rem;
+    color: var(--finova-gray-light);
+    font-size: 0.9rem;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-content {
+        padding: 1rem;
+    }
+    
+    .main-nav ul {
+        padding: 0 1rem;
+    }
+    
+    .dashboard-container,
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .welcome-section h1 {
+        font-size: 2rem;
+    }
+    
+    .amount-display {
+        font-size: 2rem;
+    }
+}
+
+/* Error States */
+.error-message {
+    background: var(--error-red);
+    color: var(--white);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+}
+
+.success-message {
+    background: var(--success-green);
+    color: var(--white);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+}
+
+/* ==========================================================================
+   Tab System Styles
+   ========================================================================== */
+
+.planning-tabs,
+.account-tabs {
+    margin-top: 2rem;
+}
+
+.tab-buttons {
+    display: flex;
+    border-bottom: 2px solid var(--finova-gray-light);
+    margin-bottom: 2rem;
+    gap: 0;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 1rem 2rem;
+    color: var(--finova-gray-medium);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border-bottom: 2px solid transparent;
+    position: relative;
+}
+
+.tab-btn:hover {
+    color: var(--finova-blue);
+    background: var(--finova-gray-lighter);
+}
+
+.tab-btn.active {
+    color: var(--finova-blue);
+    border-bottom-color: var(--finova-blue);
+    background: var(--white);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Form and Modal Styles
+   ========================================================================== */
+
+.management-container {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--finova-gray-light);
+}
+
+.add-btn {
+    background: var(--finova-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.add-btn:hover {
+    background: var(--finova-blue-dark);
+    transform: translateY(-1px);
+}
+
+.form-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--finova-gray-medium);
+    transition: var(--transition);
+}
+
+.close-modal:hover {
+    color: var(--error-red);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: var(--finova-gray-medium);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--finova-gray-light);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: var(--white);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--finova-blue);
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--finova-gray-light);
+}
+
+.cancel-btn {
+    background: var(--finova-gray-light);
+    color: var(--finova-gray-dark);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.cancel-btn:hover {
+    background: var(--finova-gray-medium);
+    color: var(--white);
+}
+
+.save-btn {
+    background: var(--finova-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.save-btn:hover {
+    background: var(--finova-blue-dark);
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Calculator Styles
+   ========================================================================== */
+
+.calculator-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.calculator-form {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.calculator-results {
+    background: var(--finova-gray-lighter);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--finova-gray-light);
+}
+
+.calculate-btn {
+    background: var(--finova-orange);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.calculate-btn:hover {
+    background: var(--finova-orange-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.scenarios-container {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.scenarios-btn {
+    background: var(--finova-teal);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin: 1rem 0;
+}
+
+.scenarios-btn:hover {
+    background: #1e8c7e;
+    transform: translateY(-1px);
+}
+
+.scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.scenario-card {
+    background: var(--finova-gray-lighter);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--finova-blue);
+    transition: var(--transition);
+}
+
+.scenario-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.social-security-container {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+/* Account and Contribution List Items */
+.account-list-item,
+.contribution-list-item {
+    background: var(--finova-gray-lighter);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--finova-blue);
+    transition: var(--transition);
+}
+
+.account-list-item:hover,
+.contribution-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.account-list-item h4,
+.contribution-list-item h4 {
+    color: var(--finova-gray-dark);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.account-list-item p,
+.contribution-list-item p {
+    margin: 0.25rem 0;
+    color: var(--finova-gray-medium);
+    font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Enhanced Dashboard Styles
+   ========================================================================== */
+
+/* Highlight cards for main financial data */
+.highlight-card {
+    border: 2px solid var(--finova-blue);
+    background: linear-gradient(145deg, var(--white) 0%, #f8fbff 100%);
+}
+
+.highlight-card:hover {
+    border-color: var(--finova-orange);
+    transform: translateY(-3px);
+}
+
+/* Quick Actions Section */
+.quick-actions-section {
+    margin: 3rem 0;
+}
+
+.quick-actions-section h2 {
+    text-align: center;
+    color: var(--finova-gray-dark);
+    margin-bottom: 2rem;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.action-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 2px solid transparent;
+}
+
+.action-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+    border-color: var(--finova-blue);
+    color: inherit;
+}
+
+.action-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--finova-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.action-content h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--finova-gray-dark);
+}
+
+.action-content p {
+    margin: 0;
+    color: var(--finova-gray-medium);
+    font-size: 0.9rem;
+}
+
+/* System Information Section */
+.system-info-section {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--finova-gray-light);
+}
+
+.system-info-section h2 {
+    color: var(--finova-gray-medium);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.system-info-description {
+    color: var(--finova-gray-medium);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+/* Make service cards smaller and less prominent */
+.system-info-section .service-card {
+    transform: scale(0.9);
+    opacity: 0.8;
+}
+
+.system-info-section .service-card:hover {
+    transform: scale(0.95) translateY(-2px);
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .actions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .action-icon {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Responsive Design for New Components */
+@media (max-width: 768px) {
+    .calculator-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .tab-buttons {
+        flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+        flex: 1;
+        min-width: 120px;
+        padding: 0.75rem 1rem;
+    }
+    
+    .management-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    
+    .form-buttons {
+        flex-direction: column;
+    }
+    
+    .modal-content {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+    }
+}
