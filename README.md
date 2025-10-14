@@ -7,6 +7,9 @@ This project is a microservices-based retirement planning application that helps
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
+│                Frontend (HTML/JS/CSS)                       │
+│              http://localhost:8000                          │
+├─────────────────────────────────────────────────────────────┤
 │                    API Gateway (8080)                       │
 ├─────────────────────────────────────────────────────────────┤
 │  User Service    │  Account Service  │  Planning Service    │
@@ -47,14 +50,29 @@ This project is a microservices-based retirement planning application that helps
 - Financial planning tools
 - Investment strategy recommendations
 
+### 7. **Frontend Application** (Port: 8000)
+- Modern, responsive web interface
+- Interactive retirement planning dashboard
+- Real-time service monitoring
+- Account and contribution management
+- Planning tools and calculators
+
 ## Technology Stack
 
+**Backend:**
 - **Java 17**
 - **Spring Boot 3.1.5**
 - **Spring Cloud 2022.0.4**
 - **PostgreSQL** (Database per service)
 - **Docker & Docker Compose**
 - **Maven** (Build tool)
+
+**Frontend:**
+- **HTML5, CSS3, JavaScript (ES6+)**
+- **Font Awesome 6.0** (Icons)
+- **Responsive Design** (Mobile-first)
+- **REST API Integration** (Fetch API)
+- **Single Page Application** (SPA)
 
 ## Getting Started
 
@@ -89,6 +107,24 @@ cd planning-service && mvn spring-boot:run
 cd api-gateway && mvn spring-boot:run
 ```
 
+3. **Start the Frontend**
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Option A: Use the provided startup script (Windows)
+start-frontend.bat
+
+# Option B: Start manually with Python
+python -m http.server 8000
+
+# Option C: Or use Node.js
+npx http-server -p 8000
+
+# Option D: Or use PHP
+php -S localhost:8000
+```
+
 **Option 2: Full Docker (Advanced)**
 
 *Note: Docker build requires additional setup. Use Option 1 for initial testing.*
@@ -103,12 +139,52 @@ docker-compose up -d
 ```
 
 ### Service URLs
+- **🌐 Frontend Application**: http://localhost:8000
 - **Eureka Dashboard**: http://localhost:8761
 - **API Gateway**: http://localhost:8080
 - **User Service**: http://localhost:8081
 - **Account Service**: http://localhost:8082
 - **Planning Service**: http://localhost:8083
 - **Config Server**: http://localhost:8888
+
+## Frontend Features
+
+### 🏠 Dashboard
+- **Financial Overview**: Monthly income projections and current balance
+- **Retirement Readiness**: Assessment of retirement planning progress
+- **Quick Actions**: Easy navigation to main features
+- **Real-time Service Monitoring**: Health status of all microservices
+
+### 📊 Account Management
+- **Overview Tab**: Summary of all retirement accounts and contributions
+- **Manage Accounts**: Add, edit, and view retirement accounts (401k, IRA, etc.)
+- **Manage Contributions**: Configure contribution settings and amounts
+- **Income Sources**: Track multiple retirement income streams
+
+### 🧮 Planning Tools
+- **Retirement Calculator**: Interactive compound interest calculator
+- **What-If Scenarios**: Compare different planning strategies
+- **Social Security Calculator**: Estimate benefits at different ages
+- **Investment Strategy**: View personalized investment recommendations
+
+### ⚙️ System Monitoring
+- **Microservices Status**: Real-time health checks for all services
+- **API Endpoints**: Documentation of available endpoints
+- **Architecture Overview**: Visual representation of system components
+- **Service Connection Testing**: Built-in debugging tools
+
+### 📱 Technical Features
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Progressive Enhancement**: Graceful fallbacks when services are unavailable
+- **Error Handling**: User-friendly error messages and recovery options
+- **Direct Service Communication**: Automatic failover from API Gateway to direct service calls
+- **Cross-Origin Support**: CORS-enabled for development flexibility
+
+### 🔧 Development Tools
+- **Service Connection Tester**: `test-services.html` for debugging connectivity
+- **Comprehensive Documentation**: Detailed setup and usage instructions
+- **Browser Console Integration**: Debug functions and logging
+- **Modular Architecture**: Easy to extend and customize
 
 ## Development
 
@@ -121,13 +197,52 @@ docker-compose up -d
 ### Configuration Management
 All configurations are managed centrally via the Config Server. Service-specific configurations are stored in the `config-repo` directory.
 
+## Project Structure
+
+```
+finova-retire-app-microsrv/
+├── frontend/                    # Frontend application
+│   ├── index.html              # Main application page
+│   ├── style.css               # Complete styling system
+│   ├── script.js               # Application logic
+│   ├── test-services.html      # Service connectivity tester
+│   ├── start-frontend.bat      # Windows startup script
+│   └── README.md               # Frontend documentation
+├── api-gateway/                # API Gateway service
+├── user-service/               # User management service
+├── account-service/            # Account management service
+├── planning-service/           # Planning tools service
+├── eureka-server/              # Service discovery
+├── config-server/              # Configuration management
+├── docker-compose.yml         # Full Docker setup
+├── docker-compose-simple.yml  # Database-only Docker
+├── start-services.bat          # Windows startup script
+└── pom.xml                     # Parent Maven configuration
+```
+
 ## Testing
+
+**Backend Testing:**
 ```bash
 # Run all tests
 mvn test
 
 # Run specific service tests
 cd user-service && mvn test
+```
+
+**Frontend Testing:**
+```bash
+# Manual testing checklist
+1. Open http://localhost:8000
+2. Verify all service status cards show correct status
+3. Test navigation between sections
+4. Test account management forms
+5. Test planning calculators
+6. Verify responsive design on different devices
+
+# Use service connection tester
+Open http://localhost:8000/test-services.html
 ```
 
 ## Monitoring
@@ -140,8 +255,58 @@ cd user-service && mvn test
 - Service-to-service communication security
 - API Gateway handles authentication/authorization
 
+## Troubleshooting
+
+### Frontend Issues
+
+**Services showing offline:**
+1. Verify all microservices are running on correct ports
+2. Check browser console for CORS errors
+3. Use service connection tester: `http://localhost:8000/test-services.html`
+4. Try accessing services directly: `http://localhost:8083/api/planning/health`
+
+**Frontend not loading:**
+1. Ensure web server is running on port 8000
+2. Check for JavaScript errors in browser console
+3. Verify all files are in the frontend directory
+4. Try different browsers (Chrome, Firefox, Edge)
+
+**Calculator not working:**
+1. Check JavaScript console for errors
+2. Verify Planning Service is responding
+3. Test with fallback data (should work even if services are down)
+
+### Backend Issues
+
+**Services not starting:**
+1. Ensure Java 17 is installed
+2. Check if ports are available (8080, 8081, 8082, 8083, 8761, 8888)
+3. Verify Maven dependencies are resolved
+4. Check application logs for specific errors
+
+**Service discovery issues:**
+1. Start Eureka Server first
+2. Wait for services to register (may take 30-60 seconds)
+3. Check Eureka dashboard: `http://localhost:8761`
+
 ## Database Design
 Each service has its own database following the database-per-service pattern:
 - **user_service_db**: User profiles and authentication
 - **account_service_db**: Retirement accounts and contributions
 - **planning_service_db**: Financial calculations and projections
+
+## Contributing
+
+### Frontend Development
+1. Follow existing code style and conventions
+2. Test changes across different browsers
+3. Update documentation for new features
+4. Ensure responsive design principles are maintained
+5. Test with services both online and offline
+
+### Backend Development
+1. Follow Spring Boot best practices
+2. Implement proper error handling
+3. Add comprehensive tests
+4. Update API documentation
+5. Ensure service discovery compatibility
