@@ -252,18 +252,29 @@ async function validateTokenWithBackend(token) {
 function logout() {
     console.log('🚪 Logging out...');
     
-    const token = getStoredToken();
-    
     // Clear stored authentication
     clearStoredAuth();
     setCurrentUser(null);
     updateUIForUnauthenticatedUser();
     
-    // Redirect to Keycloak logout
-    const logoutUrl = `${SSO_CONFIG.keycloakUrl}/realms/${SSO_CONFIG.realm}/protocol/openid-connect/logout?` +
-        `redirect_uri=${encodeURIComponent(window.location.origin)}`;
+    // Optional: Logout from Keycloak in the background (no redirect)
+    // This invalidates the SSO session without redirecting the user
+    const token = getStoredToken();
+    if (token) {
+        // Call Keycloak logout endpoint in background to invalidate SSO session
+        const logoutUrl = `${SSO_CONFIG.keycloakUrl}/realms/${SSO_CONFIG.realm}/protocol/openid-connect/logout`;
+        fetch(logoutUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).catch(error => {
+            console.log('SSO logout failed (this is normal if already logged out):', error);
+        });
+    }
     
-    window.location.href = logoutUrl;
+    console.log('✅ Logged out successfully - staying on frontend');
 }
 
 // ==========================================================================
