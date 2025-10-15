@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finova Retirement - SSO Callback</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth-styles.css">
+    <style>
+        .callback-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .callback-content {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .callback-spinner {
+            font-size: 48px;
+            color: #667eea;
+            animation: spin 2s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="callback-container">
+        <div class="callback-content">
+            <div class="callback-spinner">
+                <i class="fas fa-spinner"></i>
+            </div>
+            <h2>Processing Authentication...</h2>
+            <p>Please wait while we complete your login.</p>
+            <div id="callback-status"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Handle OAuth callback immediately when page loads
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🔄 OAuth callback page loaded');
+            
+            const statusElement = document.getElementById('callback-status');
+            
+            try {
+                // Get authorization code and state from URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                const code = urlParams.get('code');
+                const state = urlParams.get('state');
+                const error = urlParams.get('error');
+                const errorDescription = urlParams.get('error_description');
+                
+                if (error) {
+                    throw new Error(errorDescription || error);
+                }
+                
+                if (!code) {
+                    throw new Error('No authorization code received');
+                }
+                
+                console.log('🎫 Processing authorization code:', code.substring(0, 10) + '...');
+                statusElement.innerHTML = '<p style="color: #667eea;"><i class="fas fa-key"></i> Processing authorization code...</p>';
+                
+                // Handle OAuth callback with detailed logging
+                console.log('🔄 Step 1: Starting handleOAuthCallback');
+                statusElement.innerHTML = '<p style="color: #667eea;"><i class="fas fa-exchange-alt"></i> Step 1: Exchanging code for tokens...</p>';
+                
+                await handleOAuthCallback(code, state);
+                
+                console.log('✅ Step 2: handleOAuthCallback completed successfully');
+                // Success - redirect to main app
+                statusElement.innerHTML = '<p style="color: #28a745;"><i class="fas fa-check"></i> Authentication successful! Redirecting...</p>';
+                
+                setTimeout(() => {
+                    console.log('🔄 Step 3: Redirecting to dashboard');
+                    window.location.href = '/';
+                }, 1500);
+                
+            } catch (error) {
+                console.error('❌ OAuth callback error:', error);
+                statusElement.innerHTML = `
+                    <div style="color: #dc3545; text-align: left;">
+                        <p><i class="fas fa-exclamation-triangle"></i> Authentication failed:</p>
+                        <p style="font-size: 14px; margin-top: 10px;">${error.message}</p>
+                        <button onclick="window.location.href='/'" style="margin-top: 15px; padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            Return to Login
+                        </button>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

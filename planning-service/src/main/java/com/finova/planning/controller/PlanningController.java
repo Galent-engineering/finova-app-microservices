@@ -3,12 +3,16 @@ package com.finova.planning.controller;
 import com.finova.planning.dto.RetirementPlanDTO;
 import com.finova.planning.dto.SocialSecurityDTO;
 import com.finova.planning.dto.InvestmentStrategyDTO;
+import com.finova.planning.dto.UserDTO;
+import com.finova.planning.security.UserContext;
 import com.finova.planning.service.RetirementCalculatorService;
 import com.finova.planning.service.SocialSecurityService;
 import com.finova.planning.service.InvestmentStrategyService;
+import com.finova.planning.service.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -31,6 +35,9 @@ public class PlanningController {
     
     @Autowired
     private InvestmentStrategyService investmentStrategyService;
+    
+    @Autowired
+    private AuthenticationService authenticationService;
 
     /**
      * Health check endpoint
@@ -50,7 +57,13 @@ public class PlanningController {
      * Get default retirement plan for user
      */
     @GetMapping("/planning/retirement-plan/{userId}")
+    @PreAuthorize("isAuthenticated() and (@authenticationService.validateUserAccess(#userId) or hasRole('ADMIN') or hasRole('FINANCIAL_ADVISOR'))")
     public ResponseEntity<RetirementPlanDTO> getRetirementPlan(@PathVariable Long userId) {
+        // Validate user access
+        if (!authenticationService.validateUserAccess(userId)) {
+            return ResponseEntity.status(403).build();
+        }
+        
         RetirementPlanDTO plan = new RetirementPlanDTO(userId, 42, 65);
         plan = retirementCalculatorService.calculateRetirementPlan(plan);
         return ResponseEntity.ok(plan);
@@ -60,7 +73,13 @@ public class PlanningController {
      * Calculate retirement plan with custom parameters
      */
     @PostMapping("/planning/retirement-plan/calculate")
+    @PreAuthorize("isAuthenticated() and (@authenticationService.validateUserAccess(#planDTO.userId) or hasRole('ADMIN') or hasRole('FINANCIAL_ADVISOR'))")
     public ResponseEntity<RetirementPlanDTO> calculateRetirementPlan(@Valid @RequestBody RetirementPlanDTO planDTO) {
+        // Validate user access
+        if (!authenticationService.validateUserAccess(planDTO.getUserId())) {
+            return ResponseEntity.status(403).build();
+        }
+        
         RetirementPlanDTO calculatedPlan = retirementCalculatorService.calculateRetirementPlan(planDTO);
         return ResponseEntity.ok(calculatedPlan);
     }
@@ -69,7 +88,12 @@ public class PlanningController {
      * Get what-if scenarios for retirement planning
      */
     @GetMapping("/planning/scenarios/{userId}")
+    @PreAuthorize("isAuthenticated() and (@authenticationService.validateUserAccess(#userId) or hasRole('ADMIN') or hasRole('FINANCIAL_ADVISOR'))")
     public ResponseEntity<Map<String, Object>> getWhatIfScenarios(@PathVariable Long userId) {
+        // Validate user access
+        if (!authenticationService.validateUserAccess(userId)) {
+            return ResponseEntity.status(403).build();
+        }
         Map<String, Object> scenarios = new HashMap<>();
         
         // Current scenario
@@ -112,7 +136,13 @@ public class PlanningController {
      * Get Social Security benefits estimate
      */
     @GetMapping("/planning/social-security/{userId}")
+    @PreAuthorize("isAuthenticated() and (@authenticationService.validateUserAccess(#userId) or hasRole('ADMIN') or hasRole('FINANCIAL_ADVISOR'))")
     public ResponseEntity<SocialSecurityDTO> getSocialSecurityBenefits(@PathVariable Long userId) {
+        // Validate user access
+        if (!authenticationService.validateUserAccess(userId)) {
+            return ResponseEntity.status(403).build();
+        }
+        
         SocialSecurityDTO ssDTO = new SocialSecurityDTO();
         ssDTO.setUserId(userId);
         ssDTO = socialSecurityService.calculateBenefits(ssDTO);
@@ -123,7 +153,13 @@ public class PlanningController {
      * Calculate Social Security benefits with custom parameters
      */
     @PostMapping("/planning/social-security/calculate")
+    @PreAuthorize("isAuthenticated() and (@authenticationService.validateUserAccess(#ssDTO.userId) or hasRole('ADMIN') or hasRole('FINANCIAL_ADVISOR'))")
     public ResponseEntity<SocialSecurityDTO> calculateSocialSecurityBenefits(@Valid @RequestBody SocialSecurityDTO ssDTO) {
+        // Validate user access
+        if (!authenticationService.validateUserAccess(ssDTO.getUserId())) {
+            return ResponseEntity.status(403).build();
+        }
+        
         SocialSecurityDTO calculatedSS = socialSecurityService.calculateBenefits(ssDTO);
         return ResponseEntity.ok(calculatedSS);
     }
@@ -134,7 +170,13 @@ public class PlanningController {
      * Get investment strategy recommendations
      */
     @GetMapping("/planning/investment-strategy/{userId}")
+    @PreAuthorize("isAuthenticated() and (@authenticationService.validateUserAccess(#userId) or hasRole('ADMIN') or hasRole('FINANCIAL_ADVISOR'))")
     public ResponseEntity<InvestmentStrategyDTO> getInvestmentStrategy(@PathVariable Long userId, @RequestParam(required = false) Integer age) {
+        // Validate user access
+        if (!authenticationService.validateUserAccess(userId)) {
+            return ResponseEntity.status(403).build();
+        }
+        
         InvestmentStrategyDTO strategy = investmentStrategyService.generateStrategy(userId, age);
         return ResponseEntity.ok(strategy);
     }
@@ -145,7 +187,12 @@ public class PlanningController {
      * Get planning tools overview
      */
     @GetMapping("/planning/tools/{userId}")
+    @PreAuthorize("isAuthenticated() and (@authenticationService.validateUserAccess(#userId) or hasRole('ADMIN') or hasRole('FINANCIAL_ADVISOR'))")
     public ResponseEntity<Map<String, Object>> getPlanningTools(@PathVariable Long userId) {
+        // Validate user access
+        if (!authenticationService.validateUserAccess(userId)) {
+            return ResponseEntity.status(403).build();
+        }
         Map<String, Object> tools = new HashMap<>();
         
         tools.put("retirementPlanner", Map.of(
@@ -179,7 +226,13 @@ public class PlanningController {
      * Get comprehensive planning dashboard
      */
     @GetMapping("/planning/dashboard/{userId}")
+    @PreAuthorize("isAuthenticated() and (@authenticationService.validateUserAccess(#userId) or hasRole('ADMIN') or hasRole('FINANCIAL_ADVISOR'))")
     public ResponseEntity<Map<String, Object>> getPlanningDashboard(@PathVariable Long userId) {
+        // Validate user access
+        if (!authenticationService.validateUserAccess(userId)) {
+            return ResponseEntity.status(403).build();
+        }
+        
         Map<String, Object> dashboard = new HashMap<>();
         
         // Get retirement plan

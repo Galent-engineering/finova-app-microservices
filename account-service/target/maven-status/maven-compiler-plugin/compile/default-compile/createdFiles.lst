@@ -1,5 +1,6 @@
 com\finova\account\service\IncomeSourceService.class
 com\finova\account\service\ContributionService.class
+com\finova\account\config\SecurityConfig.class
 com\finova\account\AccountServiceApplication.class
 com\finova\account\dto\ContributionDTO.class
 com\finova\account\repository\IncomeSourceRepository.class
@@ -11,4 +12,5 @@ com\finova\account\dto\IncomeSourceDTO.class
 com\finova\account\controller\AccountController.class
 com\finova\account\model\Contribution.class
 com\finova\account\model\IncomeSource.class
+com\finova\account\controller\AuthController.class
 com\finova\account\service\RetirementAccountService.class

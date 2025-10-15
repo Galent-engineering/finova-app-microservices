@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Check Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Health Check Test</h1>
+    <button onclick="testAll()">Test All Services</button>
+    <div id="results"></div>
+
+    <script>
+        async function testService(name, url) {
+            const resultDiv = document.getElementById('results');
+            const result = document.createElement('div');
+            result.className = 'result';
+            result.innerHTML = `<strong>${name}</strong>: Testing ${url}...`;
+            resultDiv.appendChild(result);
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                result.className = 'result success';
+                result.innerHTML = `<strong>${name}</strong>: ✅ SUCCESS<br>Status: ${data.status}<br>URL: ${url}`;
+            } catch (error) {
+                result.className = 'result error';
+                result.innerHTML = `<strong>${name}</strong>: ❌ FAILED<br>Error: ${error.message}<br>URL: ${url}`;
+            }
+        }
+
+        async function testAll() {
+            document.getElementById('results').innerHTML = '';
+            
+            await testService('User Service', 'http://localhost:8081/actuator/health');
+            await testService('Account Service', 'http://localhost:8082/actuator/health');
+            await testService('Planning Service', 'http://localhost:8083/actuator/health');
+            await testService('Eureka Server', 'http://localhost:8761/actuator/health');
+            await testService('Config Server', 'http://localhost:8888/actuator/health');
+        }
+
+        // Auto-test on load
+        window.onload = testAll;
+    </script>
+</body>
+</html>

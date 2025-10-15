@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Accounts Issue</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        button { padding: 10px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Debug Accounts Issue</h1>
+    
+    <button onclick="loadAccountsSimple()">Load Accounts (Simple)</button>
+    <button onclick="clearAccounts()">Clear Accounts</button>
+    
+    <!-- Overview Tab Content -->
+    <div class="section">
+        <h3>Overview Content</h3>
+        <div id="retirement-accounts">Initial content</div>
+        <div id="contributions-summary">Initial content</div>
+        <div id="income-sources">Initial content</div>
+    </div>
+    
+    <!-- Management Tab Content -->
+    <div class="section">
+        <h3>Management Content</h3>
+        <div id="accounts-list">Initial content</div>
+        <div id="contributions-list">Initial content</div>
+    </div>
+
+    <script>
+        function loadAccountsSimple() {
+            console.log('Loading accounts...');
+            
+            // Set overview content
+            const retirementAccounts = document.getElementById('retirement-accounts');
+            if (retirementAccounts) {
+                retirementAccounts.innerHTML = `
+                    <div class="account-item">
+                        <strong>401(a) Plan</strong><br>
+                        Balance: $106,965.67<br>
+                        Status: On Track
+                    </div>
+                `;
+                console.log('✅ Set retirement-accounts');
+            } else {
+                console.error('❌ retirement-accounts element not found');
+            }
+            
+            const contributionsSummary = document.getElementById('contributions-summary');
+            if (contributionsSummary) {
+                contributionsSummary.innerHTML = `
+                    <div class="contrib-item">
+                        <strong>Total Monthly:</strong> $975<br>
+                        <strong>Total Annual:</strong> $11,700<br>
+                        <small>Pre-tax, Roth, and Employer Match</small>
+                    </div>
+                `;
+                console.log('✅ Set contributions-summary');
+            } else {
+                console.error('❌ contributions-summary element not found');
+            }
+            
+            const incomeSources = document.getElementById('income-sources');
+            if (incomeSources) {
+                incomeSources.innerHTML = `
+                    <div class="income-item">
+                        <strong>401(k) - Finova:</strong> $106,965<br>
+                        <strong>Traditional IRA:</strong> $45,230<br>
+                        <strong>Pension:</strong> Estimated
+                    </div>
+                `;
+                console.log('✅ Set income-sources');
+            } else {
+                console.error('❌ income-sources element not found');
+            }
+            
+            // Set management content
+            const accountsList = document.getElementById('accounts-list');
+            if (accountsList) {
+                accountsList.innerHTML = `
+                    <div class="account-list-item">
+                        <h4>401(a) Plan - Finova</h4>
+                        <p>Balance: $106,965.67</p>
+                        <p>Type: 401K</p>
+                        <p>Employer: Finova Corp</p>
+                    </div>
+                `;
+                console.log('✅ Set accounts-list');
+            } else {
+                console.error('❌ accounts-list element not found');
+            }
+            
+            const contributionsList = document.getElementById('contributions-list');
+            if (contributionsList) {
+                contributionsList.innerHTML = `
+                    <div class="contribution-list-item">
+                        <h4>Employee Pre-tax</h4>
+                        <p>Monthly: $650</p>
+                        <p>Percentage: 8.5%</p>
+                    </div>
+                    <div class="contribution-list-item">
+                        <h4>Employer Match</h4>
+                        <p>Monthly: $325</p>
+                        <p>Percentage: 4.25%</p>
+                    </div>
+                `;
+                console.log('✅ Set contributions-list');
+            } else {
+                console.error('❌ contributions-list element not found');
+            }
+            
+            console.log('Load accounts completed');
+        }
+        
+        function clearAccounts() {
+            const elements = ['retirement-accounts', 'contributions-summary', 'income-sources', 'accounts-list', 'contributions-list'];
+            elements.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.innerHTML = 'Cleared';
+                    console.log(`Cleared ${id}`);
+                }
+            });
+        }
+        
+        // Auto-load on page load
+        window.onload = loadAccountsSimple;
+    </script>
+</body>
+</html>

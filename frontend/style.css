@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Finova Retirement - Microservices Frontend Styles
+   Finova Retirement Frontend Styles
    ========================================================================== */
 
 /* Root Variables */
@@ -174,12 +174,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Sections */
 .section {
-    display: none;
+    display: none !important;
     min-height: calc(100vh - 200px);
 }
 
 .section.active {
-    display: block;
+    display: block !important;
 }
 
 .main-content {

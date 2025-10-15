@@ -1,4 +1,4 @@
-# Finova Retirement - Microservices Frontend
+# Finova Retirement Frontend
 
 A modern, responsive web frontend for the Finova Retirement Planning application, designed to work with a microservices architecture.
 

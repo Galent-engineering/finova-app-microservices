@@ -3,6 +3,8 @@ C:\Users\AkashDeep\OneDrive - Galent\Documents\Github\finova-retire-app-microsrv
 C:\Users\AkashDeep\OneDrive - Galent\Documents\Github\finova-retire-app-microsrv\account-service\src\main\java\com\finova\account\dto\ContributionDTO.java
 C:\Users\AkashDeep\OneDrive - Galent\Documents\Github\finova-retire-app-microsrv\account-service\src\main\java\com\finova\account\model\RetirementAccount.java
 C:\Users\AkashDeep\OneDrive - Galent\Documents\Github\finova-retire-app-microsrv\account-service\src\main\java\com\finova\account\service\ContributionService.java
+C:\Users\AkashDeep\OneDrive - Galent\Documents\Github\finova-retire-app-microsrv\account-service\src\main\java\com\finova\account\config\SecurityConfig.java
+C:\Users\AkashDeep\OneDrive - Galent\Documents\Github\finova-retire-app-microsrv\account-service\src\main\java\com\finova\account\controller\AuthController.java
 C:\Users\AkashDeep\OneDrive - Galent\Documents\Github\finova-retire-app-microsrv\account-service\src\main\java\com\finova\account\dto\RetirementAccountDTO.java
 C:\Users\AkashDeep\OneDrive - Galent\Documents\Github\finova-retire-app-microsrv\account-service\src\main\java\com\finova\account\model\IncomeSource.java
 C:\Users\AkashDeep\OneDrive - Galent\Documents\Github\finova-retire-app-microsrv\account-service\src\main\java\com\finova\account\dto\IncomeSourceDTO.java
