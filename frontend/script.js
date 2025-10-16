@@ -3,12 +3,23 @@
 // This frontend connects to the microservices via API Gateway
 // ==========================================================================
 
-// Configuration - Direct Services (bypassing API Gateway)
-const API_BASE_URL = 'http://localhost:8082';  // Point to Account Service directly
-const SERVICES = {
+// Configuration - Using API Gateway
+const API_GATEWAY_URL = 'http://localhost:9080';  // API Gateway
+const API_BASE_URL = API_GATEWAY_URL;  // All requests go through gateway
+
+// Direct service URLs (for health checks and fallback)
+const DIRECT_SERVICES = {
     USER: 'http://localhost:8081',
     ACCOUNT: 'http://localhost:8082', 
-    PLANNING: 'http://localhost:8083'
+    PLANNING: 'http://localhost:8083',
+    GATEWAY: API_GATEWAY_URL
+};
+
+// Gateway routes (all API requests use these)
+const SERVICES = {
+    USER: API_GATEWAY_URL,
+    ACCOUNT: API_GATEWAY_URL, 
+    PLANNING: API_GATEWAY_URL
 };
 
 // Application State
@@ -148,31 +159,42 @@ async function updateServiceStatus() {
     console.log('Checking all service statuses...');
     
     try {
-        // Run all service checks in parallel for faster results (only check main app services)
-        const [userStatus, accountStatus, planningStatus] = await Promise.allSettled([
+        // Check gateway first, then direct services as fallback
+        const [gatewayStatus, userStatus, accountStatus, planningStatus] = await Promise.allSettled([
+            checkMultipleHealthEndpoints('gateway', [
+                `${API_GATEWAY_URL}/actuator/health`
+            ]),
             checkMultipleHealthEndpoints('users', [
-                `${SERVICES.USER}/actuator/health`
+                `${API_GATEWAY_URL}/api/users/health`,
+                `${DIRECT_SERVICES.USER}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('accounts', [
-                `${SERVICES.ACCOUNT}/actuator/health`
+                `${API_GATEWAY_URL}/api/accounts/health`,
+                `${DIRECT_SERVICES.ACCOUNT}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('planning', [
-                `${SERVICES.PLANNING}/actuator/health`
+                `${API_GATEWAY_URL}/api/planning/health`,
+                `${DIRECT_SERVICES.PLANNING}/actuator/health`
             ])
         ]);
         
         // Extract results from Promise.allSettled
+        const gatewayResult = gatewayStatus.status === 'fulfilled' ? gatewayStatus.value : { status: 'down', error: 'Check failed' };
         const userResult = userStatus.status === 'fulfilled' ? userStatus.value : { status: 'down', error: 'Check failed' };
         const accountResult = accountStatus.status === 'fulfilled' ? accountStatus.value : { status: 'down', error: 'Check failed' };
         const planningResult = planningStatus.status === 'fulfilled' ? planningStatus.value : { status: 'down', error: 'Check failed' };
         
-        // Update service cards
+        // Update service cards (add gateway card if element exists)
+        if (document.getElementById('gateway-service-card')) {
+            updateServiceCard('gateway-service-card', gatewayResult);
+        }
         updateServiceCard('user-service-card', userResult);
         updateServiceCard('account-service-card', accountResult);
         updateServiceCard('planning-service-card', planningResult);
         
         // Update global status
         servicesStatus = {
+            gateway: gatewayResult.status === 'up',
             user: userResult.status === 'up',
             account: accountResult.status === 'up',
             planning: planningResult.status === 'up'
@@ -180,12 +202,18 @@ async function updateServiceStatus() {
         
         updateGlobalServiceStatus();
         
-        // Immediately update the header status if all main services are up
-        if (userResult.status === 'up' && accountResult.status === 'up' && planningResult.status === 'up') {
-            const statusElement = document.getElementById('service-status');
-            if (statusElement) {
-                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> All Services Online';
+        // Update the header status with gateway awareness
+        const statusElement = document.getElementById('service-status');
+        if (statusElement) {
+            if (gatewayResult.status === 'up' && userResult.status === 'up' && accountResult.status === 'up' && planningResult.status === 'up') {
+                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Gateway + All Services Online';
                 statusElement.className = 'service-status all-up';
+            } else if (gatewayResult.status === 'up') {
+                statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Gateway Online, Some Services Down';
+                statusElement.className = 'service-status partial-up';
+            } else {
+                statusElement.innerHTML = '<i class="fas fa-times-circle"></i> Gateway Offline';
+                statusElement.className = 'service-status all-down';
             }
         }
         

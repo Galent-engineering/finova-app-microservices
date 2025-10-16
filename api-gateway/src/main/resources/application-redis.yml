@@ -1,0 +1,40 @@
+# Redis Configuration for Rate Limiting
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+      # Optional: Redis password if configured
+      # password: your_redis_password
+
+# Fallback configuration when Redis is not available
+resilience4j:
+  ratelimiter:
+    instances:
+      default:
+        limit-refresh-period: 1s
+        limit-for-period: 10
+        timeout-duration: 0s
+      user-service:
+        limit-refresh-period: 1s
+        limit-for-period: 10
+        timeout-duration: 0s
+      account-service:
+        limit-refresh-period: 1s
+        limit-for-period: 15
+        timeout-duration: 0s
+      planning-service:
+        limit-refresh-period: 1s
+        limit-for-period: 5
+        timeout-duration: 0s
+
+logging:
+  level:
+    io.lettuce.core: INFO
+    org.springframework.data.redis: INFO
