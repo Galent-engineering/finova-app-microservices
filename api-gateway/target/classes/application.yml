@@ -93,9 +93,27 @@ management:
     web:
       exposure:
         include: health,info,gateway,prometheus
+      cors:
+        allowed-origins:
+          - "http://localhost:8000"
+          - "http://127.0.0.1:8000"
+        allowed-methods:
+          - GET
+          - POST
+          - OPTIONS
+        allowed-headers: "*"
+        allow-credentials: true
+        max-age: 3600
   endpoint:
     health:
       show-details: always
+      cors:
+        allowed-origins:
+          - "http://localhost:8000"
+          - "http://127.0.0.1:8000"
+        allowed-methods: [GET, OPTIONS]
+        allowed-headers: "*"
+        allow-credentials: true
     gateway:
       enabled: true
 
