@@ -37,9 +37,12 @@
         async function testAll() {
             document.getElementById('results').innerHTML = '';
             
+            await testService('API Gateway', 'http://localhost:8080/actuator/health');
             await testService('User Service', 'http://localhost:8081/actuator/health');
             await testService('Account Service', 'http://localhost:8082/actuator/health');
             await testService('Planning Service', 'http://localhost:8083/actuator/health');
+            await testService('Payment Service', 'http://localhost:8084/actuator/health');
+            await testService('Analytics Service', 'http://localhost:8085/actuator/health');
             await testService('Eureka Server', 'http://localhost:8761/actuator/health');
             await testService('Config Server', 'http://localhost:8888/actuator/health');
         }

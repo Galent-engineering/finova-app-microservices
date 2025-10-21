@@ -1,0 +1,32 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.5)
+
+2025-10-21T15:35:20.251+05:30  INFO 52938 --- [           main] c.finova.config.ConfigServerApplication  : Starting ConfigServerApplication v1.0.0 using Java 17.0.16 with PID 52938 (/Users/architgupta/POCs/finova-app-microservices/config-server/target/config-server-1.0.0.jar started by architgupta in /Users/architgupta/POCs/finova-app-microservices/config-server)
+2025-10-21T15:35:20.252+05:30  INFO 52938 --- [           main] c.finova.config.ConfigServerApplication  : The following 1 profile is active: "native"
+2025-10-21T15:35:20.824+05:30  INFO 52938 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=92e8228c-2ce3-3ed7-94c0-970f06895a58
+2025-10-21T15:35:20.976+05:30  INFO 52938 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8888 (http)
+2025-10-21T15:35:20.980+05:30  INFO 52938 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-21T15:35:20.980+05:30  INFO 52938 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-10-21T15:35:21.012+05:30  INFO 52938 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-21T15:35:21.013+05:30  INFO 52938 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 738 ms
+2025-10-21T15:35:21.591+05:30  INFO 52938 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoint(s) beneath base path '/actuator'
+2025-10-21T15:35:21.595+05:30  INFO 52938 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@57540fd0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5cf8edcf, org.springframework.security.web.context.SecurityContextHolderFilter@3013909b, org.springframework.security.web.header.HeaderWriterFilter@52fc5eb1, org.springframework.web.filter.CorsFilter@58cec85b, org.springframework.security.web.csrf.CsrfFilter@2cfbeac4, org.springframework.security.web.authentication.logout.LogoutFilter@417d6615, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@677b8e13, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@27f74733, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@629f066f, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@7bde1f3a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@66596a88, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@76954a33, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1542af63, org.springframework.security.web.access.ExceptionTranslationFilter@198ef2ce, org.springframework.security.web.access.intercept.AuthorizationFilter@3df978b9]
+2025-10-21T15:35:21.613+05:30  INFO 52938 --- [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2025-10-21T15:35:21.680+05:30  WARN 52938 --- [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-10-21T15:35:21.699+05:30  INFO 52938 --- [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2025-10-21T15:35:21.716+05:30  INFO 52938 --- [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2025-10-21T15:35:21.716+05:30  INFO 52938 --- [           main] com.netflix.discovery.DiscoveryClient    : Client configured to neither register nor query for data.
+2025-10-21T15:35:21.721+05:30  INFO 52938 --- [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1761041121720 with initial instances count: 0
+2025-10-21T15:35:21.723+05:30  INFO 52938 --- [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application CONFIG-SERVER with eureka with status UP
+2025-10-21T15:35:21.733+05:30  INFO 52938 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8888 (http) with context path ''
+2025-10-21T15:35:21.733+05:30  INFO 52938 --- [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8888
+2025-10-21T15:35:21.748+05:30  INFO 52938 --- [           main] c.finova.config.ConfigServerApplication  : Started ConfigServerApplication in 1.751 seconds (process running for 2.013)
+2025-10-21T15:35:23.996+05:30  INFO 52938 --- [nio-8888-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-21T15:35:23.996+05:30  INFO 52938 --- [nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-21T15:35:23.997+05:30  INFO 52938 --- [nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

@@ -8,14 +8,24 @@ const API_BASE_URL = 'http://localhost:8082';  // Point to Account Service direc
 const SERVICES = {
     USER: 'http://localhost:8081',
     ACCOUNT: 'http://localhost:8082', 
-    PLANNING: 'http://localhost:8083'
+    PLANNING: 'http://localhost:8083',
+    PAYMENT: 'http://localhost:8084',
+    ANALYTICS: 'http://localhost:8085',
+    EUREKA: 'http://localhost:8761',
+    CONFIG: 'http://localhost:8888',
+    GATEWAY: 'http://localhost:8080'
 };
 
 // Application State
 let servicesStatus = {
     user: false,
     account: false,
-    planning: false
+    planning: false,
+    payment: false,
+    analytics: false,
+    eureka: false,
+    config: false,
+    gateway: false
 };
 
 // DOM Elements
@@ -148,8 +158,8 @@ async function updateServiceStatus() {
     console.log('Checking all service statuses...');
     
     try {
-        // Run all service checks in parallel for faster results (only check main app services)
-        const [userStatus, accountStatus, planningStatus] = await Promise.allSettled([
+        // Run all service checks in parallel for faster results (check all microservices)
+        const [userStatus, accountStatus, planningStatus, paymentStatus, analyticsStatus, eurekaStatus, configStatus, gatewayStatus] = await Promise.allSettled([
             checkMultipleHealthEndpoints('users', [
                 `${SERVICES.USER}/actuator/health`
             ]),
@@ -158,6 +168,21 @@ async function updateServiceStatus() {
             ]),
             checkMultipleHealthEndpoints('planning', [
                 `${SERVICES.PLANNING}/actuator/health`
+            ]),
+            checkMultipleHealthEndpoints('payment', [
+                `${SERVICES.PAYMENT}/actuator/health`
+            ]),
+            checkMultipleHealthEndpoints('analytics', [
+                `${SERVICES.ANALYTICS}/actuator/health`
+            ]),
+            checkMultipleHealthEndpoints('eureka', [
+                `${SERVICES.EUREKA}/actuator/health`
+            ]),
+            checkMultipleHealthEndpoints('config', [
+                `${SERVICES.CONFIG}/actuator/health`
+            ]),
+            checkMultipleHealthEndpoints('gateway', [
+                `${SERVICES.GATEWAY}/actuator/health`
             ])
         ]);
         
@@ -165,27 +190,58 @@ async function updateServiceStatus() {
         const userResult = userStatus.status === 'fulfilled' ? userStatus.value : { status: 'down', error: 'Check failed' };
         const accountResult = accountStatus.status === 'fulfilled' ? accountStatus.value : { status: 'down', error: 'Check failed' };
         const planningResult = planningStatus.status === 'fulfilled' ? planningStatus.value : { status: 'down', error: 'Check failed' };
+        const paymentResult = paymentStatus.status === 'fulfilled' ? paymentStatus.value : { status: 'down', error: 'Check failed' };
+        const analyticsResult = analyticsStatus.status === 'fulfilled' ? analyticsStatus.value : { status: 'down', error: 'Check failed' };
+        const eurekaResult = eurekaStatus.status === 'fulfilled' ? eurekaStatus.value : { status: 'down', error: 'Check failed' };
+        const configResult = configStatus.status === 'fulfilled' ? configStatus.value : { status: 'down', error: 'Check failed' };
+        const gatewayResult = gatewayStatus.status === 'fulfilled' ? gatewayStatus.value : { status: 'down', error: 'Check failed' };
         
         // Update service cards
         updateServiceCard('user-service-card', userResult);
         updateServiceCard('account-service-card', accountResult);
         updateServiceCard('planning-service-card', planningResult);
+        updateServiceCard('payment-service-card', paymentResult);
+        updateServiceCard('analytics-service-card', analyticsResult);
+        updateServiceCard('eureka-service-card', eurekaResult);
+        updateServiceCard('config-service-card', configResult);
+        updateServiceCard('api-gateway-card', gatewayResult);
         
         // Update global status
         servicesStatus = {
             user: userResult.status === 'up',
             account: accountResult.status === 'up',
-            planning: planningResult.status === 'up'
+            planning: planningResult.status === 'up',
+            payment: paymentResult.status === 'up',
+            analytics: analyticsResult.status === 'up',
+            eureka: eurekaResult.status === 'up',
+            config: configResult.status === 'up',
+            gateway: gatewayResult.status === 'up'
         };
         
         updateGlobalServiceStatus();
         
-        // Immediately update the header status if all main services are up
-        if (userResult.status === 'up' && accountResult.status === 'up' && planningResult.status === 'up') {
+        // Immediately update the header status if all main business services are up
+        const allBusinessServicesUp = userResult.status === 'up' && 
+                              accountResult.status === 'up' && 
+                              planningResult.status === 'up' &&
+                              paymentResult.status === 'up' &&
+                              analyticsResult.status === 'up';
+        
+        const allInfraServicesUp = eurekaResult.status === 'up' &&
+                                   configResult.status === 'up' &&
+                                   gatewayResult.status === 'up';
+        
+        if (allBusinessServicesUp && allInfraServicesUp) {
             const statusElement = document.getElementById('service-status');
             if (statusElement) {
                 statusElement.innerHTML = '<i class="fas fa-check-circle"></i> All Services Online';
                 statusElement.className = 'service-status all-up';
+            }
+        } else if (allBusinessServicesUp) {
+            const statusElement = document.getElementById('service-status');
+            if (statusElement) {
+                statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Business Services Online (Infrastructure Partial)';
+                statusElement.className = 'service-status partial-up';
             }
         }
         

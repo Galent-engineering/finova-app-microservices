@@ -1,2 +1,2 @@
-com\finova\eureka\EurekaServerApplication.class
-com\finova\eureka\config\EurekaSecurityConfig.class
+com/finova/eureka/config/EurekaSecurityConfig.class
+com/finova/eureka/EurekaServerApplication.class

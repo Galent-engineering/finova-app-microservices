@@ -98,6 +98,46 @@ services:
       timeout: 10s
       retries: 5
 
+  # Payment Service (OLTP with MongoDB)
+  payment-service:
+    build: ./payment-service
+    container_name: payment-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+      - config-server
+      - mongodb
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:password@mongodb:27017/payment_db?authSource=admin
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8084/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Analytics Service (OLAP with MongoDB)
+  analytics-service:
+    build: ./analytics-service
+    container_name: analytics-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+      - config-server
+      - mongodb
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:password@mongodb:27017/analytics_db?authSource=admin
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8085/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
   # API Gateway
   api-gateway:
     build: ./api-gateway
@@ -109,6 +149,8 @@ services:
       - user-service
       - account-service
       - planning-service
+      - payment-service
+      - analytics-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka
@@ -155,6 +197,24 @@ services:
     volumes:
       - planning_db_data:/var/lib/postgresql/data
 
+  # MongoDB for Payment and Analytics Services
+  mongodb:
+    image: mongo:7.0
+    container_name: finova-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: finova_db
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
   # Monitoring
   prometheus:
     image: prom/prometheus:latest
@@ -175,6 +235,7 @@ volumes:
   user_db_data:
   account_db_data:
   planning_db_data:
+  mongodb_data:
 
 networks:
   default:

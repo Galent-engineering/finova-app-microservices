@@ -113,6 +113,39 @@
             <div id="planning-via-gateway" class="result"></div>
         </div>
 
+        <!-- Payment Service Test -->
+        <div class="test-section">
+            <h3>Payment Service (Port 8084)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8084/actuator/health', 'payment-actuator')">Test /actuator/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/payments/health', 'payment-via-gateway')">Test via Gateway</button>
+            <div id="payment-actuator" class="result"></div>
+            <div id="payment-via-gateway" class="result"></div>
+        </div>
+
+        <!-- Analytics Service Test -->
+        <div class="test-section">
+            <h3>Analytics Service (Port 8085)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8085/actuator/health', 'analytics-actuator')">Test /actuator/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/analytics/health', 'analytics-via-gateway')">Test via Gateway</button>
+            <div id="analytics-actuator" class="result"></div>
+            <div id="analytics-via-gateway" class="result"></div>
+        </div>
+
+        <!-- Eureka Server Test -->
+        <div class="test-section">
+            <h3>Eureka Server (Port 8761)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8761/actuator/health', 'eureka-actuator')">Test /actuator/health</button>
+            <button class="test-button" onclick="window.open('http://localhost:8761', '_blank')">Open Eureka Dashboard</button>
+            <div id="eureka-actuator" class="result"></div>
+        </div>
+
+        <!-- Config Server Test -->
+        <div class="test-section">
+            <h3>Config Server (Port 8888)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:8888/actuator/health', 'config-actuator')">Test /actuator/health</button>
+            <div id="config-actuator" class="result"></div>
+        </div>
+
         <!-- Data Endpoints Test -->
         <div class="test-section">
             <h3>Data Endpoints</h3>
@@ -204,6 +237,10 @@
                 { name: 'User Service Health', url: 'http://localhost:8081/api/users/health' },
                 { name: 'Account Service Health', url: 'http://localhost:8082/api/accounts/health' },
                 { name: 'Planning Service Health', url: 'http://localhost:8083/api/planning/health' },
+                { name: 'Payment Service Actuator', url: 'http://localhost:8084/actuator/health' },
+                { name: 'Analytics Service Actuator', url: 'http://localhost:8085/actuator/health' },
+                { name: 'Eureka Server', url: 'http://localhost:8761/actuator/health' },
+                { name: 'Config Server', url: 'http://localhost:8888/actuator/health' },
                 { name: 'User via Gateway', url: 'http://localhost:8080/api/users/health' },
                 { name: 'Account via Gateway', url: 'http://localhost:8080/api/accounts/health' },
                 { name: 'Planning via Gateway', url: 'http://localhost:8080/api/planning/health' }

@@ -1,0 +1,725 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.5)
+
+2025-10-21T15:35:07.927+05:30  INFO 52653 --- [           main] c.finova.eureka.EurekaServerApplication  : Starting EurekaServerApplication v1.0.0 using Java 17.0.16 with PID 52653 (/Users/architgupta/POCs/finova-app-microservices/eureka-server/target/eureka-server-1.0.0.jar started by architgupta in /Users/architgupta/POCs/finova-app-microservices/eureka-server)
+2025-10-21T15:35:07.928+05:30  INFO 52653 --- [           main] c.finova.eureka.EurekaServerApplication  : No active profile set, falling back to 1 default profile: "default"
+2025-10-21T15:35:08.479+05:30  INFO 52653 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=367a07f7-8823-34ba-9c9f-32c4b50a2437
+2025-10-21T15:35:08.738+05:30  INFO 52653 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8761 (http)
+2025-10-21T15:35:08.742+05:30  INFO 52653 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-10-21T15:35:08.742+05:30  INFO 52653 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-10-21T15:35:08.770+05:30  INFO 52653 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-10-21T15:35:08.771+05:30  INFO 52653 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 813 ms
+2025-10-21T15:35:09.193+05:30  INFO 52653 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2025-10-21T15:35:09.194+05:30  INFO 52653 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2025-10-21T15:35:09.279+05:30  INFO 52653 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2025-10-21T15:35:09.279+05:30  INFO 52653 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2025-10-21T15:35:09.414+05:30  INFO 52653 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5fcfca62, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@499ef98e, org.springframework.security.web.context.SecurityContextHolderFilter@4a14c44f, org.springframework.security.web.header.HeaderWriterFilter@6014a9ba, org.springframework.security.web.csrf.CsrfFilter@52d6cd34, org.springframework.security.web.authentication.logout.LogoutFilter@2c58dcb1, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@53b8afea, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6bda1d19, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4492eede, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@24934262, org.springframework.security.web.access.ExceptionTranslationFilter@75a118e6, org.springframework.security.web.access.intercept.AuthorizationFilter@39fa8ad2]
+2025-10-21T15:35:09.728+05:30  WARN 52653 --- [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-10-21T15:35:09.736+05:30  INFO 52653 --- [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2025-10-21T15:35:09.747+05:30  INFO 52653 --- [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2025-10-21T15:35:09.748+05:30  INFO 52653 --- [           main] com.netflix.discovery.DiscoveryClient    : Client configured to neither register nor query for data.
+2025-10-21T15:35:09.751+05:30  INFO 52653 --- [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1761041109751 with initial instances count: 0
+2025-10-21T15:35:09.765+05:30  INFO 52653 --- [           main] c.n.eureka.DefaultEurekaServerContext    : Initializing ...
+2025-10-21T15:35:09.766+05:30 DEBUG 52653 --- [           main] c.n.discovery.endpoint.EndpointUtils     : The availability zone for the given region us-east-1 are [defaultZone]
+2025-10-21T15:35:09.766+05:30  WARN 52653 --- [           main] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2025-10-21T15:35:09.784+05:30  INFO 52653 --- [           main] c.n.e.registry.AbstractInstanceRegistry  : Finished initializing remote region registries. All known remote regions: []
+2025-10-21T15:35:09.785+05:30  INFO 52653 --- [           main] c.n.eureka.DefaultEurekaServerContext    : Initialized
+2025-10-21T15:35:09.789+05:30  INFO 52653 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-10-21T15:35:09.810+05:30  INFO 52653 --- [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application EUREKA-SERVER with eureka with status UP
+2025-10-21T15:35:09.816+05:30  INFO 52653 --- [       Thread-9] o.s.c.n.e.server.EurekaServerBootstrap   : isAws returned false
+2025-10-21T15:35:09.816+05:30  INFO 52653 --- [       Thread-9] o.s.c.n.e.server.EurekaServerBootstrap   : Initialized server context
+2025-10-21T15:35:09.816+05:30  INFO 52653 --- [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Got 1 instances from neighboring DS node
+2025-10-21T15:35:09.816+05:30  INFO 52653 --- [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Renew threshold is: 1
+2025-10-21T15:35:09.816+05:30  INFO 52653 --- [       Thread-9] c.n.e.r.PeerAwareInstanceRegistryImpl    : Changing status to UP
+2025-10-21T15:35:09.819+05:30  INFO 52653 --- [       Thread-9] e.s.EurekaServerInitializerConfiguration : Started Eureka Server
+2025-10-21T15:35:09.820+05:30  INFO 52653 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8761 (http) with context path ''
+2025-10-21T15:35:09.821+05:30  INFO 52653 --- [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8761
+2025-10-21T15:35:09.838+05:30  INFO 52653 --- [           main] c.finova.eureka.EurekaServerApplication  : Started EurekaServerApplication in 2.184 seconds (process running for 2.416)
+2025-10-21T15:35:11.225+05:30  INFO 52653 --- [nio-8761-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-21T15:35:11.225+05:30  INFO 52653 --- [nio-8761-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-10-21T15:35:11.226+05:30  INFO 52653 --- [nio-8761-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-10-21T15:35:11.272+05:30 DEBUG 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : The number of elements in the delta queue is : 0
+2025-10-21T15:35:11.275+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:35:11.275+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:35:11.277+05:30 DEBUG 52653 --- [nio-8761-exec-2] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS_DELTA, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:35:11.289+05:30 DEBUG 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : Fetching applications registry with remote regions: false, Regions argument []
+2025-10-21T15:35:11.289+05:30 DEBUG 52653 --- [nio-8761-exec-3] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:35:11.364+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:35:11.364+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:35:14.980+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:35:14.980+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:35:27.071+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:35:27.071+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:35:30.003+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:35:30.004+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:35:30.004+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:35:30.261+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:35:30.261+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:35:41.311+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:35:41.312+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:35:41.389+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:35:41.389+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:35:45.006+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:35:45.006+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:35:57.098+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:35:57.099+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:36:00.004+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:36:00.004+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:36:00.004+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:36:00.291+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:36:00.291+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:36:09.821+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2025-10-21T15:36:09.823+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:36:11.329+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:36:11.329+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:36:11.401+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:36:11.401+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:36:15.019+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:36:15.019+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:36:27.113+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:36:27.113+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:36:30.007+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:36:30.007+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:36:30.008+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:36:30.315+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:36:30.315+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:36:41.352+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:36:41.353+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:36:41.408+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:36:41.408+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:36:45.029+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:36:45.029+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:36:57.133+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:36:57.133+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:37:00.012+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:37:00.012+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:37:00.012+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:37:00.332+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:37:00.332+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:37:09.825+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 3ms
+2025-10-21T15:37:09.827+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:37:11.365+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:37:11.366+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:37:11.417+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:37:11.417+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:37:15.040+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:37:15.040+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:37:27.175+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:37:27.176+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:37:30.017+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:37:30.017+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:37:30.017+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:37:30.346+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:37:30.346+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:37:41.386+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:37:41.387+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:37:41.424+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:37:41.424+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:37:45.056+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:37:45.057+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:37:57.195+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:37:57.196+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:38:00.022+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:38:00.023+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:38:00.023+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:38:00.363+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:38:00.363+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:38:09.830+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2025-10-21T15:38:09.831+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:38:11.411+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:38:11.411+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:38:11.435+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:38:11.435+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:38:15.074+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:38:15.074+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:38:27.213+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:38:27.213+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:38:30.027+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:38:30.027+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:38:30.034+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : The number of elements in the delta queue is : 0
+2025-10-21T15:38:30.034+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS_DELTA, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:38:30.034+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:38:30.035+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : Fetching applications registry with remote regions: false, Regions argument []
+2025-10-21T15:38:30.035+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:38:30.379+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:38:30.379+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:38:41.428+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:38:41.429+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:38:41.443+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:38:41.443+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:38:45.090+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:38:45.091+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:38:57.232+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:38:57.233+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:39:00.032+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:39:00.032+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:39:00.032+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:39:00.398+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:39:00.398+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:39:09.835+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2025-10-21T15:39:09.836+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:39:11.453+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:39:11.453+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:39:11.459+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:39:11.459+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:39:15.103+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:39:15.103+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:39:27.254+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:39:27.254+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:39:30.037+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:39:30.038+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:39:30.038+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:39:30.416+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:39:30.416+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:39:41.477+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:39:41.477+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:39:41.482+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:39:41.482+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:39:45.116+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:39:45.117+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:39:57.274+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:39:57.274+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:40:00.042+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:40:00.043+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:40:00.043+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:40:00.443+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:40:00.444+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:40:09.840+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2025-10-21T15:40:09.842+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:40:11.492+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:40:11.492+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:40:11.498+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:40:11.498+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:40:15.132+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:40:15.132+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:40:27.296+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:40:27.298+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:40:30.047+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:40:30.047+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:40:30.048+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:40:30.462+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:40:30.462+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:40:41.509+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:40:41.510+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:40:41.517+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:40:41.517+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:40:45.146+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:40:45.147+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:40:57.326+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:40:57.327+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:41:00.049+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:41:00.050+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:41:00.050+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:41:00.479+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:41:00.479+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:41:09.844+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 3ms
+2025-10-21T15:41:09.845+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:41:11.527+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:41:11.528+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:41:11.543+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:41:11.543+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:41:15.161+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:41:15.161+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:41:27.348+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:41:27.349+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:41:30.052+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:41:30.052+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:41:30.052+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : The number of elements in the delta queue is : 0
+2025-10-21T15:41:30.052+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS_DELTA, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:41:30.052+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:41:30.052+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : Fetching applications registry with remote regions: false, Regions argument []
+2025-10-21T15:41:30.052+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:41:30.494+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:41:30.494+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:41:41.541+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:41:41.542+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:41:41.562+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:41:41.562+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:41:45.172+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:41:45.172+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:41:57.364+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:41:57.364+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:42:00.056+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:42:00.056+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:42:00.056+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:42:00.506+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:42:00.506+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:42:09.845+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 0ms
+2025-10-21T15:42:09.845+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:42:11.553+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:42:11.554+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:42:11.575+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:42:11.576+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:42:15.181+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:42:15.181+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:42:27.386+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:42:27.386+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:42:30.061+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:42:30.062+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:42:30.062+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:42:30.516+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:42:30.516+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:42:41.564+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:42:41.564+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:42:41.591+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:42:41.591+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:42:45.191+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:42:45.191+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:42:57.404+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:42:57.406+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:43:00.067+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:43:00.067+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:43:00.067+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:43:00.528+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:43:00.528+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:43:09.850+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2025-10-21T15:43:09.850+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:43:11.577+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:43:11.577+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:43:11.600+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:43:11.600+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:43:15.204+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:43:15.204+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:43:27.423+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:43:27.424+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:43:30.071+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:43:30.071+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:43:30.071+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:43:30.542+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:43:30.542+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:43:41.592+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:43:41.592+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:43:41.617+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:43:41.617+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:43:45.217+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:43:45.218+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:43:57.437+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:43:57.437+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:44:00.073+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:44:00.073+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:44:00.073+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:44:00.557+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:44:00.557+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:44:09.854+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 3ms
+2025-10-21T15:44:09.855+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:44:11.606+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:44:11.606+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:44:11.630+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:44:11.630+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:44:15.234+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:44:15.234+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:44:27.465+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:44:27.465+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:44:30.079+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:44:30.079+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:44:30.079+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : The number of elements in the delta queue is : 0
+2025-10-21T15:44:30.079+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS_DELTA, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:44:30.079+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:44:30.079+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : Fetching applications registry with remote regions: false, Regions argument []
+2025-10-21T15:44:30.080+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:44:30.577+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:44:30.577+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:44:41.617+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:44:41.617+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:44:41.644+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:44:41.644+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:44:45.245+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:44:45.245+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:44:57.489+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:44:57.490+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:45:00.083+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:45:00.083+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:45:00.083+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:45:00.592+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:45:00.592+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:45:09.770+05:30 DEBUG 52653 --- [eerNodesUpdater] c.n.discovery.endpoint.EndpointUtils     : The availability zone for the given region us-east-1 are [defaultZone]
+2025-10-21T15:45:09.771+05:30  WARN 52653 --- [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2025-10-21T15:45:09.859+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2025-10-21T15:45:09.859+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:45:11.629+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:45:11.630+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:45:11.662+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:45:11.662+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:45:15.259+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:45:15.259+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:45:27.507+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:45:27.507+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:45:30.086+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:45:30.086+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:45:30.086+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:45:30.608+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:45:30.608+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:45:41.644+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:45:41.645+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:45:41.678+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:45:41.678+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:45:45.273+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:45:45.273+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:45:57.524+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:45:57.524+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:46:00.091+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:46:00.092+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:46:00.092+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:46:00.621+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:46:00.621+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:46:09.863+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2025-10-21T15:46:09.864+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:46:11.661+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:46:11.661+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:46:11.695+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:46:11.695+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:46:15.289+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:46:15.289+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:46:27.546+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:46:27.547+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:46:30.096+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:46:30.096+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:46:30.096+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:46:30.639+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:46:30.639+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:46:41.673+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:46:41.673+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:46:41.709+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:46:41.710+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:46:45.298+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:46:45.298+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:46:57.559+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:46:57.560+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:47:00.100+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:47:00.100+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:47:00.100+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:47:00.656+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:47:00.656+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:47:09.866+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2025-10-21T15:47:09.867+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:47:11.687+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:47:11.687+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:47:11.727+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:47:11.727+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:47:15.311+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:47:15.311+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:47:27.577+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:47:27.578+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:47:30.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:47:30.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:47:30.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : The number of elements in the delta queue is : 0
+2025-10-21T15:47:30.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS_DELTA, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:47:30.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:47:30.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : Fetching applications registry with remote regions: false, Regions argument []
+2025-10-21T15:47:30.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:47:30.677+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:47:30.678+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:47:41.701+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:47:41.702+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:47:41.739+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:47:41.739+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:47:45.324+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:47:45.324+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:47:57.595+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:47:57.596+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:48:00.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:48:00.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:48:00.105+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:48:00.694+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:48:00.695+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:48:09.872+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2025-10-21T15:48:09.872+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:48:11.713+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:48:11.713+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:48:11.759+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:48:11.759+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:48:15.334+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:48:15.336+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:48:27.614+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:48:27.615+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:48:30.110+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:48:30.111+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:48:30.111+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:48:30.713+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:48:30.713+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:48:41.731+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:48:41.731+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:48:41.772+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:48:41.772+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:48:45.349+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:48:45.349+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:48:57.627+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:48:57.628+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:49:00.115+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:49:00.115+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:49:00.116+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:49:00.729+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:49:00.729+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:49:09.877+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2025-10-21T15:49:09.877+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:49:11.764+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:49:11.764+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:49:11.825+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:49:11.825+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:49:15.364+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:49:15.364+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:49:27.644+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:49:27.645+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:49:30.120+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:49:30.121+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:49:30.121+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:49:30.744+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:49:30.744+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:49:41.778+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:49:41.778+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:49:41.846+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:49:41.847+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:49:45.387+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:49:45.388+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:49:57.664+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:49:57.664+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:50:00.124+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:50:00.124+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:50:00.124+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:50:00.767+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:50:00.767+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:50:09.794+05:30  INFO 52653 --- [hresholdUpdater] c.n.e.r.PeerAwareInstanceRegistryImpl    : Current renewal threshold is : 0
+2025-10-21T15:50:09.883+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2025-10-21T15:50:09.883+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:50:11.838+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:50:11.839+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:50:11.894+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:50:11.894+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:50:15.400+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:50:15.401+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:50:27.685+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:50:27.686+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:50:30.129+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:50:30.130+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:50:30.130+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : The number of elements in the delta queue is : 0
+2025-10-21T15:50:30.131+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS_DELTA, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:50:30.131+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:50:30.131+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : Fetching applications registry with remote regions: false, Regions argument []
+2025-10-21T15:50:30.131+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:50:30.783+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:50:30.783+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:50:41.856+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:50:41.857+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:50:41.931+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:50:41.931+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:50:45.411+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:50:45.411+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:50:57.705+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:50:57.705+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:51:00.134+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:51:00.135+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:51:00.135+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:51:00.796+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:51:00.796+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:51:09.888+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 5ms
+2025-10-21T15:51:09.890+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:51:11.869+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:51:11.870+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:51:11.941+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:51:11.942+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:51:15.426+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:51:15.426+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:51:27.720+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:51:27.720+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:51:30.138+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:51:30.138+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:51:30.138+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:51:30.857+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:51:30.857+05:30  WARN 52653 --- [nio-8761-exec-2] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:51:41.880+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:51:41.881+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:51:41.955+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:51:41.955+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:51:45.442+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:51:45.442+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:51:57.740+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:51:57.741+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:52:00.142+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:52:00.142+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:52:00.142+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:52:00.869+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:52:00.869+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:52:09.893+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2025-10-21T15:52:09.894+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:52:11.890+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:52:11.890+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:52:11.971+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:52:11.971+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:52:15.454+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:52:15.454+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:52:27.759+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:52:27.759+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:52:30.147+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:52:30.148+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:52:30.148+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:52:30.877+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:52:30.877+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:52:41.899+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:52:41.900+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:52:41.988+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:52:41.988+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:52:45.464+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:52:45.464+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:52:57.772+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:52:57.773+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:53:00.150+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:53:00.151+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:53:00.151+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:53:00.891+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:53:00.892+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:53:09.895+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 1ms
+2025-10-21T15:53:09.895+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:53:11.907+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:53:11.907+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:53:12.003+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:53:12.004+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:53:15.477+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:53:15.477+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:53:27.793+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:53:27.793+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:53:30.155+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:53:30.156+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:53:30.156+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : The number of elements in the delta queue is : 0
+2025-10-21T15:53:30.158+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS_DELTA, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:53:30.158+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:53:30.158+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : Fetching applications registry with remote regions: false, Regions argument []
+2025-10-21T15:53:30.158+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:53:30.909+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:53:30.909+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:53:41.928+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:53:41.929+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:53:42.021+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:53:42.021+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:53:45.495+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:53:45.495+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:53:57.813+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:53:57.813+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:54:00.160+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:54:00.161+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:54:00.161+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:54:00.922+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:54:00.923+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:54:09.897+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2025-10-21T15:54:09.898+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:54:11.942+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:54:11.942+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:54:12.035+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:54:12.035+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:54:15.507+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:54:15.507+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:54:27.831+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:54:27.831+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:54:30.161+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:54:30.162+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:54:30.162+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:54:30.933+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:54:30.933+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:54:41.955+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:54:41.955+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:54:42.051+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:54:42.051+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:54:45.524+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:54:45.524+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:54:57.848+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:54:57.848+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:55:00.163+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:55:00.163+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:55:00.163+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:55:00.942+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:55:00.942+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:55:09.775+05:30 DEBUG 52653 --- [eerNodesUpdater] c.n.discovery.endpoint.EndpointUtils     : The availability zone for the given region us-east-1 are [defaultZone]
+2025-10-21T15:55:09.776+05:30  WARN 52653 --- [eerNodesUpdater] c.n.eureka.cluster.PeerEurekaNodes       : The replica size seems to be empty. Check the route 53 DNS Registry
+2025-10-21T15:55:09.902+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 4ms
+2025-10-21T15:55:09.903+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:55:11.969+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:55:11.969+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:55:12.065+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:55:12.066+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:55:15.537+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:55:15.538+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:55:27.871+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:55:27.871+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:55:30.167+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:55:30.168+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:55:30.168+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:55:30.957+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:55:30.957+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:55:41.988+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:55:41.988+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:55:42.091+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:55:42.091+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:55:45.570+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:55:45.571+05:30  WARN 52653 --- [nio-8761-exec-6] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:55:57.901+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:55:57.902+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:56:00.172+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:56:00.172+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:56:00.172+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:56:00.969+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:56:00.969+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:56:09.904+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2025-10-21T15:56:09.905+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:56:11.999+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:56:11.999+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:56:12.107+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:56:12.107+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:56:15.583+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:56:15.584+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:56:27.921+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:56:27.921+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:56:30.177+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:56:30.177+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:56:30.178+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : The number of elements in the delta queue is : 0
+2025-10-21T15:56:30.179+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS_DELTA, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:56:30.179+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:56:30.179+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.e.registry.AbstractInstanceRegistry  : Fetching applications registry with remote regions: false, Regions argument []
+2025-10-21T15:56:30.180+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : New application cache entry {name=ALL_APPS, type=Application, format=JSON} with apps hashcode 
+2025-10-21T15:56:30.982+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:56:30.983+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:56:42.035+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:56:42.035+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:56:42.147+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:56:42.147+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:56:45.603+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:56:45.603+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:56:57.937+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:56:57.937+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:57:00.178+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:57:00.178+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:57:00.178+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:57:01.002+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:57:01.002+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:57:09.907+05:30  INFO 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task with compensationTime 2ms
+2025-10-21T15:57:09.908+05:30 DEBUG 52653 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task
+2025-10-21T15:57:12.053+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:57:12.054+05:30  WARN 52653 --- [nio-8761-exec-4] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:57:12.165+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:57:12.165+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:57:15.620+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:57:15.620+05:30  WARN 52653 --- [nio-8761-exec-3] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:57:27.978+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:57:27.979+05:30  WARN 52653 --- [nio-8761-exec-8] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:57:30.183+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:57:30.183+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:57:30.183+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:57:31.017+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:57:31.018+05:30  WARN 52653 --- [nio-8761-exec-7] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:57:42.069+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:57:42.069+05:30  WARN 52653 --- [nio-8761-exec-5] c.n.eureka.resources.InstanceResource    : Not Found (Renew): USER-SERVICE - 192.168.29.171:user-service:8081
+2025-10-21T15:57:42.177+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:57:42.177+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ANALYTICS-SERVICE - analytics-service:ea508b3d29801f8515cc86745e8800c8
+2025-10-21T15:57:45.633+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:57:45.633+05:30  WARN 52653 --- [nio-8761-exec-9] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PLANNING-SERVICE - 192.168.29.171:planning-service:8083
+2025-10-21T15:57:57.990+05:30  WARN 52653 --- [io-8761-exec-10] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:57:57.990+05:30  WARN 52653 --- [io-8761-exec-10] c.n.eureka.resources.InstanceResource    : Not Found (Renew): PAYMENT-SERVICE - payment-service:00fba5f1e997cccfc59ea5cfb8418307
+2025-10-21T15:58:00.188+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache
+2025-10-21T15:58:00.188+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS_DELTA V2 JSON
+2025-10-21T15:58:00.188+05:30 DEBUG 52653 --- [-CacheFillTimer] c.n.eureka.registry.ResponseCacheImpl    : Updating the client cache from response cache for key : Application ALL_APPS V2 JSON
+2025-10-21T15:58:01.024+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.e.registry.AbstractInstanceRegistry  : DS: Registry: lease doesn't exist, registering resource: ACCOUNT-SERVICE - 192.168.29.171:account-service:8082
+2025-10-21T15:58:01.024+05:30  WARN 52653 --- [nio-8761-exec-1] c.n.eureka.resources.InstanceResource    : Not Found (Renew): ACCOUNT-SERVICE - 192.168.29.171:account-service:8082

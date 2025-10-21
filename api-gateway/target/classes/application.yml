@@ -30,6 +30,18 @@ spring:
           predicates:
             - Path=/api/planning/**,/api/calculators/**
 
+        # Payment Service Routes (Static URLs)
+        - id: payment-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/subscriptions/**,/api/payments/**
+
+        # Analytics Service Routes (Static URLs)
+        - id: analytics-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/analytics/**,/api/reports/**
+
 # Completely disable Eureka for API Gateway to avoid startup issues
 eureka:
   client:
@@ -40,6 +52,10 @@ management:
     web:
       exposure:
         include: health,info,gateway,prometheus
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+        allowed-headers: "*"
   endpoint:
     health:
       show-details: always

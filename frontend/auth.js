@@ -5,7 +5,7 @@
 
 // SSO Configuration
 const SSO_CONFIG = {
-    keycloakUrl: 'http://localhost:8080',
+    keycloakUrl: 'http://localhost:9080',
     realm: 'finova',
     clientId: 'finova-frontend',
     redirectUri: window.location.origin + '/callback.html',
