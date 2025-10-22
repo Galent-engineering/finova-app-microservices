@@ -3,17 +3,29 @@
 // This frontend connects to the microservices via API Gateway
 // ==========================================================================
 
-// Configuration - Direct Services (bypassing API Gateway)
-const API_BASE_URL = 'http://localhost:8082';  // Point to Account Service directly
-const SERVICES = {
+// Configuration - Using API Gateway
+const API_GATEWAY_URL = 'http://localhost:9080';  // API Gateway
+const API_BASE_URL = API_GATEWAY_URL;  // All requests go through gateway
+
+// Direct service URLs (for health checks and fallback)
+const DIRECT_SERVICES = {
     USER: 'http://localhost:8081',
     ACCOUNT: 'http://localhost:8082', 
     PLANNING: 'http://localhost:8083',
     PAYMENT: 'http://localhost:8084',
     ANALYTICS: 'http://localhost:8085',
     EUREKA: 'http://localhost:8761',
-    CONFIG: 'http://localhost:8888',
-    GATEWAY: 'http://localhost:8080'
+    CONFIG: 'http://localhost:8888'
+};
+
+const SERVICES = {
+    USER: API_GATEWAY_URL,
+    ACCOUNT: API_GATEWAY_URL,
+    PLANNING: API_GATEWAY_URL,
+    PAYMENT: API_GATEWAY_URL,
+    ANALYTICS: API_GATEWAY_URL,
+    EUREKA: API_GATEWAY_URL,
+    CONFIG: API_GATEWAY_URL
 };
 
 // Application State
@@ -158,35 +170,43 @@ async function updateServiceStatus() {
     console.log('Checking all service statuses...');
     
     try {
-        // Run all service checks in parallel for faster results (check all microservices)
-        const [userStatus, accountStatus, planningStatus, paymentStatus, analyticsStatus, eurekaStatus, configStatus, gatewayStatus] = await Promise.allSettled([
+        // Run all service checks in parallel for faster results (only check main app services)
+        const [gatewayStatus, userStatus, accountStatus, planningStatus, paymentStatus, analyticsStatus, eurekaStatus, configStatus] = await Promise.allSettled([
+            checkMultipleHealthEndpoints('gateway', [
+                `${API_GATEWAY_URL}/actuator/health`
+            ]),
             checkMultipleHealthEndpoints('users', [
-                `${SERVICES.USER}/actuator/health`
+                `${API_GATEWAY_URL}/api/users/health`,
+                `${DIRECT_SERVICES.USER}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('accounts', [
-                `${SERVICES.ACCOUNT}/actuator/health`
+                `${API_GATEWAY_URL}/api/accounts/health`,
+                `${DIRECT_SERVICES.ACCOUNT}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('planning', [
-                `${SERVICES.PLANNING}/actuator/health`
+                `${API_GATEWAY_URL}/api/planning/health`,
+                `${DIRECT_SERVICES.PLANNING}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('payment', [
-                `${SERVICES.PAYMENT}/actuator/health`
+                `${API_GATEWAY_URL}/api/payments/health`,
+                `${DIRECT_SERVICES.PAYMENT}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('analytics', [
-                `${SERVICES.ANALYTICS}/actuator/health`
+                `${API_GATEWAY_URL}/api/analytics/health`,
+                `${DIRECT_SERVICES.ANALYTICS}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('eureka', [
-                `${SERVICES.EUREKA}/actuator/health`
+                `${API_GATEWAY_URL}/api/eureka/health`,
+                `${DIRECT_SERVICES.EUREKA}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('config', [
-                `${SERVICES.CONFIG}/actuator/health`
-            ]),
-            checkMultipleHealthEndpoints('gateway', [
-                `${SERVICES.GATEWAY}/actuator/health`
+                `${API_GATEWAY_URL}/api/config/health`,
+                `${DIRECT_SERVICES.CONFIG}/actuator/health`
             ])
         ]);
         
         // Extract results from Promise.allSettled
+        const gatewayResult = gatewayStatus.status === 'fulfilled' ? gatewayStatus.value : { status: 'down', error: 'Check failed' };
         const userResult = userStatus.status === 'fulfilled' ? userStatus.value : { status: 'down', error: 'Check failed' };
         const accountResult = accountStatus.status === 'fulfilled' ? accountStatus.value : { status: 'down', error: 'Check failed' };
         const planningResult = planningStatus.status === 'fulfilled' ? planningStatus.value : { status: 'down', error: 'Check failed' };
@@ -196,7 +216,10 @@ async function updateServiceStatus() {
         const configResult = configStatus.status === 'fulfilled' ? configStatus.value : { status: 'down', error: 'Check failed' };
         const gatewayResult = gatewayStatus.status === 'fulfilled' ? gatewayStatus.value : { status: 'down', error: 'Check failed' };
         
-        // Update service cards
+        // Update service cards (add gateway card if element exists)
+        if (document.getElementById('gateway-service-card')) {
+            updateServiceCard('gateway-service-card', gatewayResult);
+        }
         updateServiceCard('user-service-card', userResult);
         updateServiceCard('account-service-card', accountResult);
         updateServiceCard('planning-service-card', planningResult);
@@ -208,6 +231,7 @@ async function updateServiceStatus() {
         
         // Update global status
         servicesStatus = {
+            gateway: gatewayResult.status === 'up',
             user: userResult.status === 'up',
             account: accountResult.status === 'up',
             planning: planningResult.status === 'up',
@@ -236,6 +260,12 @@ async function updateServiceStatus() {
             if (statusElement) {
                 statusElement.innerHTML = '<i class="fas fa-check-circle"></i> All Services Online';
                 statusElement.className = 'service-status all-up';
+            } else if (gatewayResult.status === 'up') {
+                statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Gateway Online, Some Services Down';
+                statusElement.className = 'service-status partial-up';
+            } else {
+                statusElement.innerHTML = '<i class="fas fa-times-circle"></i> Gateway Offline';
+                statusElement.className = 'service-status all-down';
             }
         } else if (allBusinessServicesUp) {
             const statusElement = document.getElementById('service-status');

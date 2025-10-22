@@ -73,11 +73,13 @@
 
         <!-- API Gateway Test -->
         <div class="test-section">
-            <h3>API Gateway (Port 8080)</h3>
-            <button class="test-button" onclick="testEndpoint('http://localhost:8080/actuator/health', 'gateway-actuator')">Test /actuator/health</button>
-            <button class="test-button" onclick="testEndpoint('http://localhost:8080/health', 'gateway-health')">Test /health</button>
+            <h3>API Gateway (Port 9080)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:9080/actuator/health', 'gateway-actuator')">Test /actuator/health</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:9080/fallback/general', 'gateway-fallback')">Test Fallback</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:9080/actuator/gateway/routes', 'gateway-routes')">Test Routes</button>
             <div id="gateway-actuator" class="result"></div>
-            <div id="gateway-health" class="result"></div>
+            <div id="gateway-fallback" class="result"></div>
+            <div id="gateway-routes" class="result"></div>
         </div>
 
         <!-- User Service Test -->
@@ -85,7 +87,7 @@
             <h3>User Service (Port 8081)</h3>
             <button class="test-button" onclick="testEndpoint('http://localhost:8081/api/users/health', 'user-health')">Test /api/users/health</button>
             <button class="test-button" onclick="testEndpoint('http://localhost:8081/actuator/health', 'user-actuator')">Test /actuator/health</button>
-            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/users/health', 'user-via-gateway')">Test via Gateway</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:9080/api/users/health', 'user-via-gateway')">Test via Gateway</button>
             <div id="user-health" class="result"></div>
             <div id="user-actuator" class="result"></div>
             <div id="user-via-gateway" class="result"></div>
@@ -96,7 +98,7 @@
             <h3>Account Service (Port 8082)</h3>
             <button class="test-button" onclick="testEndpoint('http://localhost:8082/api/accounts/health', 'account-health')">Test /api/accounts/health</button>
             <button class="test-button" onclick="testEndpoint('http://localhost:8082/actuator/health', 'account-actuator')">Test /actuator/health</button>
-            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/accounts/health', 'account-via-gateway')">Test via Gateway</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:9080/api/accounts/health', 'account-via-gateway')">Test via Gateway</button>
             <div id="account-health" class="result"></div>
             <div id="account-actuator" class="result"></div>
             <div id="account-via-gateway" class="result"></div>
@@ -107,7 +109,7 @@
             <h3>Planning Service (Port 8083)</h3>
             <button class="test-button" onclick="testEndpoint('http://localhost:8083/api/planning/health', 'planning-health')">Test /api/planning/health</button>
             <button class="test-button" onclick="testEndpoint('http://localhost:8083/actuator/health', 'planning-actuator')">Test /actuator/health</button>
-            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/planning/health', 'planning-via-gateway')">Test via Gateway</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:9080/api/planning/health', 'planning-via-gateway')">Test via Gateway</button>
             <div id="planning-health" class="result"></div>
             <div id="planning-actuator" class="result"></div>
             <div id="planning-via-gateway" class="result"></div>
@@ -148,10 +150,10 @@
 
         <!-- Data Endpoints Test -->
         <div class="test-section">
-            <h3>Data Endpoints</h3>
-            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/dashboard/1', 'dashboard-data')">Test Dashboard Data</button>
-            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/accounts/user/1', 'user-accounts')">Test User Accounts</button>
-            <button class="test-button" onclick="testEndpoint('http://localhost:8080/api/planning/retirement-plan/1', 'retirement-plan')">Test Retirement Plan</button>
+            <h3>Data Endpoints (via Gateway)</h3>
+            <button class="test-button" onclick="testEndpoint('http://localhost:9080/api/dashboard/1', 'dashboard-data')">Test Dashboard Data</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:9080/api/accounts/user/1', 'user-accounts')">Test User Accounts</button>
+            <button class="test-button" onclick="testEndpoint('http://localhost:9080/api/planning/retirement-plan/1', 'retirement-plan')">Test Retirement Plan</button>
             <div id="dashboard-data" class="result"></div>
             <div id="user-accounts" class="result"></div>
             <div id="retirement-plan" class="result"></div>

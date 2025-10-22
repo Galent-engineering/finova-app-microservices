@@ -6,10 +6,11 @@ A modern, responsive web frontend for the Finova Retirement Planning application
 
 This frontend application provides a comprehensive retirement planning dashboard that connects to multiple microservices:
 
+- **Keycloak** (Port 8080) - Identity and access management
 - **User Service** (Port 8081) - User authentication and profiles
 - **Account Service** (Port 8082) - Retirement accounts and contributions
 - **Planning Service** (Port 8083) - Planning calculations and strategies
-- **API Gateway** (Port 8080) - Single entry point for all services
+- **API Gateway** (Port 9080) - Single entry point for all services
 
 ## Features
 

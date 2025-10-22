@@ -146,6 +146,18 @@
                 <h2>System Information</h2>
                 <p class="system-info-description">Microservices status - for technical monitoring</p>
                 <div class="service-status-grid">
+                    <div class="service-card" id="gateway-service-card">
+                        <div class="service-header">
+                            <i class="fas fa-route"></i>
+                            <h3>API Gateway</h3>
+                        </div>
+                        <div class="service-status-indicator">
+                            <span class="status-dot loading"></span>
+                            <span class="status-text">Checking...</span>
+                        </div>
+                        <div class="service-port">Port: 9080</div>
+                    </div>
+
                     <div class="service-card" id="user-service-card">
                         <div class="service-header">
                             <i class="fas fa-user"></i>
@@ -250,7 +262,7 @@
     <div id="accounts-section" class="section">
         <div class="main-content">
             <h1>Account Management</h1>
-            <div class="data-source">Data from: Account Service (localhost:8082)</div>
+            <div class="data-source">Data from: Account Service via API Gateway (localhost:9080)</div>
             
             <!-- Account Management Tabs -->
             <div class="account-tabs">
@@ -378,7 +390,7 @@
     <div id="planning-section" class="section">
         <div class="main-content">
             <h1>Planning Tools</h1>
-            <div class="data-source">Data from: Planning Service (localhost:8083)</div>
+            <div class="data-source">Data from: Planning Service via API Gateway (localhost:9080)</div>
             
             <!-- Planning Tools Tabs -->
             <div class="planning-tabs">
@@ -506,7 +518,7 @@
                     <h3>Architecture Overview</h3>
                     <p>This application uses a microservices architecture with:</p>
                     <ul>
-                        <li><strong>API Gateway:</strong> localhost:8080 (Single entry point)</li>
+                        <li><strong>API Gateway:</strong> localhost:9080 (Single entry point)</li>
                         <li><strong>User Service:</strong> localhost:8081 (Authentication & profiles)</li>
                         <li><strong>Account Service:</strong> localhost:8082 (Accounts & contributions)</li>
                         <li><strong>Planning Service:</strong> localhost:8083 (Calculators & planning)</li>

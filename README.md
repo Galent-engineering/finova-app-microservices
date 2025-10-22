@@ -3,59 +3,88 @@
 ## Overview
 This project is a microservices-based retirement planning application that helps users manage their retirement accounts, contributions, and financial planning.
 
-## Architecture
+## Current Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                Frontend (HTML/JS/CSS)                       │
-│              http://localhost:8000                          │
-├─────────────────────────────────────────────────────────────┤
-│                    API Gateway (8080)                       │
-├─────────────────────────────────────────────────────────────┤
-│  User Service    │  Account Service  │  Planning Service    │
-│     (8081)       │      (8082)       │       (8083)         │
-├─────────────────────────────────────────────────────────────┤
-│           Service Discovery - Eureka (8761)                 │
-│           Configuration Server (8888)                       │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        Frontend (HTML/JS/CSS)                               │
+│                         http://localhost:8000                               │
+│              ↓ All API requests go through Gateway ↓                        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                        API Gateway (9080) ⭐ Enhanced                       │
+│    • Service Discovery  • Load Balancing  • CORS  • Rate Limiting           │
+│    • Request/Response Headers  • Fallback Responses  • Health Monitoring    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│    Keycloak         │  User Service    │  Account Service  │  Planning       │
+│   Auth Server       │     (8081)       │      (8082)       │  Service        │
+│     (8080)          │                  │                   │   (8083)        │
+├─────────────────────────────────────────────────────────────────────────────┤
+│              Service Discovery - Eureka (8761)                              │
+│              Configuration Server (8888)                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 🔄 **Request Flow:**
+```
+Browser → API Gateway (9080) → Service Discovery → Microservice (8081-8083)
+   ↑                ↓
+   └── Fallback ←───┘ (if service down)
 ```
 
 ## Services
 
-### 1. **Eureka Server** (Port: 8761)
+### 1. **Keycloak Auth Server** (Port: 8080) 🔐
+- OAuth 2.0 / OpenID Connect authentication
+- User management and identity provider
+- SSO (Single Sign-On) capabilities
+- Role-based access control
+
+### 2. **API Gateway** (Port: 9080) ⭐ **Enhanced**
+- **Single entry point** for all client requests
+- **Dynamic service discovery** via Eureka
+- **Load balancing** with automatic failover
+- **CORS handling** for browser compatibility
+- **Rate limiting** (Redis-based, optional)
+- **Request/response headers** for tracking
+- **Fallback responses** when services unavailable
+- **Health monitoring** and route inspection
+
+### 3. **Eureka Server** (Port: 8761)
 - Service discovery and registration
 - Monitors health of all microservices
+- Auto-discovery for dynamic scaling
 
-### 2. **API Gateway** (Port: 8080)
-- Single entry point for client requests
-- Load balancing and routing
-- Security and authentication
-
-### 3. **Config Server** (Port: 8888)
+### 4. **Config Server** (Port: 8888)
 - Centralized configuration management
 - Environment-specific configurations
+- Hot reload of configurations
 
-### 4. **User Service** (Port: 8081)
+### 5. **User Service** (Port: 8081)
 - User authentication and authorization
 - User profile management
 - JWT token generation and validation
+- Keycloak integration
 
-### 5. **Account Service** (Port: 8082)
+### 6. **Account Service** (Port: 8082)
 - Retirement account management
 - Contribution tracking
 - Income source management
+- Financial data aggregation
 
-### 6. **Planning Service** (Port: 8083)
+### 7. **Planning Service** (Port: 8083)
 - Retirement calculators
 - Financial planning tools
 - Investment strategy recommendations
+- Projection algorithms
 
-### 7. **Frontend Application** (Port: 8000)
-- Modern, responsive web interface
-- Interactive retirement planning dashboard
-- Real-time service monitoring
-- Account and contribution management
-- Planning tools and calculators
+### 8. **Frontend Application** (Port: 8000)
+- **Modern, responsive web interface**
+- **Routes through API Gateway (9080)**
+- **Interactive retirement planning dashboard**
+- **Real-time service monitoring** (including gateway)
+- **Account and contribution management**
+- **Planning tools and calculators**
+- **CORS-enabled** for gateway integration
 
 ## Technology Stack
 
@@ -140,12 +169,48 @@ docker-compose up -d
 
 ### Service URLs
 - **🌐 Frontend Application**: http://localhost:8000
-- **Eureka Dashboard**: http://localhost:8761
-- **API Gateway**: http://localhost:8080
-- **User Service**: http://localhost:8081
-- **Account Service**: http://localhost:8082
-- **Planning Service**: http://localhost:8083
-- **Config Server**: http://localhost:8888
+- **⭐ API Gateway (Enhanced)**: http://localhost:9080
+  - Health: http://localhost:9080/actuator/health
+  - Routes: http://localhost:9080/actuator/gateway/routes
+  - Fallbacks: http://localhost:9080/fallback/
+- **🔐 Keycloak Auth Server**: http://localhost:8080
+- **📡 Eureka Dashboard**: http://localhost:8761
+- **⚙️ Config Server**: http://localhost:8888
+- **👤 User Service**: http://localhost:8081
+- **💰 Account Service**: http://localhost:8082  
+- **📊 Planning Service**: http://localhost:8083
+
+## 🚀 API Gateway Features (NEW)
+
+### ✅ **Production-Ready Capabilities**
+- **Service Discovery Integration**: Auto-discovers services via Eureka
+- **Load Balancing**: `lb://service-name` protocol for automatic load distribution
+- **CORS Support**: Configured for `http://localhost:8000` (frontend)
+- **Health Monitoring**: `/actuator/health` and `/actuator/gateway/routes`
+- **Request/Response Headers**: Custom headers for tracking and debugging
+- **Fallback Responses**: Graceful degradation when services are unavailable
+
+### 🔧 **Development Features**  
+- **Route Inspection**: View all active routes at `/actuator/gateway/routes`
+- **Service-Specific Fallbacks**: Different responses per service type
+- **Enhanced CORS**: Supports development and production origins
+- **Request Tracking**: `X-Request-Source` and `X-Gateway-Response` headers
+
+### 🌐 **Frontend Integration**
+The frontend now routes **all API requests** through the gateway:
+```javascript
+// Before: Direct service calls
+fetch('http://localhost:8082/api/accounts/user/1')
+
+// After: Through API Gateway  
+fetch('http://localhost:9080/api/accounts/user/1')
+```
+
+### 📊 **Monitoring & Testing**
+- **Service Tester**: http://localhost:8000/test-services.html
+- **Gateway Health**: http://localhost:9080/actuator/health  
+- **Active Routes**: http://localhost:9080/actuator/gateway/routes
+- **Fallback Testing**: http://localhost:9080/fallback/user-service
 
 ## Frontend Features
 
@@ -177,8 +242,10 @@ docker-compose up -d
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
 - **Progressive Enhancement**: Graceful fallbacks when services are unavailable
 - **Error Handling**: User-friendly error messages and recovery options
-- **Direct Service Communication**: Automatic failover from API Gateway to direct service calls
-- **Cross-Origin Support**: CORS-enabled for development flexibility
+- **API Gateway Integration**: All requests routed through enhanced gateway (port 9080)
+- **Intelligent Fallback**: Gateway provides fallback responses when services are down
+- **Service Discovery**: Dynamic service routing via Eureka integration
+- **Cross-Origin Support**: CORS-enabled for development and production
 
 ### 🔧 Development Tools
 - **Service Connection Tester**: `test-services.html` for debugging connectivity
