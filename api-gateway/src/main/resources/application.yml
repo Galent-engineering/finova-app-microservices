@@ -36,45 +36,20 @@ spring:
           uri: lb://planning-service
           predicates:
             - Path=/api/planning/**,/api/calculators/**
-          filters:
-            - AddRequestHeader=X-Request-Source, api-gateway
-            - AddResponseHeader=X-Response-Time, gateway-response
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-        - AddResponseHeader=X-Gateway-Response, api-gateway
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOriginPatterns: "*"
-            allowedOrigins:
-              - "http://localhost:8000"
-              - "http://127.0.0.1:8000"
-              - "http://localhost:3000"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-              - PATCH
-              - HEAD
-            allowedHeaders:
-              - "*"
-              - "Content-Type"
-              - "Authorization"
-              - "X-Requested-With"
-              - "Accept"
-              - "Origin"
-              - "Access-Control-Request-Method"
-              - "Access-Control-Request-Headers"
-            exposedHeaders:
-              - "X-Gateway-Response"
-              - "X-Response-Time"
-              - "X-Request-Source"
-            allowCredentials: true
-            maxAge: 3600
 
-# Enable Eureka for service discovery
+        # Payment Service Routes (Static URLs)
+        - id: payment-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/subscriptions/**,/api/payments/**
+
+        # Analytics Service Routes (Static URLs)
+        - id: analytics-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/analytics/**,/api/reports/**
+
+# Completely disable Eureka for API Gateway to avoid startup issues
 eureka:
   client:
     enabled: true
@@ -94,16 +69,9 @@ management:
       exposure:
         include: health,info,gateway,prometheus
       cors:
-        allowed-origins:
-          - "http://localhost:8000"
-          - "http://127.0.0.1:8000"
-        allowed-methods:
-          - GET
-          - POST
-          - OPTIONS
+        allowed-origins: "*"
+        allowed-methods: "*"
         allowed-headers: "*"
-        allow-credentials: true
-        max-age: 3600
   endpoint:
     health:
       show-details: always

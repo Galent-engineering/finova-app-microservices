@@ -25,8 +25,8 @@ spring:
       resourceserver:
         jwt:
           # Keycloak configuration for demo
-          issuer-uri: http://localhost:8080/realms/finova
-          jwk-set-uri: http://localhost:8080/realms/finova/protocol/openid-connect/certs
+          issuer-uri: http://localhost:9080/realms/finova
+          jwk-set-uri: http://localhost:9080/realms/finova/protocol/openid-connect/certs
 
 eureka:
   client:

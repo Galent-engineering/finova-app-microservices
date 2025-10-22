@@ -30,6 +30,8 @@
             <li><a href="#" class="nav-link active" data-section="dashboard">Dashboard</a></li>
             <li><a href="#" class="nav-link" data-section="accounts">Accounts</a></li>
             <li><a href="#" class="nav-link" data-section="planning">Planning Tools</a></li>
+            <li><a href="#" class="nav-link" data-section="billing">Manage Billing</a></li>
+            <li><a href="#" class="nav-link" data-section="analytics">Analytics</a></li>
             <li><a href="#" class="nav-link" data-section="services">Service Status</a></li>
         </ul>
     </nav>
@@ -109,6 +111,24 @@
                             <p>Use calculators and planning resources</p>
                         </div>
                     </a>
+                    <a href="payments.html" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="action-content">
+                            <h3>Manage Billing</h3>
+                            <p>Handle advisory subscription payments</p>
+                        </div>
+                    </a>
+                    <a href="analytics.html" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="action-content">
+                            <h3>View Analytics</h3>
+                            <p>Comprehensive performance insights and reports</p>
+                        </div>
+                    </a>
                     <a href="#" class="action-card" onclick="switchToSection('services')">
                         <div class="action-icon">
                             <i class="fas fa-cog"></i>
@@ -172,6 +192,66 @@
                             <span class="status-text">Checking...</span>
                         </div>
                         <div class="service-port">Port: 8083</div>
+                    </div>
+
+                    <div class="service-card" id="payment-service-card">
+                        <div class="service-header">
+                            <i class="fas fa-credit-card"></i>
+                            <h3>Payment Service</h3>
+                        </div>
+                        <div class="service-status-indicator">
+                            <span class="status-dot loading"></span>
+                            <span class="status-text">Checking...</span>
+                        </div>
+                        <div class="service-port">Port: 8084</div>
+                    </div>
+
+                    <div class="service-card" id="analytics-service-card">
+                        <div class="service-header">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Analytics Service</h3>
+                        </div>
+                        <div class="service-status-indicator">
+                            <span class="status-dot loading"></span>
+                            <span class="status-text">Checking...</span>
+                        </div>
+                        <div class="service-port">Port: 8085</div>
+                    </div>
+
+                    <div class="service-card" id="eureka-service-card">
+                        <div class="service-header">
+                            <i class="fas fa-project-diagram"></i>
+                            <h3>Eureka Server</h3>
+                        </div>
+                        <div class="service-status-indicator">
+                            <span class="status-dot loading"></span>
+                            <span class="status-text">Checking...</span>
+                        </div>
+                        <div class="service-port">Port: 8761</div>
+                    </div>
+
+                    <div class="service-card" id="config-service-card">
+                        <div class="service-header">
+                            <i class="fas fa-cogs"></i>
+                            <h3>Config Server</h3>
+                        </div>
+                        <div class="service-status-indicator">
+                            <span class="status-dot loading"></span>
+                            <span class="status-text">Checking...</span>
+                        </div>
+                        <div class="service-port">Port: 8888</div>
+                    </div>
+
+                    <div class="service-card" id="api-gateway-card">
+                        <div class="service-header">
+                            <i class="fas fa-door-open"></i>
+                            <h3>API Gateway</h3>
+                        </div>
+                        <div class="service-status-indicator">
+                            <span class="status-dot loading"></span>
+                            <span class="status-text">Checking...</span>
+                        </div>
+                        <div class="service-port">Port: 8080</div>
                     </div>
                 </div>
             </div>
@@ -415,6 +495,20 @@
         </div>
     </div>
 
+    <!-- Billing Section -->
+    <div id="billing-section" class="section">
+        <div class="main-content">
+            <iframe src="payments.html" style="width: 100%; height: calc(100vh - 200px); border: none;"></iframe>
+        </div>
+    </div>
+
+    <!-- Analytics Section -->
+    <div id="analytics-section" class="section">
+        <div class="main-content">
+            <iframe src="analytics.html" style="width: 100%; height: calc(100vh - 200px); border: none;"></iframe>
+        </div>
+    </div>
+
     <!-- Services Section -->
     <div id="services-section" class="section">
         <div class="main-content">
@@ -428,7 +522,11 @@
                         <li><strong>User Service:</strong> localhost:8081 (Authentication & profiles)</li>
                         <li><strong>Account Service:</strong> localhost:8082 (Accounts & contributions)</li>
                         <li><strong>Planning Service:</strong> localhost:8083 (Calculators & planning)</li>
+                        <li><strong>Analytics Service:</strong> localhost:8084 (Analytics & reporting)</li>
+                        <li><strong>Payment Service:</strong> localhost:8085 (Payment processing & billing)</li>
                         <li><strong>Eureka Server:</strong> localhost:8761 (Service discovery)</li>
+                        <li><strong>Config Server:</strong> localhost:8888 (Centralized configuration)</li>
+                        <li><strong>Keycloak (SSO):</strong> localhost:9080 (Identity & access management)</li>
                     </ul>
                 </div>
                 
@@ -440,6 +538,13 @@
                             <div class="endpoint">GET /api/users/health</div>
                             <div class="endpoint">GET /api/accounts/health</div>
                             <div class="endpoint">GET /api/planning/health</div>
+                            <div class="endpoint">GET /api/payments/health</div>
+                            <div class="endpoint">GET /api/analytics/health</div>
+                        </div>
+                        <div class="endpoint-group">
+                            <h4>Infrastructure Services</h4>
+                            <div class="endpoint">GET http://localhost:8761/actuator/health</div>
+                            <div class="endpoint">GET http://localhost:8888/actuator/health</div>
                         </div>
                     </div>
                 </div>

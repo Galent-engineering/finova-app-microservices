@@ -12,21 +12,32 @@ const DIRECT_SERVICES = {
     USER: 'http://localhost:8081',
     ACCOUNT: 'http://localhost:8082', 
     PLANNING: 'http://localhost:8083',
-    GATEWAY: API_GATEWAY_URL
+    PAYMENT: 'http://localhost:8084',
+    ANALYTICS: 'http://localhost:8085',
+    EUREKA: 'http://localhost:8761',
+    CONFIG: 'http://localhost:8888'
 };
 
-// Gateway routes (all API requests use these)
 const SERVICES = {
     USER: API_GATEWAY_URL,
-    ACCOUNT: API_GATEWAY_URL, 
-    PLANNING: API_GATEWAY_URL
+    ACCOUNT: API_GATEWAY_URL,
+    PLANNING: API_GATEWAY_URL,
+    PAYMENT: API_GATEWAY_URL,
+    ANALYTICS: API_GATEWAY_URL,
+    EUREKA: API_GATEWAY_URL,
+    CONFIG: API_GATEWAY_URL
 };
 
 // Application State
 let servicesStatus = {
     user: false,
     account: false,
-    planning: false
+    planning: false,
+    payment: false,
+    analytics: false,
+    eureka: false,
+    config: false,
+    gateway: false
 };
 
 // DOM Elements
@@ -159,8 +170,8 @@ async function updateServiceStatus() {
     console.log('Checking all service statuses...');
     
     try {
-        // Check gateway first, then direct services as fallback
-        const [gatewayStatus, userStatus, accountStatus, planningStatus] = await Promise.allSettled([
+        // Run all service checks in parallel for faster results (only check main app services)
+        const [gatewayStatus, userStatus, accountStatus, planningStatus, paymentStatus, analyticsStatus, eurekaStatus, configStatus] = await Promise.allSettled([
             checkMultipleHealthEndpoints('gateway', [
                 `${API_GATEWAY_URL}/actuator/health`
             ]),
@@ -175,6 +186,22 @@ async function updateServiceStatus() {
             checkMultipleHealthEndpoints('planning', [
                 `${API_GATEWAY_URL}/api/planning/health`,
                 `${DIRECT_SERVICES.PLANNING}/actuator/health`
+            ]),
+            checkMultipleHealthEndpoints('payment', [
+                `${API_GATEWAY_URL}/api/payments/health`,
+                `${DIRECT_SERVICES.PAYMENT}/actuator/health`
+            ]),
+            checkMultipleHealthEndpoints('analytics', [
+                `${API_GATEWAY_URL}/api/analytics/health`,
+                `${DIRECT_SERVICES.ANALYTICS}/actuator/health`
+            ]),
+            checkMultipleHealthEndpoints('eureka', [
+                `${API_GATEWAY_URL}/api/eureka/health`,
+                `${DIRECT_SERVICES.EUREKA}/actuator/health`
+            ]),
+            checkMultipleHealthEndpoints('config', [
+                `${API_GATEWAY_URL}/api/config/health`,
+                `${DIRECT_SERVICES.CONFIG}/actuator/health`
             ])
         ]);
         
@@ -183,6 +210,11 @@ async function updateServiceStatus() {
         const userResult = userStatus.status === 'fulfilled' ? userStatus.value : { status: 'down', error: 'Check failed' };
         const accountResult = accountStatus.status === 'fulfilled' ? accountStatus.value : { status: 'down', error: 'Check failed' };
         const planningResult = planningStatus.status === 'fulfilled' ? planningStatus.value : { status: 'down', error: 'Check failed' };
+        const paymentResult = paymentStatus.status === 'fulfilled' ? paymentStatus.value : { status: 'down', error: 'Check failed' };
+        const analyticsResult = analyticsStatus.status === 'fulfilled' ? analyticsStatus.value : { status: 'down', error: 'Check failed' };
+        const eurekaResult = eurekaStatus.status === 'fulfilled' ? eurekaStatus.value : { status: 'down', error: 'Check failed' };
+        const configResult = configStatus.status === 'fulfilled' ? configStatus.value : { status: 'down', error: 'Check failed' };
+        const gatewayResult = gatewayStatus.status === 'fulfilled' ? gatewayStatus.value : { status: 'down', error: 'Check failed' };
         
         // Update service cards (add gateway card if element exists)
         if (document.getElementById('gateway-service-card')) {
@@ -191,22 +223,42 @@ async function updateServiceStatus() {
         updateServiceCard('user-service-card', userResult);
         updateServiceCard('account-service-card', accountResult);
         updateServiceCard('planning-service-card', planningResult);
+        updateServiceCard('payment-service-card', paymentResult);
+        updateServiceCard('analytics-service-card', analyticsResult);
+        updateServiceCard('eureka-service-card', eurekaResult);
+        updateServiceCard('config-service-card', configResult);
+        updateServiceCard('api-gateway-card', gatewayResult);
         
         // Update global status
         servicesStatus = {
             gateway: gatewayResult.status === 'up',
             user: userResult.status === 'up',
             account: accountResult.status === 'up',
-            planning: planningResult.status === 'up'
+            planning: planningResult.status === 'up',
+            payment: paymentResult.status === 'up',
+            analytics: analyticsResult.status === 'up',
+            eureka: eurekaResult.status === 'up',
+            config: configResult.status === 'up',
+            gateway: gatewayResult.status === 'up'
         };
         
         updateGlobalServiceStatus();
         
-        // Update the header status with gateway awareness
-        const statusElement = document.getElementById('service-status');
-        if (statusElement) {
-            if (gatewayResult.status === 'up' && userResult.status === 'up' && accountResult.status === 'up' && planningResult.status === 'up') {
-                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> Gateway + All Services Online';
+        // Immediately update the header status if all main business services are up
+        const allBusinessServicesUp = userResult.status === 'up' && 
+                              accountResult.status === 'up' && 
+                              planningResult.status === 'up' &&
+                              paymentResult.status === 'up' &&
+                              analyticsResult.status === 'up';
+        
+        const allInfraServicesUp = eurekaResult.status === 'up' &&
+                                   configResult.status === 'up' &&
+                                   gatewayResult.status === 'up';
+        
+        if (allBusinessServicesUp && allInfraServicesUp) {
+            const statusElement = document.getElementById('service-status');
+            if (statusElement) {
+                statusElement.innerHTML = '<i class="fas fa-check-circle"></i> All Services Online';
                 statusElement.className = 'service-status all-up';
             } else if (gatewayResult.status === 'up') {
                 statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Gateway Online, Some Services Down';
@@ -214,6 +266,12 @@ async function updateServiceStatus() {
             } else {
                 statusElement.innerHTML = '<i class="fas fa-times-circle"></i> Gateway Offline';
                 statusElement.className = 'service-status all-down';
+            }
+        } else if (allBusinessServicesUp) {
+            const statusElement = document.getElementById('service-status');
+            if (statusElement) {
+                statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Business Services Online (Infrastructure Partial)';
+                statusElement.className = 'service-status partial-up';
             }
         }
         
