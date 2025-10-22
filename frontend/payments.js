@@ -109,7 +109,7 @@ function displayNoSubscription() {
             <i class="fas fa-inbox" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
             <h3 style="color: #475569; margin-bottom: 0.5rem;">No Active Subscription</h3>
             <p style="color: #64748b; margin-bottom: 1.5rem;">You don't have an active advisory subscription yet.</p>
-            <button class="btn btn-primary" onclick="window.location.href='index.html'">Explore Advisory Plans</button>
+            <button class="btn btn-primary" onclick="window.top.location.href='index.html'">Explore Advisory Plans</button>
         </div>
     `;
 }
