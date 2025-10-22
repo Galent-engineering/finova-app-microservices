@@ -4,7 +4,7 @@
 // ==========================================================================
 
 // Configuration - Using API Gateway
-const API_GATEWAY_URL = 'http://localhost:9080';  // API Gateway
+const API_GATEWAY_URL = 'http://localhost:8080';  // API Gateway (NOT Keycloak!)
 const API_BASE_URL = API_GATEWAY_URL;  // All requests go through gateway
 
 // Direct service URLs (for health checks and fallback)
@@ -171,36 +171,30 @@ async function updateServiceStatus() {
     
     try {
         // Run all service checks in parallel for faster results (only check main app services)
+        // Check services directly since gateway routes don't proxy health endpoints
         const [gatewayStatus, userStatus, accountStatus, planningStatus, paymentStatus, analyticsStatus, eurekaStatus, configStatus] = await Promise.allSettled([
             checkMultipleHealthEndpoints('gateway', [
                 `${API_GATEWAY_URL}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('users', [
-                `${API_GATEWAY_URL}/api/users/health`,
                 `${DIRECT_SERVICES.USER}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('accounts', [
-                `${API_GATEWAY_URL}/api/accounts/health`,
                 `${DIRECT_SERVICES.ACCOUNT}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('planning', [
-                `${API_GATEWAY_URL}/api/planning/health`,
                 `${DIRECT_SERVICES.PLANNING}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('payment', [
-                `${API_GATEWAY_URL}/api/payments/health`,
                 `${DIRECT_SERVICES.PAYMENT}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('analytics', [
-                `${API_GATEWAY_URL}/api/analytics/health`,
                 `${DIRECT_SERVICES.ANALYTICS}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('eureka', [
-                `${API_GATEWAY_URL}/api/eureka/health`,
                 `${DIRECT_SERVICES.EUREKA}/actuator/health`
             ]),
             checkMultipleHealthEndpoints('config', [
-                `${API_GATEWAY_URL}/api/config/health`,
                 `${DIRECT_SERVICES.CONFIG}/actuator/health`
             ])
         ]);
@@ -214,7 +208,6 @@ async function updateServiceStatus() {
         const analyticsResult = analyticsStatus.status === 'fulfilled' ? analyticsStatus.value : { status: 'down', error: 'Check failed' };
         const eurekaResult = eurekaStatus.status === 'fulfilled' ? eurekaStatus.value : { status: 'down', error: 'Check failed' };
         const configResult = configStatus.status === 'fulfilled' ? configStatus.value : { status: 'down', error: 'Check failed' };
-        const gatewayResult = gatewayStatus.status === 'fulfilled' ? gatewayStatus.value : { status: 'down', error: 'Check failed' };
         
         // Update service cards (add gateway card if element exists)
         if (document.getElementById('gateway-service-card')) {
@@ -238,8 +231,7 @@ async function updateServiceStatus() {
             payment: paymentResult.status === 'up',
             analytics: analyticsResult.status === 'up',
             eureka: eurekaResult.status === 'up',
-            config: configResult.status === 'up',
-            gateway: gatewayResult.status === 'up'
+            config: configResult.status === 'up'
         };
         
         updateGlobalServiceStatus();

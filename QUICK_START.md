@@ -14,6 +14,7 @@ Make sure these ports are available:
 - 8080 (API Gateway)
 - 8081-8085 (Microservices)
 - 8761 (Eureka)
+- 8888 (Config Server)
 - 9080 (Keycloak)
 - 27017 (MongoDB)
 
@@ -96,9 +97,20 @@ mvn clean install -DskipTests
 
 ## Step 4: Start Microservices (In Order)
 
-Open **7 separate terminal windows/tabs** and run these commands **in order**:
+Open **8 separate terminal windows/tabs** and run these commands **in order**:
 
-### Terminal 1 - Eureka Server (Service Discovery)
+### Terminal 1 - Config Server (Configuration Management)
+```bash
+cd /Users/architgupta/POCs/finova-app-microservices/config-server
+mvn spring-boot:run
+```
+**✅ Wait for:** `Started ConfigServerApplication`  
+**🌐 Port:** 8888  
+**Note:** Config Server should start first to provide centralized configuration.
+
+---
+
+### Terminal 2 - Eureka Server (Service Discovery)
 ```bash
 cd /Users/architgupta/POCs/finova-app-microservices/eureka-server
 mvn spring-boot:run
@@ -108,7 +120,7 @@ mvn spring-boot:run
 
 ---
 
-### Terminal 2 - API Gateway
+### Terminal 3 - API Gateway
 ```bash
 cd /Users/architgupta/POCs/finova-app-microservices/api-gateway
 mvn spring-boot:run
@@ -118,7 +130,7 @@ mvn spring-boot:run
 
 ---
 
-### Terminal 3 - User Service
+### Terminal 4 - User Service
 ```bash
 cd /Users/architgupta/POCs/finova-app-microservices/user-service
 mvn spring-boot:run
@@ -128,7 +140,7 @@ mvn spring-boot:run
 
 ---
 
-### Terminal 4 - Account Service
+### Terminal 5 - Account Service
 ```bash
 cd /Users/architgupta/POCs/finova-app-microservices/account-service
 mvn spring-boot:run
@@ -138,7 +150,7 @@ mvn spring-boot:run
 
 ---
 
-### Terminal 5 - Planning Service
+### Terminal 6 - Planning Service
 ```bash
 cd /Users/architgupta/POCs/finova-app-microservices/planning-service
 mvn spring-boot:run
@@ -148,7 +160,7 @@ mvn spring-boot:run
 
 ---
 
-### Terminal 6 - Payment Service (OLTP)
+### Terminal 7 - Payment Service (OLTP)
 ```bash
 cd /Users/architgupta/POCs/finova-app-microservices/payment-service
 mvn spring-boot:run
@@ -158,7 +170,7 @@ mvn spring-boot:run
 
 ---
 
-### Terminal 7 - Analytics Service (OLAP)
+### Terminal 8 - Analytics Service (OLAP)
 ```bash
 cd /Users/architgupta/POCs/finova-app-microservices/analytics-service
 mvn spring-boot:run
@@ -171,7 +183,7 @@ mvn spring-boot:run
 
 ## Step 5: Start Frontend
 
-### Terminal 8 - Web UI
+### Terminal 9 - Web UI
 ```bash
 cd /Users/architgupta/POCs/finova-app-microservices/frontend
 python3 -m http.server 8000
@@ -192,6 +204,7 @@ echo ""
 
 services=(
   "Keycloak:http://localhost:9080/health"
+  "Config Server:http://localhost:8888/actuator/health"
   "Eureka:http://localhost:8761/actuator/health"
   "API Gateway:http://localhost:8080/actuator/health"
   "User Service:http://localhost:8081/actuator/health"
@@ -327,6 +340,7 @@ curl "http://localhost:8085/api/analytics/dashboard/1?period=3m" | jq
 |---------|------|---------|------------|
 | **Keycloak** | 9080 | SSO/OAuth 2.0 | Identity Provider |
 | **MongoDB** | 27017 | NoSQL Database | Analytics & Payments |
+| **Config Server** | 8888 | Configuration Management | Spring Cloud Config |
 | **Eureka** | 8761 | Service Discovery | Spring Cloud Netflix |
 | **API Gateway** | 8080 | API Routing | Spring Cloud Gateway |
 | **User Service** | 8081 | User Management | Spring Boot + OAuth |
@@ -431,10 +445,10 @@ Perfect for showcasing all features:
 Before considering setup complete, verify:
 
 - ✅ Java 17 is active (`java -version`)
-- ✅ All 7 Maven services built successfully
+- ✅ All 8 Maven services built successfully
 - ✅ Keycloak accessible at http://localhost:9080
 - ✅ MongoDB accepting connections
-- ✅ All 8 health endpoints return 200 OK
+- ✅ All 9 health endpoints return 200 OK
 - ✅ Can get OAuth token from Keycloak
 - ✅ Protected endpoints require Bearer token
 - ✅ Frontend loads at http://localhost:8000
@@ -464,10 +478,11 @@ Before considering setup complete, verify:
 
 - **OLTP vs OLAP:** Payment Service (fast transactions) vs Analytics Service (complex queries)
 - **OAuth 2.0:** All services secured with JWT tokens from Keycloak
+- **Centralized Config:** Config Server manages application configurations
 - **Service Discovery:** Eureka tracks all service instances
 - **API Gateway:** Single entry point with routing to microservices
 - **MongoDB:** NoSQL for flexible analytics and payment data
-- **Microservices:** 7 independent services, each with its own database
+- **Microservices:** 8 independent services, each with its own database
 
 ---
 

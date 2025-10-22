@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auth Test</title>
+    <script src="auth.js?v=20251022-4"></script>
+    <script>
+        window.addEventListener('load', async () => {
+            console.log('=== AUTH TEST ===');
+            console.log('1. initializeAuth function exists?', typeof initializeAuth);
+            console.log('2. loginWithSSO function exists?', typeof loginWithSSO);
+            
+            if (typeof initializeAuth === 'function') {
+                const result = await initializeAuth();
+                console.log('3. initializeAuth() returned:', result);
+                console.log('4. Current user:', getCurrentUser());
+                console.log('5. Is authenticated?', isAuthenticated());
+            }
+            
+            // Show results on page
+            document.body.innerHTML = `
+                <h1>Authentication Test</h1>
+                <pre>${JSON.stringify({
+                    'initializeAuth exists': typeof initializeAuth !== 'undefined',
+                    'loginWithSSO exists': typeof loginWithSSO !== 'undefined',
+                    'isAuthenticated': typeof isAuthenticated !== 'undefined' ? isAuthenticated() : 'N/A',
+                    'currentUser': getCurrentUser(),
+                    'hasToken': !!localStorage.getItem('finova_access_token')
+                }, null, 2)}</pre>
+                <h2>What should happen:</h2>
+                <ul>
+                    <li>If NOT authenticated: Should show <strong>false</strong> and login UI should appear</li>
+                    <li>If authenticated: Should show <strong>true</strong> and user info</li>
+                </ul>
+                <button onclick="location.reload()">Reload Test</button>
+                <button onclick="localStorage.clear(); location.reload()">Clear & Reload</button>
+            `;
+        });
+    </script>
+</head>
+<body>
+    <p>Loading auth test...</p>
+</body>
+</html>
+

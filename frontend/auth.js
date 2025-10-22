@@ -391,7 +391,7 @@ function updateUIForAuthenticatedUser() {
     updateHeaderForAuthenticatedUser();
     
     // Initialize section visibility properly for CSS-based navigation
-    const sections = ['dashboard-section', 'accounts-section', 'planning-section', 'services-section'];
+    const sections = ['dashboard-section', 'accounts-section', 'planning-section', 'billing-section', 'analytics-section', 'services-section'];
     sections.forEach(sectionId => {
         const section = document.getElementById(sectionId);
         if (section) {
@@ -489,7 +489,7 @@ function updateHeaderForUnauthenticatedUser() {
 
 function showLoginPrompt() {
     // Hide all main sections
-    const sections = ['dashboard-section', 'accounts-section', 'planning-section', 'services-section'];
+    const sections = ['dashboard-section', 'accounts-section', 'planning-section', 'billing-section', 'analytics-section', 'services-section'];
     sections.forEach(sectionId => {
         const section = document.getElementById(sectionId);
         if (section) {

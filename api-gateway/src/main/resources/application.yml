@@ -1,5 +1,5 @@
 server:
-  port: 9080
+  port: 8080
 
 spring:
   application:
@@ -84,6 +84,9 @@ management:
         allow-credentials: true
     gateway:
       enabled: true
+  health:
+    redis:
+      enabled: false  # Disable Redis health check since Redis is not running
 
 # Simplified Gateway - no circuit breakers for now
 

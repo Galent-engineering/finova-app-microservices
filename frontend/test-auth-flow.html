@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Authentication Flow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 { color: #2c3e50; }
+        h2 { color: #3498db; }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #2980b9; }
+        .success { color: #27ae60; font-weight: bold; }
+        .error { color: #e74c3c; font-weight: bold; }
+        .info { color: #3498db; }
+        pre {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Finova Authentication Flow Test</h1>
+    <p>Use this page to test and debug the authentication and API configuration.</p>
+
+    <!-- Test 1: Port Configuration -->
+    <div class="test-section">
+        <h2>1. Configuration Check</h2>
+        <button onclick="checkConfiguration()">Check Frontend Configuration</button>
+        <div id="config-result" class="result"></div>
+    </div>
+
+    <!-- Test 2: Service Health -->
+    <div class="test-section">
+        <h2>2. Service Health Checks</h2>
+        <button onclick="checkAPIGateway()">Test API Gateway (8080)</button>
+        <button onclick="checkKeycloak()">Test Keycloak (9080)</button>
+        <button onclick="checkAllServices()">Test All Services</button>
+        <div id="health-result" class="result"></div>
+    </div>
+
+    <!-- Test 3: Authentication State -->
+    <div class="test-section">
+        <h2>3. Authentication State</h2>
+        <button onclick="checkAuthState()">Check Current Auth State</button>
+        <button onclick="clearAuth()">Clear Auth & Reload</button>
+        <div id="auth-result" class="result"></div>
+    </div>
+
+    <!-- Test 4: API Calls -->
+    <div class="test-section">
+        <h2>4. Test API Calls</h2>
+        <p class="info">Note: These require authentication</p>
+        <button onclick="testUserAPI()">Test User API</button>
+        <button onclick="testAccountAPI()">Test Account API</button>
+        <button onclick="testPlanningAPI()">Test Planning API</button>
+        <div id="api-result" class="result"></div>
+    </div>
+
+    <!-- Test 5: Login Flow -->
+    <div class="test-section">
+        <h2>5. Login Flow Test</h2>
+        <button onclick="testLoginRedirect()">Test Login Redirect</button>
+        <p class="info">This will redirect you to Keycloak. Use: john.doe / password123</p>
+    </div>
+
+    <script>
+        // Configuration Check
+        function checkConfiguration() {
+            const result = document.getElementById('config-result');
+            const config = {
+                'Current Page': window.location.href,
+                'Expected Frontend': 'http://localhost:8000',
+                'Script.js loaded': typeof API_GATEWAY_URL !== 'undefined',
+                'API Gateway URL': typeof API_GATEWAY_URL !== 'undefined' ? API_GATEWAY_URL : 'NOT LOADED',
+                'Expected Gateway': 'http://localhost:8080',
+                'Auth.js loaded': typeof initializeAuth !== 'undefined',
+                'Keycloak URL': typeof SSO_CONFIG !== 'undefined' ? SSO_CONFIG.keycloakUrl : 'NOT LOADED',
+                'Expected Keycloak': 'http://localhost:9080'
+            };
+
+            let html = '<h3>Configuration:</h3><pre>';
+            for (const [key, value] of Object.entries(config)) {
+                html += `${key}: ${value}\n`;
+            }
+            html += '</pre>';
+
+            // Validate
+            if (typeof API_GATEWAY_URL !== 'undefined' && API_GATEWAY_URL === 'http://localhost:8080') {
+                html += '<p class="success">✅ API Gateway URL is correct!</p>';
+            } else if (typeof API_GATEWAY_URL !== 'undefined') {
+                html += `<p class="error">❌ API Gateway URL is WRONG! Found: ${API_GATEWAY_URL}, Expected: http://localhost:8080</p>`;
+            } else {
+                html += '<p class="error">❌ script.js not loaded!</p>';
+            }
+
+            result.innerHTML = html;
+        }
+
+        // API Gateway Health Check
+        async function checkAPIGateway() {
+            const result = document.getElementById('health-result');
+            result.innerHTML = '<p class="info">Testing API Gateway at http://localhost:8080...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:8080/actuator/health');
+                if (response.ok) {
+                    const data = await response.text();
+                    result.innerHTML = `<p class="success">✅ API Gateway is UP!</p><pre>${data}</pre>`;
+                } else {
+                    result.innerHTML = `<p class="error">❌ API Gateway returned ${response.status}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Cannot reach API Gateway: ${error.message}</p>
+                    <p class="info">Make sure API Gateway is running on port 8080</p>`;
+            }
+        }
+
+        // Keycloak Health Check
+        async function checkKeycloak() {
+            const result = document.getElementById('health-result');
+            result.innerHTML = '<p class="info">Testing Keycloak at http://localhost:9080...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:9080/realms/finova/.well-known/openid-configuration');
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = `<p class="success">✅ Keycloak is UP!</p>
+                        <p>Issuer: ${data.issuer}</p>
+                        <p>Token endpoint: ${data.token_endpoint}</p>`;
+                } else {
+                    result.innerHTML = `<p class="error">❌ Keycloak returned ${response.status}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Cannot reach Keycloak: ${error.message}</p>
+                    <p class="info">Make sure Keycloak is running on port 9080</p>`;
+            }
+        }
+
+        // Check All Services
+        async function checkAllServices() {
+            const result = document.getElementById('health-result');
+            result.innerHTML = '<p class="info">Testing all services...</p>';
+            
+            const services = [
+                { name: 'API Gateway', url: 'http://localhost:8080/actuator/health' },
+                { name: 'Keycloak', url: 'http://localhost:9080/health' },
+                { name: 'User Service', url: 'http://localhost:8081/actuator/health' },
+                { name: 'Account Service', url: 'http://localhost:8082/actuator/health' },
+                { name: 'Planning Service', url: 'http://localhost:8083/actuator/health' },
+                { name: 'Payment Service', url: 'http://localhost:8084/actuator/health' },
+                { name: 'Analytics Service', url: 'http://localhost:8085/actuator/health' },
+                { name: 'Eureka', url: 'http://localhost:8761/actuator/health' }
+            ];
+
+            let html = '<h3>Service Status:</h3>';
+            
+            for (const service of services) {
+                try {
+                    const response = await fetch(service.url, { signal: AbortSignal.timeout(3000) });
+                    if (response.ok) {
+                        html += `<p class="success">✅ ${service.name}: UP</p>`;
+                    } else {
+                        html += `<p class="error">❌ ${service.name}: DOWN (${response.status})</p>`;
+                    }
+                } catch (error) {
+                    html += `<p class="error">❌ ${service.name}: UNREACHABLE</p>`;
+                }
+            }
+            
+            result.innerHTML = html;
+        }
+
+        // Check Authentication State
+        function checkAuthState() {
+            const result = document.getElementById('auth-result');
+            const token = localStorage.getItem('finova_access_token');
+            const userInfo = localStorage.getItem('finova_user_info');
+            const tokenExpiry = localStorage.getItem('finova_token_expiry');
+
+            let html = '<h3>Current Authentication State:</h3>';
+            html += `<p><strong>Has Token:</strong> ${token ? 'Yes' : 'No'}</p>`;
+            
+            if (token) {
+                html += `<p><strong>Token (first 50 chars):</strong> ${token.substring(0, 50)}...</p>`;
+            }
+            
+            if (tokenExpiry) {
+                const expiryDate = new Date(parseInt(tokenExpiry));
+                const isExpired = Date.now() >= parseInt(tokenExpiry);
+                html += `<p><strong>Token Expires:</strong> ${expiryDate.toLocaleString()}</p>`;
+                html += `<p class="${isExpired ? 'error' : 'success'}"><strong>Status:</strong> ${isExpired ? 'EXPIRED' : 'VALID'}</p>`;
+            }
+            
+            if (userInfo) {
+                html += '<h4>User Info:</h4><pre>' + JSON.stringify(JSON.parse(userInfo), null, 2) + '</pre>';
+            }
+
+            if (typeof isAuthenticated !== 'undefined') {
+                html += `<p><strong>isAuthenticated():</strong> ${isAuthenticated()}</p>`;
+            }
+
+            result.innerHTML = html;
+        }
+
+        // Clear Auth
+        function clearAuth() {
+            localStorage.clear();
+            sessionStorage.clear();
+            alert('Authentication cleared! Reloading page...');
+            location.reload();
+        }
+
+        // Test User API
+        async function testUserAPI() {
+            const result = document.getElementById('api-result');
+            const token = localStorage.getItem('finova_access_token');
+            
+            if (!token) {
+                result.innerHTML = '<p class="error">❌ No authentication token found. Please login first.</p>';
+                return;
+            }
+
+            result.innerHTML = '<p class="info">Testing User API...</p>';
+
+            try {
+                const response = await fetch('http://localhost:8080/api/users/health', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.text();
+                    result.innerHTML = `<p class="success">✅ User API accessible!</p><pre>${data}</pre>`;
+                } else {
+                    result.innerHTML = `<p class="error">❌ User API returned ${response.status}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+
+        // Test Account API
+        async function testAccountAPI() {
+            const result = document.getElementById('api-result');
+            const token = localStorage.getItem('finova_access_token');
+            
+            if (!token) {
+                result.innerHTML = '<p class="error">❌ No authentication token found. Please login first.</p>';
+                return;
+            }
+
+            result.innerHTML = '<p class="info">Testing Account API...</p>';
+
+            try {
+                const response = await fetch('http://localhost:8080/api/accounts/health', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.text();
+                    result.innerHTML = `<p class="success">✅ Account API accessible!</p><pre>${data}</pre>`;
+                } else {
+                    result.innerHTML = `<p class="error">❌ Account API returned ${response.status}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+
+        // Test Planning API
+        async function testPlanningAPI() {
+            const result = document.getElementById('api-result');
+            const token = localStorage.getItem('finova_access_token');
+            
+            if (!token) {
+                result.innerHTML = '<p class="error">❌ No authentication token found. Please login first.</p>';
+                return;
+            }
+
+            result.innerHTML = '<p class="info">Testing Planning API...</p>';
+
+            try {
+                const response = await fetch('http://localhost:8080/api/planning/health', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const data = await response.text();
+                    result.innerHTML = `<p class="success">✅ Planning API accessible!</p><pre>${data}</pre>`;
+                } else {
+                    result.innerHTML = `<p class="error">❌ Planning API returned ${response.status}</p>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+            }
+        }
+
+        // Test Login Redirect
+        function testLoginRedirect() {
+            if (typeof loginWithSSO !== 'undefined') {
+                loginWithSSO();
+            } else {
+                // Manual redirect
+                const state = 'test_' + Math.random().toString(36).substring(7);
+                sessionStorage.setItem('oauth_state', state);
+                const authUrl = `http://localhost:9080/realms/finova/protocol/openid-connect/auth?` +
+                    `client_id=finova-frontend&` +
+                    `redirect_uri=${encodeURIComponent('http://localhost:8000/callback.html')}&` +
+                    `response_type=code&` +
+                    `scope=openid%20profile%20email%20roles&` +
+                    `state=${state}`;
+                window.location.href = authUrl;
+            }
+        }
+
+        // Auto-run configuration check on load
+        window.addEventListener('load', () => {
+            setTimeout(checkConfiguration, 500);
+        });
+    </script>
+</body>
+</html>
+
