@@ -31,6 +31,9 @@ Browser → API Gateway (9080) → Service Discovery → Microservice (8081-8083
    └── Fallback ←───┘ (if service down)
 ```
 
+
+
+
 ## Services
 
 ### 1. **Keycloak Auth Server** (Port: 8080) 🔐
