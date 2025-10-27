@@ -187,11 +187,10 @@ class UserServiceTest {
         user.setRiskTolerance("MODERATE");
 
         // When
-        UserProfileDTO result = userService.getUserProfile(1L);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        UserProfileDTO result = userService.getUserProfile(1L);
 
         // Then
-        result = userService.getUserProfile(1L);
         assertEquals(user.getId(), result.getId());
         assertEquals(user.getUsername(), result.getUsername());
         assertEquals(user.getFirstName(), result.getFirstName());
