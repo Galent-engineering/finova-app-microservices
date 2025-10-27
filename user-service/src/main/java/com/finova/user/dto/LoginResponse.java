@@ -5,17 +5,20 @@ package com.finova.user.dto;
  */
 public class LoginResponse {
     
+    private boolean success = false;
     private String token;
     private String type = "Bearer";
     private Long id;
     private String username;
     private String email;
     private String message;
+    private String errorMessage;
     
     // Constructors
     public LoginResponse() {}
     
     public LoginResponse(String token, Long id, String username, String email) {
+        this.success = true;
         this.token = token;
         this.id = id;
         this.username = username;
@@ -23,11 +26,15 @@ public class LoginResponse {
         this.message = "Login successful";
     }
     
-    public LoginResponse(String message) {
-        this.message = message;
+    public LoginResponse(String errorMessage) {
+        this.success = false;
+        this.errorMessage = errorMessage;
     }
     
     // Getters and Setters
+    public boolean isSuccess() { return success; }
+    public void setSuccess(boolean success) { this.success = success; }
+    
     public String getToken() { return token; }
     public void setToken(String token) { this.token = token; }
     
@@ -45,4 +52,11 @@ public class LoginResponse {
     
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
+    
+    public String getErrorMessage() { return errorMessage; }
+    public void setErrorMessage(String errorMessage) { this.errorMessage = errorMessage; }
+    
+    // Convenience getters for backward compatibility
+    public Long getUserId() { return id; }
+    public void setUserId(Long userId) { this.id = userId; }
 }
