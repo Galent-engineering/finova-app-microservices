@@ -15,14 +15,18 @@ public class SocialSecurityDTO {
     private Long id;
     
     @NotNull(message = "User ID is required")
+    @Positive(message = "User ID must be positive")
     private Long userId;
     
+    @Past(message = "Date of birth must be in the past")
     private LocalDate dateOfBirth;
     
-    @PositiveOrZero(message = "Current salary must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Current salary must be zero or positive")
+    @DecimalMax(value = "1000000.0", message = "Current salary cannot exceed $1,000,000")
     private BigDecimal currentSalary;
     
-    @PositiveOrZero(message = "Years of work history must be positive or zero")
+    @Min(value = 0, message = "Years of work history must be zero or positive")
+    @Max(value = 50, message = "Years of work history cannot exceed 50")
     private Integer yearsOfWorkHistory;
     
     private String claimAge; // "Age 62", "Age 67 (Full Retirement Age)", "Age 70"

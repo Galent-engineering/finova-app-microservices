@@ -16,22 +16,30 @@ public class RetirementAccountDTO {
     private Long id;
     
     @NotNull(message = "User ID is required")
+    @Positive(message = "User ID must be positive")
     private Long userId;
     
     @NotBlank(message = "Account name is required")
+    @Size(min = 1, max = 100, message = "Account name must be between 1 and 100 characters")
     private String accountName;
     
+    @Pattern(regexp = "^(401k|403b|457|ira|roth_ira|sep_ira|simple_ira|pension|annuity|other)$", 
+             message = "Account type must be one of: 401k, 403b, 457, ira, roth_ira, sep_ira, simple_ira, pension, annuity, other")
     private String accountType;
     
-    @PositiveOrZero(message = "Current balance must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Current balance must be zero or positive")
+    @DecimalMax(value = "10000000.0", message = "Current balance cannot exceed $10,000,000")
     private BigDecimal currentBalance;
     
+    @PastOrPresent(message = "As of date must be in the past or present")
     private LocalDate asOfDate;
     
-    @PositiveOrZero(message = "Estimated monthly income must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Estimated monthly income must be zero or positive")
+    @DecimalMax(value = "50000.0", message = "Estimated monthly income cannot exceed $50,000")
     private BigDecimal estimatedMonthlyIncome;
     
-    @PositiveOrZero(message = "Estimated monthly goal must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Estimated monthly goal must be zero or positive")
+    @DecimalMax(value = "50000.0", message = "Estimated monthly goal cannot exceed $50,000")
     private BigDecimal estimatedMonthlyGoal;
     
     private String status;
