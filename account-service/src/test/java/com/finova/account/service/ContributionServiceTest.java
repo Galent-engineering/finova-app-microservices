@@ -120,11 +120,13 @@ class ContributionServiceTest {
     @Test
     void createContribution_WithInvalidAccountId_ShouldThrowRuntimeException() {
         // Given
+        ContributionDTO invalidDTO = createTestContributionDTO();
+        invalidDTO.setAccountId(999L);
         when(retirementAccountRepository.findById(999L)).thenReturn(Optional.empty());
 
         // When & Then
         RuntimeException exception = assertThrows(RuntimeException.class, 
-            () -> contributionService.createContribution(testContributionDTO));
+            () -> contributionService.createContribution(invalidDTO));
         
         assertEquals("Account not found with id: 999", exception.getMessage());
         verify(retirementAccountRepository).findById(999L);
@@ -167,6 +169,7 @@ class ContributionServiceTest {
         // Given
         List<ContributionDTO> contributionDTOs = List.of(testContributionDTO);
         when(contributionRepository.findById(1L)).thenReturn(Optional.of(testContribution));
+        when(retirementAccountRepository.findById(1L)).thenReturn(Optional.of(testAccount));
         when(contributionRepository.save(any(Contribution.class))).thenReturn(testContribution);
 
         // When
@@ -176,6 +179,7 @@ class ContributionServiceTest {
         assertNotNull(result);
         assertFalse(result.isEmpty());
         verify(contributionRepository).findById(1L);
+        verify(retirementAccountRepository).findById(1L);
         verify(contributionRepository).save(any(Contribution.class));
     }
 

@@ -119,11 +119,13 @@ class IncomeSourceServiceTest {
     @Test
     void createIncomeSource_WithInvalidAccountId_ShouldThrowRuntimeException() {
         // Given
+        IncomeSourceDTO invalidDTO = createTestIncomeSourceDTO();
+        invalidDTO.setAccountId(999L);
         when(retirementAccountRepository.findById(999L)).thenReturn(Optional.empty());
 
         // When & Then
         RuntimeException exception = assertThrows(RuntimeException.class, 
-            () -> incomeSourceService.createIncomeSource(testIncomeSourceDTO));
+            () -> incomeSourceService.createIncomeSource(invalidDTO));
         
         assertEquals("Account not found with id: 999", exception.getMessage());
         verify(retirementAccountRepository).findById(999L);
