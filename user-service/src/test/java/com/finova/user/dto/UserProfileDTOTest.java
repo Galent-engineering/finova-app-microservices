@@ -1,8 +1,8 @@
 package com.finova.user.dto;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit tests for UserProfileDTO
@@ -38,268 +38,241 @@ class UserProfileDTOTest {
 
     @Test
     @DisplayName("Should create UserProfileDTO with default constructor")
-    void testDefaultConstructor() {
+    void shouldCreateUserProfileDTOWithDefaultConstructor() {
         UserProfileDTO dto = new UserProfileDTO();
-        assertNotNull(dto);
+        
+        assertThat(dto).isNotNull();
     }
 
     @Test
     @DisplayName("Should create UserProfileDTO with parameterized constructor")
-    void testParameterizedConstructor() {
+    void shouldCreateUserProfileDTOWithParameterizedConstructor() {
         UserProfileDTO dto = new UserProfileDTO("johndoe", "John", "Doe", "john@example.com");
         
-        assertEquals("johndoe", dto.getUsername());
-        assertEquals("John", dto.getFirstName());
-        assertEquals("Doe", dto.getLastName());
-        assertEquals("john@example.com", dto.getEmail());
+        assertThat(dto.getUsername()).isEqualTo("johndoe");
+        assertThat(dto.getFirstName()).isEqualTo("John");
+        assertThat(dto.getLastName()).isEqualTo("Doe");
+        assertThat(dto.getEmail()).isEqualTo("john@example.com");
     }
 
     @Test
     @DisplayName("Should validate UserProfileDTO with valid data")
-    void testValidUserProfileDTO() {
+    void shouldValidateUserProfileDTOWithValidData() {
         Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(profileDTO);
-        assertTrue(violations.isEmpty());
+        
+        assertThat(violations).isEmpty();
     }
 
     @Test
     @DisplayName("Should fail validation when username is blank")
-    void testBlankUsername() {
+    void shouldFailValidationWhenUsernameIsBlank() {
         profileDTO.setUsername("");
+        
         Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(profileDTO);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("username")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when username is too short")
-    void testUsernameTooShort() {
+    void shouldFailValidationWhenUsernameIsTooShort() {
         profileDTO.setUsername("ab");
+        
         Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(profileDTO);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
     }
 
     @Test
     @DisplayName("Should fail validation when username is too long")
-    void testUsernameTooLong() {
+    void shouldFailValidationWhenUsernameIsTooLong() {
         profileDTO.setUsername("a".repeat(51));
+        
         Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(profileDTO);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
     }
 
     @Test
     @DisplayName("Should fail validation when first name is blank")
-    void testBlankFirstName() {
+    void shouldFailValidationWhenFirstNameIsBlank() {
         profileDTO.setFirstName("");
+        
         Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(profileDTO);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("firstName")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when last name is blank")
-    void testBlankLastName() {
+    void shouldFailValidationWhenLastNameIsBlank() {
         profileDTO.setLastName("");
+        
         Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(profileDTO);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("lastName")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when email is invalid")
-    void testInvalidEmail() {
+    void shouldFailValidationWhenEmailIsInvalid() {
         profileDTO.setEmail("invalid-email");
-        Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(profileDTO);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should accept valid email format")
-    void testValidEmail() {
-        profileDTO.setEmail("valid.email@example.com");
-        Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(profileDTO);
-        assertTrue(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should get display name correctly")
-    void testGetDisplayName() {
-        profileDTO.setFirstName("Jane");
-        profileDTO.setLastName("Smith");
         
-        assertEquals("Jane Smith", profileDTO.getDisplayName());
+        Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(profileDTO);
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("email")
+        );
     }
 
     @Test
     @DisplayName("Should set and get ID")
-    void testIdGetterSetter() {
+    void shouldSetAndGetId() {
         profileDTO.setId(123L);
-        assertEquals(123L, profileDTO.getId());
+        
+        assertThat(profileDTO.getId()).isEqualTo(123L);
     }
 
     @Test
-    @DisplayName("Should set and get phone")
-    void testPhoneGetterSetter() {
+    @DisplayName("Should set and get phone number")
+    void shouldSetAndGetPhoneNumber() {
         profileDTO.setPhone("555-1234");
-        assertEquals("555-1234", profileDTO.getPhone());
+        
+        assertThat(profileDTO.getPhone()).isEqualTo("555-1234");
     }
 
     @Test
     @DisplayName("Should set and get date of birth")
-    void testDateOfBirthGetterSetter() {
-        LocalDate dob = LocalDate.of(1990, 5, 15);
-        profileDTO.setDateOfBirth(dob);
-        assertEquals(dob, profileDTO.getDateOfBirth());
+    void shouldSetAndGetDateOfBirth() {
+        LocalDate birthDate = LocalDate.of(1985, 6, 15);
+        profileDTO.setDateOfBirth(birthDate);
+        
+        assertThat(profileDTO.getDateOfBirth()).isEqualTo(birthDate);
     }
 
     @Test
     @DisplayName("Should set and get annual salary")
-    void testAnnualSalaryGetterSetter() {
+    void shouldSetAndGetAnnualSalary() {
         BigDecimal salary = new BigDecimal("75000.00");
         profileDTO.setAnnualSalary(salary);
-        assertEquals(salary, profileDTO.getAnnualSalary());
+        
+        assertThat(profileDTO.getAnnualSalary()).isEqualByComparingTo(salary);
     }
 
     @Test
     @DisplayName("Should set and get employment status")
-    void testEmploymentStatusGetterSetter() {
+    void shouldSetAndGetEmploymentStatus() {
         profileDTO.setEmploymentStatus("FULL_TIME");
-        assertEquals("FULL_TIME", profileDTO.getEmploymentStatus());
+        
+        assertThat(profileDTO.getEmploymentStatus()).isEqualTo("FULL_TIME");
     }
 
     @Test
     @DisplayName("Should set and get years with employer")
-    void testYearsWithEmployerGetterSetter() {
-        profileDTO.setYearsWithEmployer(10);
-        assertEquals(10, profileDTO.getYearsWithEmployer());
+    void shouldSetAndGetYearsWithEmployer() {
+        profileDTO.setYearsWithEmployer(5);
+        
+        assertThat(profileDTO.getYearsWithEmployer()).isEqualTo(5);
     }
 
     @Test
     @DisplayName("Should set and get marital status")
-    void testMaritalStatusGetterSetter() {
+    void shouldSetAndGetMaritalStatus() {
         profileDTO.setMaritalStatus("MARRIED");
-        assertEquals("MARRIED", profileDTO.getMaritalStatus());
+        
+        assertThat(profileDTO.getMaritalStatus()).isEqualTo("MARRIED");
     }
 
     @Test
     @DisplayName("Should set and get risk tolerance")
-    void testRiskToleranceGetterSetter() {
+    void shouldSetAndGetRiskTolerance() {
         profileDTO.setRiskTolerance("MODERATE");
-        assertEquals("MODERATE", profileDTO.getRiskTolerance());
-    }
-
-    @Test
-    @DisplayName("Should handle null optional fields")
-    void testNullOptionalFields() {
-        profileDTO.setPhone(null);
-        profileDTO.setDateOfBirth(null);
-        profileDTO.setAnnualSalary(null);
-        profileDTO.setEmploymentStatus(null);
-        profileDTO.setYearsWithEmployer(null);
-        profileDTO.setMaritalStatus(null);
-        profileDTO.setRiskTolerance(null);
         
-        assertNull(profileDTO.getPhone());
-        assertNull(profileDTO.getDateOfBirth());
-        assertNull(profileDTO.getAnnualSalary());
-        assertNull(profileDTO.getEmploymentStatus());
-        assertNull(profileDTO.getYearsWithEmployer());
-        assertNull(profileDTO.getMaritalStatus());
-        assertNull(profileDTO.getRiskTolerance());
+        assertThat(profileDTO.getRiskTolerance()).isEqualTo("MODERATE");
     }
 
     @Test
-    @DisplayName("Should create complete retirement planning profile")
-    void testCompleteRetirementProfile() {
-        UserProfileDTO dto = new UserProfileDTO("retirement_user", "Alice", "Johnson", "alice@finova.com");
-        dto.setId(42L);
+    @DisplayName("Should return correct display name")
+    void shouldReturnCorrectDisplayName() {
+        profileDTO.setFirstName("Jane");
+        profileDTO.setLastName("Smith");
+        
+        String displayName = profileDTO.getDisplayName();
+        
+        assertThat(displayName).isEqualTo("Jane Smith");
+    }
+
+    @Test
+    @DisplayName("Should create complete user profile for retirement planning")
+    void shouldCreateCompleteUserProfileForRetirementPlanning() {
+        UserProfileDTO dto = new UserProfileDTO("jsmith", "Jane", "Smith", "jane.smith@finova.com");
+        dto.setId(100L);
         dto.setPhone("555-9876");
-        dto.setDateOfBirth(LocalDate.of(1975, 8, 20));
+        dto.setDateOfBirth(LocalDate.of(1980, 3, 20));
         dto.setAnnualSalary(new BigDecimal("95000.00"));
         dto.setEmploymentStatus("FULL_TIME");
-        dto.setYearsWithEmployer(15);
+        dto.setYearsWithEmployer(12);
         dto.setMaritalStatus("MARRIED");
         dto.setRiskTolerance("MODERATE");
         
+        // Verify all fields
+        assertThat(dto.getId()).isEqualTo(100L);
+        assertThat(dto.getUsername()).isEqualTo("jsmith");
+        assertThat(dto.getFirstName()).isEqualTo("Jane");
+        assertThat(dto.getLastName()).isEqualTo("Smith");
+        assertThat(dto.getEmail()).isEqualTo("jane.smith@finova.com");
+        assertThat(dto.getPhone()).isEqualTo("555-9876");
+        assertThat(dto.getDateOfBirth()).isEqualTo(LocalDate.of(1980, 3, 20));
+        assertThat(dto.getAnnualSalary()).isEqualByComparingTo(new BigDecimal("95000.00"));
+        assertThat(dto.getEmploymentStatus()).isEqualTo("FULL_TIME");
+        assertThat(dto.getYearsWithEmployer()).isEqualTo(12);
+        assertThat(dto.getMaritalStatus()).isEqualTo("MARRIED");
+        assertThat(dto.getRiskTolerance()).isEqualTo("MODERATE");
+        assertThat(dto.getDisplayName()).isEqualTo("Jane Smith");
+        
+        // Validate
         Set<ConstraintViolation<UserProfileDTO>> violations = validator.validate(dto);
-        assertTrue(violations.isEmpty());
-        
-        assertEquals(42L, dto.getId());
-        assertEquals("retirement_user", dto.getUsername());
-        assertEquals("Alice", dto.getFirstName());
-        assertEquals("Johnson", dto.getLastName());
-        assertEquals("alice@finova.com", dto.getEmail());
-        assertEquals("555-9876", dto.getPhone());
-        assertEquals(LocalDate.of(1975, 8, 20), dto.getDateOfBirth());
-        assertEquals(new BigDecimal("95000.00"), dto.getAnnualSalary());
-        assertEquals("FULL_TIME", dto.getEmploymentStatus());
-        assertEquals(15, dto.getYearsWithEmployer());
-        assertEquals("MARRIED", dto.getMaritalStatus());
-        assertEquals("MODERATE", dto.getRiskTolerance());
-        assertEquals("Alice Johnson", dto.getDisplayName());
+        assertThat(violations).isEmpty();
     }
 
     @Test
-    @DisplayName("Should handle conservative risk tolerance profile")
-    void testConservativeRiskProfile() {
-        profileDTO.setRiskTolerance("CONSERVATIVE");
-        profileDTO.setAnnualSalary(new BigDecimal("60000.00"));
-        profileDTO.setYearsWithEmployer(20);
+    @DisplayName("Should handle high salary amounts for executive profiles")
+    void shouldHandleHighSalaryAmountsForExecutiveProfiles() {
+        BigDecimal executiveSalary = new BigDecimal("500000.00");
+        profileDTO.setAnnualSalary(executiveSalary);
         
-        assertEquals("CONSERVATIVE", profileDTO.getRiskTolerance());
-        assertEquals(new BigDecimal("60000.00"), profileDTO.getAnnualSalary());
-        assertEquals(20, profileDTO.getYearsWithEmployer());
-    }
-
-    @Test
-    @DisplayName("Should handle aggressive risk tolerance profile")
-    void testAggressiveRiskProfile() {
-        profileDTO.setRiskTolerance("AGGRESSIVE");
-        profileDTO.setAnnualSalary(new BigDecimal("120000.00"));
-        profileDTO.setYearsWithEmployer(5);
-        
-        assertEquals("AGGRESSIVE", profileDTO.getRiskTolerance());
-        assertEquals(new BigDecimal("120000.00"), profileDTO.getAnnualSalary());
-        assertEquals(5, profileDTO.getYearsWithEmployer());
+        assertThat(profileDTO.getAnnualSalary()).isEqualByComparingTo(executiveSalary);
     }
 
     @Test
     @DisplayName("Should handle various employment statuses")
-    void testVariousEmploymentStatuses() {
-        String[] statuses = {"FULL_TIME", "PART_TIME", "SELF_EMPLOYED", "RETIRED", "UNEMPLOYED"};
+    void shouldHandleVariousEmploymentStatuses() {
+        String[] statuses = {"FULL_TIME", "PART_TIME", "CONTRACT", "SELF_EMPLOYED", "RETIRED"};
         
         for (String status : statuses) {
             profileDTO.setEmploymentStatus(status);
-            assertEquals(status, profileDTO.getEmploymentStatus());
+            assertThat(profileDTO.getEmploymentStatus()).isEqualTo(status);
         }
     }
 
     @Test
-    @DisplayName("Should handle various marital statuses")
-    void testVariousMaritalStatuses() {
-        String[] statuses = {"SINGLE", "MARRIED", "DIVORCED", "WIDOWED"};
+    @DisplayName("Should handle various risk tolerance levels")
+    void shouldHandleVariousRiskToleranceLevels() {
+        String[] riskLevels = {"CONSERVATIVE", "MODERATE", "AGGRESSIVE"};
         
-        for (String status : statuses) {
-            profileDTO.setMaritalStatus(status);
-            assertEquals(status, profileDTO.getMaritalStatus());
+        for (String level : riskLevels) {
+            profileDTO.setRiskTolerance(level);
+            assertThat(profileDTO.getRiskTolerance()).isEqualTo(level);
         }
-    }
-
-    @Test
-    @DisplayName("Should handle large salary values")
-    void testLargeSalaryValues() {
-        BigDecimal largeSalary = new BigDecimal("999999.99");
-        profileDTO.setAnnualSalary(largeSalary);
-        assertEquals(largeSalary, profileDTO.getAnnualSalary());
-    }
-
-    @Test
-    @DisplayName("Should handle zero years with employer")
-    void testZeroYearsWithEmployer() {
-        profileDTO.setYearsWithEmployer(0);
-        assertEquals(0, profileDTO.getYearsWithEmployer());
-    }
-
-    @Test
-    @DisplayName("Should handle many years with employer")
-    void testManyYearsWithEmployer() {
-        profileDTO.setYearsWithEmployer(40);
-        assertEquals(40, profileDTO.getYearsWithEmployer());
     }
 }

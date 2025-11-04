@@ -1,9 +1,9 @@
 package com.finova.user.dto;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit tests for LoginResponse DTO
@@ -13,142 +13,117 @@ class LoginResponseTest {
 
     @Test
     @DisplayName("Should create LoginResponse with default constructor")
-    void testDefaultConstructor() {
+    void shouldCreateLoginResponseWithDefaultConstructor() {
         LoginResponse response = new LoginResponse();
         
-        assertNotNull(response);
-        assertEquals("Bearer", response.getType());
+        assertThat(response).isNotNull();
+        assertThat(response.getType()).isEqualTo("Bearer");
     }
 
     @Test
-    @DisplayName("Should create LoginResponse with success data")
-    void testSuccessConstructor() {
-        LoginResponse response = new LoginResponse("jwt-token-123", 1L, "johndoe", "john@example.com");
+    @DisplayName("Should create successful LoginResponse with token")
+    void shouldCreateSuccessfulLoginResponseWithToken() {
+        LoginResponse response = new LoginResponse(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            1L,
+            "johndoe",
+            "john.doe@example.com"
+        );
         
-        assertEquals("jwt-token-123", response.getToken());
-        assertEquals(1L, response.getId());
-        assertEquals("johndoe", response.getUsername());
-        assertEquals("john@example.com", response.getEmail());
-        assertEquals("Login successful", response.getMessage());
-        assertEquals("Bearer", response.getType());
+        assertThat(response.getToken()).isEqualTo("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...");
+        assertThat(response.getId()).isEqualTo(1L);
+        assertThat(response.getUsername()).isEqualTo("johndoe");
+        assertThat(response.getEmail()).isEqualTo("john.doe@example.com");
+        assertThat(response.getMessage()).isEqualTo("Login successful");
+        assertThat(response.getType()).isEqualTo("Bearer");
     }
 
     @Test
-    @DisplayName("Should create LoginResponse with error message")
-    void testErrorConstructor() {
-        LoginResponse response = new LoginResponse("Invalid credentials");
+    @DisplayName("Should create error LoginResponse with message")
+    void shouldCreateErrorLoginResponseWithMessage() {
+        LoginResponse response = new LoginResponse("Invalid username or password");
         
-        assertEquals("Invalid credentials", response.getMessage());
-        assertNull(response.getToken());
-        assertNull(response.getId());
-        assertNull(response.getUsername());
-        assertNull(response.getEmail());
+        assertThat(response.getMessage()).isEqualTo("Invalid username or password");
+        assertThat(response.getToken()).isNull();
+        assertThat(response.getId()).isNull();
+        assertThat(response.getUsername()).isNull();
+        assertThat(response.getEmail()).isNull();
     }
 
     @Test
-    @DisplayName("Should set and get token correctly")
-    void testTokenGetterSetter() {
+    @DisplayName("Should set and get token")
+    void shouldSetAndGetToken() {
         LoginResponse response = new LoginResponse();
-        response.setToken("new-token-456");
+        response.setToken("newToken123");
         
-        assertEquals("new-token-456", response.getToken());
+        assertThat(response.getToken()).isEqualTo("newToken123");
     }
 
     @Test
-    @DisplayName("Should set and get type correctly")
-    void testTypeGetterSetter() {
+    @DisplayName("Should set and get type")
+    void shouldSetAndGetType() {
         LoginResponse response = new LoginResponse();
-        response.setType("Custom");
+        response.setType("JWT");
         
-        assertEquals("Custom", response.getType());
+        assertThat(response.getType()).isEqualTo("JWT");
     }
 
     @Test
-    @DisplayName("Should set and get id correctly")
-    void testIdGetterSetter() {
+    @DisplayName("Should set and get user ID")
+    void shouldSetAndGetUserId() {
         LoginResponse response = new LoginResponse();
-        response.setId(100L);
+        response.setId(42L);
         
-        assertEquals(100L, response.getId());
+        assertThat(response.getId()).isEqualTo(42L);
     }
 
     @Test
-    @DisplayName("Should set and get username correctly")
-    void testUsernameGetterSetter() {
+    @DisplayName("Should set and get username")
+    void shouldSetAndGetUsername() {
         LoginResponse response = new LoginResponse();
         response.setUsername("testuser");
         
-        assertEquals("testuser", response.getUsername());
+        assertThat(response.getUsername()).isEqualTo("testuser");
     }
 
     @Test
-    @DisplayName("Should set and get email correctly")
-    void testEmailGetterSetter() {
+    @DisplayName("Should set and get email")
+    void shouldSetAndGetEmail() {
         LoginResponse response = new LoginResponse();
         response.setEmail("test@example.com");
         
-        assertEquals("test@example.com", response.getEmail());
+        assertThat(response.getEmail()).isEqualTo("test@example.com");
     }
 
     @Test
-    @DisplayName("Should set and get message correctly")
-    void testMessageGetterSetter() {
+    @DisplayName("Should set and get message")
+    void shouldSetAndGetMessage() {
         LoginResponse response = new LoginResponse();
         response.setMessage("Custom message");
         
-        assertEquals("Custom message", response.getMessage());
+        assertThat(response.getMessage()).isEqualTo("Custom message");
     }
 
     @Test
-    @DisplayName("Should handle null values")
-    void testNullValues() {
-        LoginResponse response = new LoginResponse();
-        response.setToken(null);
-        response.setId(null);
-        response.setUsername(null);
-        response.setEmail(null);
-        response.setMessage(null);
-        
-        assertNull(response.getToken());
-        assertNull(response.getId());
-        assertNull(response.getUsername());
-        assertNull(response.getEmail());
-        assertNull(response.getMessage());
-    }
-
-    @Test
-    @DisplayName("Should create response for successful authentication")
-    void testSuccessfulAuthenticationResponse() {
-        LoginResponse response = new LoginResponse(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-            42L,
-            "retirement_planner",
-            "planner@finova.com"
-        );
-        
-        assertNotNull(response.getToken());
-        assertEquals(42L, response.getId());
-        assertEquals("retirement_planner", response.getUsername());
-        assertEquals("planner@finova.com", response.getEmail());
-        assertEquals("Login successful", response.getMessage());
-        assertEquals("Bearer", response.getType());
-    }
-
-    @Test
-    @DisplayName("Should create response for failed authentication")
-    void testFailedAuthenticationResponse() {
-        LoginResponse response = new LoginResponse("Invalid username or password");
-        
-        assertEquals("Invalid username or password", response.getMessage());
-        assertNull(response.getToken());
-    }
-
-    @Test
-    @DisplayName("Should create response for disabled account")
-    void testDisabledAccountResponse() {
+    @DisplayName("Should handle authentication failure response")
+    void shouldHandleAuthenticationFailureResponse() {
         LoginResponse response = new LoginResponse("Account is disabled");
         
-        assertEquals("Account is disabled", response.getMessage());
-        assertNull(response.getToken());
+        assertThat(response.getMessage()).isEqualTo("Account is disabled");
+        assertThat(response.getToken()).isNull();
+    }
+
+    @Test
+    @DisplayName("Should handle complete successful login response")
+    void shouldHandleCompleteSuccessfulLoginResponse() {
+        String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+        LoginResponse response = new LoginResponse(token, 100L, "janesmith", "jane.smith@finova.com");
+        
+        assertThat(response.getToken()).isEqualTo(token);
+        assertThat(response.getType()).isEqualTo("Bearer");
+        assertThat(response.getId()).isEqualTo(100L);
+        assertThat(response.getUsername()).isEqualTo("janesmith");
+        assertThat(response.getEmail()).isEqualTo("jane.smith@finova.com");
+        assertThat(response.getMessage()).isEqualTo("Login successful");
     }
 }

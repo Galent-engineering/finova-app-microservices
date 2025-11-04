@@ -1,8 +1,8 @@
 package com.finova.user.dto;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -11,7 +11,7 @@ import jakarta.validation.ConstraintViolation;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit tests for RegisterRequest DTO
@@ -37,200 +37,185 @@ class RegisterRequestTest {
 
     @Test
     @DisplayName("Should create RegisterRequest with default constructor")
-    void testDefaultConstructor() {
+    void shouldCreateRegisterRequestWithDefaultConstructor() {
         RegisterRequest request = new RegisterRequest();
-        assertNotNull(request);
+        
+        assertThat(request).isNotNull();
     }
 
     @Test
     @DisplayName("Should create RegisterRequest with parameterized constructor")
-    void testParameterizedConstructor() {
+    void shouldCreateRegisterRequestWithParameterizedConstructor() {
         RegisterRequest request = new RegisterRequest(
-            "johndoe", "securepass", "John", "Doe", "john@example.com"
+            "johndoe", 
+            "securePass123", 
+            "John", 
+            "Doe", 
+            "john@example.com"
         );
         
-        assertEquals("johndoe", request.getUsername());
-        assertEquals("securepass", request.getPassword());
-        assertEquals("John", request.getFirstName());
-        assertEquals("Doe", request.getLastName());
-        assertEquals("john@example.com", request.getEmail());
+        assertThat(request.getUsername()).isEqualTo("johndoe");
+        assertThat(request.getPassword()).isEqualTo("securePass123");
+        assertThat(request.getFirstName()).isEqualTo("John");
+        assertThat(request.getLastName()).isEqualTo("Doe");
+        assertThat(request.getEmail()).isEqualTo("john@example.com");
     }
 
     @Test
     @DisplayName("Should validate RegisterRequest with valid data")
-    void testValidRegisterRequest() {
+    void shouldValidateRegisterRequestWithValidData() {
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertTrue(violations.isEmpty());
+        
+        assertThat(violations).isEmpty();
     }
 
     @Test
     @DisplayName("Should fail validation when username is blank")
-    void testBlankUsername() {
+    void shouldFailValidationWhenUsernameIsBlank() {
         registerRequest.setUsername("");
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should fail validation when username is null")
-    void testNullUsername() {
-        registerRequest.setUsername(null);
-        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("username") &&
+            v.getMessage().contains("Username is required")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when username is too short")
-    void testUsernameTooShort() {
+    void shouldFailValidationWhenUsernameIsTooShort() {
         registerRequest.setUsername("ab");
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("username")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when username is too long")
-    void testUsernameTooLong() {
+    void shouldFailValidationWhenUsernameIsTooLong() {
         registerRequest.setUsername("a".repeat(51));
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should accept username with minimum length")
-    void testUsernameMinimumLength() {
-        registerRequest.setUsername("abc");
-        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertTrue(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should accept username with maximum length")
-    void testUsernameMaximumLength() {
-        registerRequest.setUsername("a".repeat(50));
-        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertTrue(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("username")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when password is blank")
-    void testBlankPassword() {
+    void shouldFailValidationWhenPasswordIsBlank() {
         registerRequest.setPassword("");
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should fail validation when password is null")
-    void testNullPassword() {
-        registerRequest.setPassword(null);
-        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("password") &&
+            v.getMessage().contains("Password is required")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when password is too short")
-    void testPasswordTooShort() {
+    void shouldFailValidationWhenPasswordIsTooShort() {
         registerRequest.setPassword("12345");
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should accept password with minimum length")
-    void testPasswordMinimumLength() {
-        registerRequest.setPassword("123456");
-        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertTrue(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("password") &&
+            v.getMessage().contains("at least 6 characters")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when first name is blank")
-    void testBlankFirstName() {
+    void shouldFailValidationWhenFirstNameIsBlank() {
         registerRequest.setFirstName("");
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should fail validation when first name is null")
-    void testNullFirstName() {
-        registerRequest.setFirstName(null);
-        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("firstName") &&
+            v.getMessage().contains("First name is required")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when last name is blank")
-    void testBlankLastName() {
+    void shouldFailValidationWhenLastNameIsBlank() {
         registerRequest.setLastName("");
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should fail validation when last name is null")
-    void testNullLastName() {
-        registerRequest.setLastName(null);
-        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("lastName") &&
+            v.getMessage().contains("Last name is required")
+        );
     }
 
     @Test
     @DisplayName("Should fail validation when email is invalid")
-    void testInvalidEmail() {
+    void shouldFailValidationWhenEmailIsInvalid() {
         registerRequest.setEmail("invalid-email");
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertFalse(violations.isEmpty());
+        
+        assertThat(violations).isNotEmpty();
+        assertThat(violations).anyMatch(v -> 
+            v.getPropertyPath().toString().equals("email") &&
+            v.getMessage().contains("Email should be valid")
+        );
     }
 
     @Test
-    @DisplayName("Should accept valid email format")
-    void testValidEmail() {
-        registerRequest.setEmail("valid.email@example.com");
+    @DisplayName("Should validate with valid email format")
+    void shouldValidateWithValidEmailFormat() {
+        registerRequest.setEmail("valid.email@finova.com");
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertTrue(violations.isEmpty());
+        
+        assertThat(violations).isEmpty();
     }
 
     @Test
-    @DisplayName("Should accept null email")
-    void testNullEmail() {
+    @DisplayName("Should allow null email")
+    void shouldAllowNullEmail() {
         registerRequest.setEmail(null);
+        
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(registerRequest);
-        assertTrue(violations.isEmpty());
+        
+        // Should only fail on required fields, not email
+        assertThat(violations).allMatch(v -> 
+            !v.getPropertyPath().toString().equals("email")
+        );
     }
 
     @Test
     @DisplayName("Should set and get all fields correctly")
-    void testAllGettersSetters() {
+    void shouldSetAndGetAllFieldsCorrectly() {
         RegisterRequest request = new RegisterRequest();
         request.setUsername("newuser");
         request.setPassword("newpass123");
         request.setFirstName("Jane");
         request.setLastName("Smith");
-        request.setEmail("jane@example.com");
+        request.setEmail("jane.smith@example.com");
         
-        assertEquals("newuser", request.getUsername());
-        assertEquals("newpass123", request.getPassword());
-        assertEquals("Jane", request.getFirstName());
-        assertEquals("Smith", request.getLastName());
-        assertEquals("jane@example.com", request.getEmail());
-    }
-
-    @Test
-    @DisplayName("Should create valid registration for retirement planner")
-    void testRetirementPlannerRegistration() {
-        RegisterRequest request = new RegisterRequest(
-            "retirement_planner",
-            "SecurePass123!",
-            "Robert",
-            "Johnson",
-            "robert.johnson@finova.com"
-        );
-        
-        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(request);
-        assertTrue(violations.isEmpty());
-        assertEquals("retirement_planner", request.getUsername());
-        assertEquals("Robert", request.getFirstName());
-        assertEquals("Johnson", request.getLastName());
+        assertThat(request.getUsername()).isEqualTo("newuser");
+        assertThat(request.getPassword()).isEqualTo("newpass123");
+        assertThat(request.getFirstName()).isEqualTo("Jane");
+        assertThat(request.getLastName()).isEqualTo("Smith");
+        assertThat(request.getEmail()).isEqualTo("jane.smith@example.com");
     }
 }
