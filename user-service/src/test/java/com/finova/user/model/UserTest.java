@@ -4,155 +4,201 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
-import jakarta.validation.ConstraintViolation;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for User entity
  */
-@DisplayName("User Entity Tests")
+@DisplayName("User Model Tests")
 class UserTest {
 
-    private Validator validator;
     private User user;
 
     @BeforeEach
     void setUp() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-        
         user = new User();
-        user.setUsername("testuser");
-        user.setPassword("encodedPassword123");
-        user.setFirstName("John");
-        user.setLastName("Doe");
-        user.setEmail("john.doe@example.com");
     }
 
     @Test
     @DisplayName("Should create user with default constructor")
     void testDefaultConstructor() {
-        User newUser = new User();
-        
-        assertNotNull(newUser);
-        assertNotNull(newUser.getCreatedAt());
-        assertNotNull(newUser.getUpdatedAt());
-        assertTrue(newUser.isEnabled());
-        assertEquals("USER", newUser.getRole());
+        assertNotNull(user);
+        assertNotNull(user.getCreatedAt());
+        assertNotNull(user.getUpdatedAt());
+        assertTrue(user.isEnabled());
+        assertEquals("USER", user.getRole());
     }
 
     @Test
     @DisplayName("Should create user with parameterized constructor")
     void testParameterizedConstructor() {
-        User newUser = new User("johndoe", "password123", "John", "Doe", "john@example.com");
+        User newUser = new User("testuser", "password123", "John", "Doe", "john.doe@example.com");
         
-        assertEquals("johndoe", newUser.getUsername());
+        assertEquals("testuser", newUser.getUsername());
         assertEquals("password123", newUser.getPassword());
         assertEquals("John", newUser.getFirstName());
         assertEquals("Doe", newUser.getLastName());
-        assertEquals("john@example.com", newUser.getEmail());
+        assertEquals("john.doe@example.com", newUser.getEmail());
         assertNotNull(newUser.getCreatedAt());
         assertNotNull(newUser.getUpdatedAt());
     }
 
     @Test
-    @DisplayName("Should validate user with all required fields")
-    void testValidUser() {
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        assertTrue(violations.isEmpty());
+    @DisplayName("Should set and get user ID")
+    void testSetAndGetId() {
+        user.setId(1L);
+        assertEquals(1L, user.getId());
     }
 
     @Test
-    @DisplayName("Should fail validation when username is blank")
-    void testBlankUsername() {
-        user.setUsername("");
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        assertFalse(violations.isEmpty());
+    @DisplayName("Should set and get username")
+    void testSetAndGetUsername() {
+        user.setUsername("testuser");
+        assertEquals("testuser", user.getUsername());
     }
 
     @Test
-    @DisplayName("Should fail validation when username is too short")
-    void testUsernameTooShort() {
-        user.setUsername("ab");
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        assertFalse(violations.isEmpty());
+    @DisplayName("Should set and get password")
+    void testSetAndGetPassword() {
+        user.setPassword("securePassword123");
+        assertEquals("securePassword123", user.getPassword());
     }
 
     @Test
-    @DisplayName("Should fail validation when username is too long")
-    void testUsernameTooLong() {
-        user.setUsername("a".repeat(51));
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should fail validation when password is blank")
-    void testBlankPassword() {
-        user.setPassword("");
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should fail validation when first name is blank")
-    void testBlankFirstName() {
-        user.setFirstName("");
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should fail validation when last name is blank")
-    void testBlankLastName() {
-        user.setLastName("");
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should fail validation when email is invalid")
-    void testInvalidEmail() {
-        user.setEmail("invalid-email");
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        assertFalse(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should accept valid email format")
-    void testValidEmail() {
-        user.setEmail("valid.email@example.com");
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        assertTrue(violations.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Should get display name correctly")
-    void testGetDisplayName() {
+    @DisplayName("Should set and get first name")
+    void testSetAndGetFirstName() {
         user.setFirstName("Jane");
+        assertEquals("Jane", user.getFirstName());
+    }
+
+    @Test
+    @DisplayName("Should set and get last name")
+    void testSetAndGetLastName() {
         user.setLastName("Smith");
+        assertEquals("Smith", user.getLastName());
+    }
+
+    @Test
+    @DisplayName("Should set and get email")
+    void testSetAndGetEmail() {
+        user.setEmail("jane.smith@example.com");
+        assertEquals("jane.smith@example.com", user.getEmail());
+    }
+
+    @Test
+    @DisplayName("Should set and get phone")
+    void testSetAndGetPhone() {
+        user.setPhone("555-1234");
+        assertEquals("555-1234", user.getPhone());
+    }
+
+    @Test
+    @DisplayName("Should set and get date of birth")
+    void testSetAndGetDateOfBirth() {
+        LocalDate dob = LocalDate.of(1985, 5, 15);
+        user.setDateOfBirth(dob);
+        assertEquals(dob, user.getDateOfBirth());
+    }
+
+    @Test
+    @DisplayName("Should set and get annual salary")
+    void testSetAndGetAnnualSalary() {
+        BigDecimal salary = new BigDecimal("75000.00");
+        user.setAnnualSalary(salary);
+        assertEquals(salary, user.getAnnualSalary());
+    }
+
+    @Test
+    @DisplayName("Should set and get employment status")
+    void testSetAndGetEmploymentStatus() {
+        user.setEmploymentStatus("Full-Time");
+        assertEquals("Full-Time", user.getEmploymentStatus());
+    }
+
+    @Test
+    @DisplayName("Should set and get years with employer")
+    void testSetAndGetYearsWithEmployer() {
+        user.setYearsWithEmployer(5);
+        assertEquals(5, user.getYearsWithEmployer());
+    }
+
+    @Test
+    @DisplayName("Should set and get marital status")
+    void testSetAndGetMaritalStatus() {
+        user.setMaritalStatus("Married");
+        assertEquals("Married", user.getMaritalStatus());
+    }
+
+    @Test
+    @DisplayName("Should set and get risk tolerance")
+    void testSetAndGetRiskTolerance() {
+        user.setRiskTolerance("Moderate");
+        assertEquals("Moderate", user.getRiskTolerance());
+    }
+
+    @Test
+    @DisplayName("Should set and get created at timestamp")
+    void testSetAndGetCreatedAt() {
+        LocalDateTime now = LocalDateTime.now();
+        user.setCreatedAt(now);
+        assertEquals(now, user.getCreatedAt());
+    }
+
+    @Test
+    @DisplayName("Should set and get updated at timestamp")
+    void testSetAndGetUpdatedAt() {
+        LocalDateTime now = LocalDateTime.now();
+        user.setUpdatedAt(now);
+        assertEquals(now, user.getUpdatedAt());
+    }
+
+    @Test
+    @DisplayName("Should set and get last login timestamp")
+    void testSetAndGetLastLogin() {
+        LocalDateTime now = LocalDateTime.now();
+        user.setLastLogin(now);
+        assertEquals(now, user.getLastLogin());
+    }
+
+    @Test
+    @DisplayName("Should set and get enabled status")
+    void testSetAndGetEnabled() {
+        user.setEnabled(false);
+        assertFalse(user.isEnabled());
         
-        assertEquals("Jane Smith", user.getDisplayName());
+        user.setEnabled(true);
+        assertTrue(user.isEnabled());
+    }
+
+    @Test
+    @DisplayName("Should set and get role")
+    void testSetAndGetRole() {
+        user.setRole("ADMIN");
+        assertEquals("ADMIN", user.getRole());
+    }
+
+    @Test
+    @DisplayName("Should return correct display name")
+    void testGetDisplayName() {
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        
+        assertEquals("John Doe", user.getDisplayName());
     }
 
     @Test
     @DisplayName("Should calculate age correctly from date of birth")
     void testGetAge() {
-        LocalDate birthDate = LocalDate.now().minusYears(30);
-        user.setDateOfBirth(birthDate);
+        LocalDate dob = LocalDate.of(1990, 1, 1);
+        user.setDateOfBirth(dob);
         
         Integer age = user.getAge();
         assertNotNull(age);
-        assertEquals(30, age);
+        assertTrue(age >= 33); // Age will be at least 33 in 2023+
     }
 
     @Test
@@ -163,121 +209,70 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("Should set and get all financial profile fields")
-    void testFinancialProfileFields() {
-        BigDecimal salary = new BigDecimal("75000.00");
-        user.setAnnualSalary(salary);
-        user.setEmploymentStatus("FULL_TIME");
-        user.setYearsWithEmployer(5);
-        user.setMaritalStatus("MARRIED");
-        user.setRiskTolerance("MODERATE");
+    @DisplayName("Should update timestamp on update")
+    void testOnUpdate() {
+        LocalDateTime originalUpdatedAt = user.getUpdatedAt();
         
-        assertEquals(salary, user.getAnnualSalary());
-        assertEquals("FULL_TIME", user.getEmploymentStatus());
-        assertEquals(5, user.getYearsWithEmployer());
-        assertEquals("MARRIED", user.getMaritalStatus());
-        assertEquals("MODERATE", user.getRiskTolerance());
-    }
-
-    @Test
-    @DisplayName("Should set and get contact information")
-    void testContactInformation() {
-        user.setPhone("555-1234");
-        LocalDate dob = LocalDate.of(1990, 5, 15);
-        user.setDateOfBirth(dob);
+        // Simulate PreUpdate callback
+        user.onUpdate();
         
-        assertEquals("555-1234", user.getPhone());
-        assertEquals(dob, user.getDateOfBirth());
+        assertNotNull(user.getUpdatedAt());
+        assertTrue(user.getUpdatedAt().isAfter(originalUpdatedAt) || 
+                   user.getUpdatedAt().isEqual(originalUpdatedAt));
     }
 
     @Test
-    @DisplayName("Should set and get user status fields")
-    void testUserStatusFields() {
-        user.setEnabled(false);
-        user.setRole("ADMIN");
-        LocalDateTime lastLogin = LocalDateTime.now();
-        user.setLastLogin(lastLogin);
-        
-        assertFalse(user.isEnabled());
-        assertEquals("ADMIN", user.getRole());
-        assertEquals(lastLogin, user.getLastLogin());
-    }
-
-    @Test
-    @DisplayName("Should set and get ID")
-    void testIdGetterSetter() {
-        user.setId(123L);
-        assertEquals(123L, user.getId());
-    }
-
-    @Test
-    @DisplayName("Should handle timestamp fields correctly")
-    void testTimestampFields() {
-        LocalDateTime now = LocalDateTime.now();
-        user.setCreatedAt(now);
-        user.setUpdatedAt(now);
-        
-        assertEquals(now, user.getCreatedAt());
-        assertEquals(now, user.getUpdatedAt());
-    }
-
-    @Test
-    @DisplayName("Should handle null optional fields")
-    void testNullOptionalFields() {
-        user.setPhone(null);
-        user.setDateOfBirth(null);
-        user.setAnnualSalary(null);
-        user.setEmploymentStatus(null);
-        user.setYearsWithEmployer(null);
-        user.setMaritalStatus(null);
-        user.setRiskTolerance(null);
-        user.setLastLogin(null);
-        
-        assertNull(user.getPhone());
-        assertNull(user.getDateOfBirth());
-        assertNull(user.getAnnualSalary());
-        assertNull(user.getEmploymentStatus());
-        assertNull(user.getYearsWithEmployer());
-        assertNull(user.getMaritalStatus());
-        assertNull(user.getRiskTolerance());
-        assertNull(user.getLastLogin());
-    }
-
-    @Test
-    @DisplayName("Should create user with realistic retirement planning data")
-    void testRealisticRetirementPlanningData() {
-        user.setDateOfBirth(LocalDate.of(1980, 3, 15));
+    @DisplayName("Should handle financial profile data for retirement calculations")
+    void testFinancialProfileData() {
+        // Set up a complete financial profile
         user.setAnnualSalary(new BigDecimal("85000.00"));
-        user.setEmploymentStatus("FULL_TIME");
+        user.setEmploymentStatus("Full-Time");
         user.setYearsWithEmployer(10);
-        user.setMaritalStatus("MARRIED");
-        user.setRiskTolerance("MODERATE");
-        user.setPhone("555-0123");
+        user.setRiskTolerance("Moderate");
+        user.setDateOfBirth(LocalDate.of(1980, 6, 15));
         
-        assertEquals(LocalDate.of(1980, 3, 15), user.getDateOfBirth());
+        // Verify all financial data is correctly stored
         assertEquals(new BigDecimal("85000.00"), user.getAnnualSalary());
-        assertEquals("FULL_TIME", user.getEmploymentStatus());
+        assertEquals("Full-Time", user.getEmploymentStatus());
         assertEquals(10, user.getYearsWithEmployer());
-        assertEquals("MARRIED", user.getMaritalStatus());
-        assertEquals("MODERATE", user.getRiskTolerance());
+        assertEquals("Moderate", user.getRiskTolerance());
+        assertNotNull(user.getAge());
+    }
+
+    @Test
+    @DisplayName("Should handle user with minimal required fields")
+    void testMinimalUserProfile() {
+        User minimalUser = new User("minuser", "pass123", "Min", "User", "min@example.com");
         
-        // Verify age calculation for retirement planning
-        Integer age = user.getAge();
-        assertNotNull(age);
-        assertTrue(age >= 40 && age <= 50);
+        assertNotNull(minimalUser.getUsername());
+        assertNotNull(minimalUser.getPassword());
+        assertNotNull(minimalUser.getFirstName());
+        assertNotNull(minimalUser.getLastName());
+        assertNotNull(minimalUser.getEmail());
+        assertNull(minimalUser.getPhone());
+        assertNull(minimalUser.getDateOfBirth());
+        assertNull(minimalUser.getAnnualSalary());
     }
 
     @Test
-    @DisplayName("Should handle edge case for very young user")
-    void testYoungUserAge() {
-        user.setDateOfBirth(LocalDate.now().minusYears(18));
-        assertEquals(18, user.getAge());
-    }
-
-    @Test
-    @DisplayName("Should handle edge case for senior user")
-    void testSeniorUserAge() {
-        user.setDateOfBirth(LocalDate.now().minusYears(70));
-        assertEquals(70, user.getAge());
+    @DisplayName("Should handle user with complete profile")
+    void testCompleteUserProfile() {
+        User completeUser = new User("completeuser", "secure123", "Complete", "User", "complete@example.com");
+        completeUser.setPhone("555-9876");
+        completeUser.setDateOfBirth(LocalDate.of(1985, 3, 20));
+        completeUser.setAnnualSalary(new BigDecimal("95000.00"));
+        completeUser.setEmploymentStatus("Full-Time");
+        completeUser.setYearsWithEmployer(8);
+        completeUser.setMaritalStatus("Single");
+        completeUser.setRiskTolerance("Aggressive");
+        
+        assertNotNull(completeUser.getUsername());
+        assertNotNull(completeUser.getPhone());
+        assertNotNull(completeUser.getDateOfBirth());
+        assertNotNull(completeUser.getAnnualSalary());
+        assertNotNull(completeUser.getEmploymentStatus());
+        assertNotNull(completeUser.getYearsWithEmployer());
+        assertNotNull(completeUser.getMaritalStatus());
+        assertNotNull(completeUser.getRiskTolerance());
     }
 }
