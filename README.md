@@ -1,7 +1,44 @@
 # Finova Retirement Planning - Microservices Architecture
 
 ## Overview
-This project is a microservices-based retirement planning application that helps users manage their retirement accounts, contributions, and financial planning.
+This project is a comprehensive microservices-based retirement planning application that helps users manage their retirement accounts, contributions, financial planning, payments, and analytics. The system implements both OLTP (Online Transaction Processing) and OLAP (Online Analytical Processing) patterns.
+
+## ✨ Latest Features
+
+### 🆕 Payment Service (OLTP) - Port 8084
+Real-time subscription and payment processing with MongoDB integration:
+- **3 Subscription Tiers**: Basic ($9.99), Plus ($19.99), Premium ($49.99)
+- **Flexible Billing**: Monthly, Quarterly (5% off), Annual (10% off)
+- **Payment Processing**: <2 second response time with mock gateway
+- **Automatic Retry**: Failed payments automatically retry
+- **Full Management**: Pause, cancel, or update subscriptions anytime
+
+### 🆕 Analytics Service (OLAP) - Port 8085
+Historical data analysis and insights generation with MongoDB aggregation:
+- **6 Months Sample Data**: Auto-generated on first startup
+- **Interactive Dashboard**: Key metrics and performance indicators
+- **Rich Visualizations**: Line charts, donut charts, bar graphs
+- **Quarterly Reports**: Detailed performance breakdown
+- **Smart Insights**: AI-driven recommendations based on your data
+- **Time-Based Analysis**: View trends over 3m, 6m, 12m, or all time
+
+### 🔧 MongoDB Integration
+- **Dual Database Strategy**: PostgreSQL for traditional services, MongoDB for payments & analytics
+- **ACID Transactions**: Payment service ensures data consistency
+- **Aggregation Pipelines**: Analytics service leverages MongoDB's powerful query capabilities
+- **Auto-Indexing**: Optimized for both read and write operations
+
+## 📑 Quick Links
+- [Architecture Overview](#current-architecture)
+- [Getting Started](#getting-started)
+- [Service URLs](#service-urls)
+- [Payment Service API](#-payment-service-api-oltp)
+- [Analytics Service API](#-analytics-service-api-olap)
+- [OLTP vs OLAP Architecture](#️-oltp-vs-olap-architecture)
+- [Frontend Features](#frontend-features)
+- [Testing](#testing)
+- [Troubleshooting](#troubleshooting)
+- [Database Design](#database-design)
 
 ## Current Architecture
 
@@ -15,18 +52,21 @@ This project is a microservices-based retirement planning application that helps
 │    • Service Discovery  • Load Balancing  • CORS  • Rate Limiting           │
 │    • Request/Response Headers  • Fallback Responses  • Health Monitoring    │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│    Keycloak         │  User Service    │  Account Service  │  Planning       │
-│   Auth Server       │     (8081)       │      (8082)       │  Service        │
-│     (8080)          │                  │                   │   (8083)        │
+│  Keycloak    │  User     │  Account   │  Planning  │  Payment   │ Analytics │
+│  Auth Server │  Service  │  Service   │  Service   │  Service   │  Service  │
+│   (8080)     │  (8081)   │  (8082)    │  (8083)    │  (8084)    │  (8085)   │
+│              │           │            │            │  [OLTP]    │  [OLAP]   │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │              Service Discovery - Eureka (8761)                              │
 │              Configuration Server (8888)                                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│         PostgreSQL (User, Account, Planning)  │  MongoDB (Payment, Analytics)│
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 🔄 **Request Flow:**
 ```
-Browser → API Gateway (9080) → Service Discovery → Microservice (8081-8083)
+Browser → API Gateway (9080) → Service Discovery → Microservices (8081-8085)
    ↑                ↓
    └── Fallback ←───┘ (if service down)
 ```
@@ -77,13 +117,37 @@ Browser → API Gateway (9080) → Service Discovery → Microservice (8081-8083
 - Investment strategy recommendations
 - Projection algorithms
 
-### 8. **Frontend Application** (Port: 8000)
+### 8. **Payment Service** (Port: 8084) 💳 **[OLTP]**
+- **Real-time transaction processing** (<2 seconds)
+- **Advisory subscription management** (Basic, Plus, Premium tiers)
+- **Billing frequency options** (Monthly, Quarterly, Annual with discounts)
+- **Payment method management** and updates
+- **Mock payment gateway** (90% success rate simulation)
+- **Automatic retry mechanism** for failed payments
+- **Subscription pause/cancel** functionality
+- **Payment history tracking** and reporting
+- **MongoDB integration** for transactional data
+
+### 9. **Analytics Service** (Port: 8085) 📊 **[OLAP]**
+- **Historical data analysis** (6 months of auto-generated sample data)
+- **Real-time dashboard** with key metrics
+- **Interactive charts** (Line, Donut, Bar graphs)
+- **Quarterly performance analysis** and trends
+- **Contribution breakdown** analysis
+- **Account distribution** insights
+- **Actionable recommendations** based on data
+- **MongoDB aggregation pipelines** for complex queries
+- **Time-based reporting** (3m, 6m, 12m, all time)
+
+### 10. **Frontend Application** (Port: 8000)
 - **Modern, responsive web interface**
 - **Routes through API Gateway (9080)**
 - **Interactive retirement planning dashboard**
 - **Real-time service monitoring** (including gateway)
 - **Account and contribution management**
 - **Planning tools and calculators**
+- **Payment and subscription management**
+- **Analytics dashboard with visualizations**
 - **CORS-enabled** for gateway integration
 
 ## Technology Stack
@@ -92,7 +156,8 @@ Browser → API Gateway (9080) → Service Discovery → Microservice (8081-8083
 - **Java 17**
 - **Spring Boot 3.1.5**
 - **Spring Cloud 2022.0.4**
-- **PostgreSQL** (Database per service)
+- **PostgreSQL** (User, Account, Planning services)
+- **MongoDB 7.0** (Payment, Analytics services)
 - **Docker & Docker Compose**
 - **Maven** (Build tool)
 
@@ -110,14 +175,19 @@ Browser → API Gateway (9080) → Service Discovery → Microservice (8081-8083
 - Maven 3.6+
 - Docker & Docker Compose
 - PostgreSQL (if not using Docker)
+- MongoDB (if not using Docker - required for Payment & Analytics services)
 
 ### Running the Application
 
 **Option 1: Quick Start (Recommended for Development)**
 
-1. **Start databases (Optional - uses H2 in-memory by default)**
+1. **Start databases**
 ```bash
+# Start PostgreSQL and MongoDB
 docker-compose -f docker-compose-simple.yml up -d
+
+# Verify databases are running
+docker ps
 ```
 
 2. **Run the automated startup script**
@@ -127,13 +197,15 @@ start-services.bat
 
 # Manual startup (if script doesn't work)
 mvn clean compile
-# Then start services in separate terminals:
+# Then start services in separate terminals (in order):
+cd config-server && mvn spring-boot:run
 cd eureka-server && mvn spring-boot:run
-cd config-server && mvn spring-boot:run  
+cd api-gateway && mvn spring-boot:run
 cd user-service && mvn spring-boot:run
 cd account-service && mvn spring-boot:run
 cd planning-service && mvn spring-boot:run
-cd api-gateway && mvn spring-boot:run
+cd payment-service && mvn spring-boot:run
+cd analytics-service && mvn spring-boot:run
 ```
 
 3. **Start the Frontend**
@@ -179,6 +251,8 @@ docker-compose up -d
 - **👤 User Service**: http://localhost:8081
 - **💰 Account Service**: http://localhost:8082  
 - **📊 Planning Service**: http://localhost:8083
+- **💳 Payment Service (OLTP)**: http://localhost:8084
+- **📈 Analytics Service (OLAP)**: http://localhost:8085
 
 ## 🚀 API Gateway Features (NEW)
 
@@ -204,6 +278,14 @@ fetch('http://localhost:8082/api/accounts/user/1')
 
 // After: Through API Gateway  
 fetch('http://localhost:9080/api/accounts/user/1')
+
+// New services accessible through gateway:
+// Payment Service
+fetch('http://localhost:9080/api/subscriptions/1/active')
+fetch('http://localhost:9080/api/payments/1')
+
+// Analytics Service
+fetch('http://localhost:9080/api/analytics/dashboard/1?period=6m')
 ```
 
 ### 📊 **Monitoring & Testing**
@@ -211,6 +293,108 @@ fetch('http://localhost:9080/api/accounts/user/1')
 - **Gateway Health**: http://localhost:9080/actuator/health  
 - **Active Routes**: http://localhost:9080/actuator/gateway/routes
 - **Fallback Testing**: http://localhost:9080/fallback/user-service
+- **Payment Service Health**: http://localhost:8084/actuator/health
+- **Analytics Service Health**: http://localhost:8085/actuator/health
+
+## 💳 Payment Service API (OLTP)
+
+### Key Endpoints:
+```bash
+# Subscription Management
+GET    /api/subscriptions/{userId}                    # Get all subscriptions
+GET    /api/subscriptions/{userId}/active             # Get active subscription
+POST   /api/subscriptions                             # Create subscription
+PUT    /api/subscriptions/{subscriptionId}/pause      # Pause subscription
+PUT    /api/subscriptions/{subscriptionId}/cancel     # Cancel subscription
+
+# Payment Processing
+POST   /api/payments/process                          # Process payment
+GET    /api/payments/{userId}                         # Get payment history
+GET    /api/payments/{userId}/recent?limit=10         # Get recent payments
+
+# Payment Methods
+POST   /api/payment-methods                           # Add payment method
+GET    /api/payment-methods/{userId}                  # Get user payment methods
+PUT    /api/payment-methods/{methodId}                # Update payment method
+```
+
+### Subscription Plans:
+- **Basic**: $9.99/month - Essential retirement tools
+- **Plus**: $19.99/month - Advanced planning features  
+- **Premium**: $49.99/month - Full advisory service
+
+### Billing Frequencies:
+- **Monthly**: Full price
+- **Quarterly**: 5% discount
+- **Annual**: 10% discount
+
+## 📊 Analytics Service API (OLAP)
+
+### Key Endpoints:
+```bash
+# Dashboard & Overview
+GET    /api/analytics/dashboard/{userId}?period=6m    # Dashboard with key metrics
+GET    /api/analytics/overview/{userId}               # Quick overview stats
+
+# Historical Data
+GET    /api/analytics/balance-history/{userId}?period=6m   # Balance trends
+GET    /api/analytics/contributions/{userId}?period=6m     # Contribution history
+GET    /api/analytics/quarterly/{userId}                   # Quarterly performance
+
+# Insights & Recommendations
+GET    /api/analytics/insights/{userId}               # AI-driven insights
+GET    /api/analytics/account-breakdown/{userId}      # Account distribution
+```
+
+### Analytics Features:
+- **Auto-Generated Sample Data**: 6 months of historical data on first startup
+- **Time Periods**: 3 months, 6 months, 12 months, all time
+- **Aggregation Pipelines**: MongoDB-powered analytics
+- **Real-time Calculations**: Dynamic metrics and growth rates
+- **Visual Data**: Ready for charts and graphs
+
+## 🏗️ OLTP vs OLAP Architecture
+
+This application demonstrates both **OLTP** (Online Transaction Processing) and **OLAP** (Online Analytical Processing) patterns:
+
+### OLTP - Payment Service (Port 8084)
+**Purpose**: Handle real-time transactions with immediate consistency
+
+**Characteristics**:
+- ✅ **Low latency**: Payment processing under 2 seconds
+- ✅ **High concurrency**: Handle multiple simultaneous payments
+- ✅ **ACID transactions**: Ensure data consistency
+- ✅ **Normalized data**: Efficient updates and inserts
+- ✅ **Real-time validation**: Immediate payment confirmation
+
+**Use Cases**:
+- Processing subscription payments
+- Updating payment methods
+- Managing subscription status (pause/cancel)
+- Recording transaction history
+
+### OLAP - Analytics Service (Port 8085)
+**Purpose**: Analyze historical data and generate insights
+
+**Characteristics**:
+- ✅ **Complex queries**: Aggregation pipelines for deep analysis
+- ✅ **Historical data**: 6 months of time-series data
+- ✅ **Read-optimized**: Denormalized for fast queries
+- ✅ **Batch processing**: Generate quarterly reports
+- ✅ **Trend analysis**: Calculate growth rates and patterns
+
+**Use Cases**:
+- Generating retirement readiness scores
+- Analyzing contribution patterns
+- Visualizing account balance trends
+- Creating quarterly performance reports
+- Providing actionable financial insights
+
+### Why MongoDB for Both?
+- **OLTP (Payment)**: MongoDB's ACID transactions and low latency make it ideal for payment processing
+- **OLAP (Analytics)**: MongoDB's aggregation framework excels at complex analytical queries
+- **Flexibility**: Schema-less design accommodates evolving data requirements
+- **Scalability**: Both services can scale independently based on load
 
 ## Frontend Features
 
@@ -232,8 +416,35 @@ fetch('http://localhost:9080/api/accounts/user/1')
 - **Social Security Calculator**: Estimate benefits at different ages
 - **Investment Strategy**: View personalized investment recommendations
 
+### 💳 Payment Management (OLTP)
+- **Subscription Management**: Select and manage advisory service subscriptions
+  - **Basic Plan**: $9.99/month - Essential retirement planning tools
+  - **Plus Plan**: $19.99/month - Advanced planning + professional tips
+  - **Premium Plan**: $49.99/month - Full-service financial advisory
+- **Billing Frequency**: Choose Monthly, Quarterly (5% off), or Annual (10% off)
+- **Payment Methods**: Add, update, and manage payment methods
+- **Payment History**: View all past transactions and invoices
+- **Subscription Control**: Pause or cancel subscriptions anytime
+- **Real-time Processing**: Instant payment confirmation (<2 seconds)
+- **Automatic Retry**: Failed payments automatically retry with notifications
+
+### 📊 Analytics Dashboard (OLAP)
+- **Key Performance Metrics**:
+  - Total Balance across all accounts
+  - Total Contributions (Employee + Employer)
+  - Average Monthly Growth rate
+  - Retirement Readiness Score
+- **Interactive Visualizations**:
+  - **Balance Trends**: Line chart showing 6-month balance history
+  - **Account Distribution**: Donut chart breaking down accounts by type
+  - **Contribution Analysis**: Bar chart comparing employee vs employer contributions
+- **Time Period Selection**: View data for 3 months, 6 months, 12 months, or all time
+- **Quarterly Performance**: Detailed quarterly breakdown with growth metrics
+- **Actionable Insights**: AI-driven recommendations based on your data
+- **Account Breakdown**: See individual account performance and contributions
+
 ### ⚙️ System Monitoring
-- **Microservices Status**: Real-time health checks for all services
+- **Microservices Status**: Real-time health checks for all services (including Payment & Analytics)
 - **API Endpoints**: Documentation of available endpoints
 - **Architecture Overview**: Visual representation of system components
 - **Service Connection Testing**: Built-in debugging tools
@@ -270,21 +481,28 @@ All configurations are managed centrally via the Config Server. Service-specific
 finova-retire-app-microsrv/
 ├── frontend/                    # Frontend application
 │   ├── index.html              # Main application page
+│   ├── payments.html           # Payment & subscription management
+│   ├── analytics.html          # Analytics dashboard
 │   ├── style.css               # Complete styling system
 │   ├── script.js               # Application logic
 │   ├── test-services.html      # Service connectivity tester
 │   ├── start-frontend.bat      # Windows startup script
 │   └── README.md               # Frontend documentation
-├── api-gateway/                # API Gateway service
-├── user-service/               # User management service
-├── account-service/            # Account management service
-├── planning-service/           # Planning tools service
-├── eureka-server/              # Service discovery
-├── config-server/              # Configuration management
+├── api-gateway/                # API Gateway service (Port 9080)
+├── user-service/               # User management service (Port 8081)
+├── account-service/            # Account management service (Port 8082)
+├── planning-service/           # Planning tools service (Port 8083)
+├── payment-service/            # Payment service - OLTP (Port 8084, MongoDB)
+├── analytics-service/          # Analytics service - OLAP (Port 8085, MongoDB)
+├── eureka-server/              # Service discovery (Port 8761)
+├── config-server/              # Configuration management (Port 8888)
 ├── docker-compose.yml         # Full Docker setup
-├── docker-compose-simple.yml  # Database-only Docker
+├── docker-compose-simple.yml  # Database-only Docker (PostgreSQL + MongoDB)
 ├── start-services.bat          # Windows startup script
-└── pom.xml                     # Parent Maven configuration
+├── pom.xml                     # Parent Maven configuration
+├── README.md                   # This file
+├── QUICK_START.md              # Quick start guide
+└── OLTP_OLAP_INTEGRATION_README.md  # Payment & Analytics integration guide
 ```
 
 ## Testing
@@ -296,6 +514,50 @@ mvn test
 
 # Run specific service tests
 cd user-service && mvn test
+cd payment-service && mvn test
+cd analytics-service && mvn test
+```
+
+**Payment Service Testing:**
+```bash
+# Test subscription creation
+curl -X POST http://localhost:8084/api/subscriptions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userId": 1,
+    "planType": "PLUS",
+    "frequency": "MONTHLY"
+  }'
+
+# Get active subscription
+curl http://localhost:8084/api/subscriptions/1/active
+
+# Process payment
+curl -X POST http://localhost:8084/api/payments/process \
+  -H "Content-Type: application/json" \
+  -d '{
+    "subscriptionId": 1,
+    "userId": 1,
+    "paymentMethodId": "pm_123"
+  }'
+
+# Get payment history
+curl http://localhost:8084/api/payments/1
+```
+
+**Analytics Service Testing:**
+```bash
+# Get dashboard data
+curl "http://localhost:8085/api/analytics/dashboard/1?period=6m"
+
+# Get balance history
+curl "http://localhost:8085/api/analytics/balance-history/1?period=6m"
+
+# Get quarterly performance
+curl http://localhost:8085/api/analytics/quarterly/1
+
+# Get insights
+curl http://localhost:8085/api/analytics/insights/1
 ```
 
 **Frontend Testing:**
@@ -306,7 +568,10 @@ cd user-service && mvn test
 3. Test navigation between sections
 4. Test account management forms
 5. Test planning calculators
-6. Verify responsive design on different devices
+6. Test payment subscription flow (http://localhost:8000/payments.html)
+7. Test analytics dashboard (http://localhost:8000/analytics.html)
+8. Verify charts and visualizations load correctly
+9. Verify responsive design on different devices
 
 # Use service connection tester
 Open http://localhost:8000/test-services.html
@@ -318,9 +583,12 @@ Open http://localhost:8000/test-services.html
 - **Service Discovery**: Monitor via Eureka dashboard
 
 ## Security
-- JWT-based authentication
-- Service-to-service communication security
-- API Gateway handles authentication/authorization
+- **JWT-based authentication** via Keycloak
+- **Service-to-service communication security**
+- **API Gateway** handles authentication/authorization
+- **Payment security**: PCI-compliant payment processing simulation
+- **Data encryption**: Sensitive payment data encrypted at rest
+- **CORS protection**: Configured for trusted origins only
 
 ## Troubleshooting
 
@@ -356,11 +624,41 @@ Open http://localhost:8000/test-services.html
 2. Wait for services to register (may take 30-60 seconds)
 3. Check Eureka dashboard: `http://localhost:8761`
 
+**MongoDB connection issues:**
+1. Ensure MongoDB is running: `docker ps | grep mongodb`
+2. Check connection string in application.yml files
+3. Verify credentials (default: admin/password)
+4. Check MongoDB logs: `docker logs finova-mongodb`
+
+**Payment Service issues:**
+1. Verify MongoDB is accessible at port 27017
+2. Check service logs for payment processing errors
+3. Test mock payment gateway (90% success rate by design)
+4. Retry failed payments using the automatic retry mechanism
+
+**Analytics Service issues:**
+1. Wait for sample data generation on first startup (~30 seconds)
+2. Check MongoDB collections: account_snapshots, contributions, quarterly_stats
+3. Verify aggregation pipeline queries in logs
+4. Ensure time period parameter is valid (3m, 6m, 12m, all)
+
 ## Database Design
 Each service has its own database following the database-per-service pattern:
+
+### PostgreSQL Databases (Relational - OLTP):
 - **user_service_db**: User profiles and authentication
 - **account_service_db**: Retirement accounts and contributions
 - **planning_service_db**: Financial calculations and projections
+
+### MongoDB Databases (Document - OLTP/OLAP):
+- **payment_db**: Subscription plans, payment transactions, and payment methods
+  - Collections: `subscriptions`, `payments`, `payment_methods`
+  - Optimized for: Real-time transaction processing
+  - Features: ACID transactions, payment history tracking
+- **analytics_db**: Historical account data and performance metrics
+  - Collections: `account_snapshots`, `contributions`, `quarterly_stats`
+  - Optimized for: Aggregation pipelines, time-series analysis
+  - Features: 6 months historical data, trend analysis, reporting
 
 ## Contributing
 
@@ -377,3 +675,64 @@ Each service has its own database following the database-per-service pattern:
 3. Add comprehensive tests
 4. Update API documentation
 5. Ensure service discovery compatibility
+
+## 📋 Complete Services Summary
+
+| Service | Port | Type | Database | Purpose |
+|---------|------|------|----------|---------|
+| **Frontend** | 8000 | Web UI | - | User interface and visualization |
+| **Keycloak Auth** | 8080 | Identity | - | OAuth 2.0 / OpenID Connect authentication |
+| **API Gateway** | 9080 | Gateway | - | Single entry point, routing, load balancing |
+| **Eureka Server** | 8761 | Discovery | - | Service registration and discovery |
+| **Config Server** | 8888 | Config | - | Centralized configuration management |
+| **User Service** | 8081 | Business | PostgreSQL | User profiles and authentication |
+| **Account Service** | 8082 | Business | PostgreSQL | Retirement account management |
+| **Planning Service** | 8083 | Business | PostgreSQL | Financial planning and calculators |
+| **Payment Service** | 8084 | OLTP | MongoDB | Real-time payment processing |
+| **Analytics Service** | 8085 | OLAP | MongoDB | Historical data analysis and insights |
+
+### Service Dependencies
+```
+Frontend (8000)
+    ↓
+API Gateway (9080) ← relies on → Eureka (8761) ← relies on → Config Server (8888)
+    ↓
+┌───┴───┬────────┬─────────┬─────────┬──────────┐
+│       │        │         │         │          │
+User   Account  Planning Payment  Analytics  Keycloak
+8081   8082     8083     8084     8085       8080
+```
+
+### Technology Matrix
+
+| Technology | Services |
+|------------|----------|
+| **Java 17 + Spring Boot** | All backend services |
+| **PostgreSQL** | User, Account, Planning |
+| **MongoDB 7.0** | Payment, Analytics |
+| **Spring Cloud** | Gateway, Eureka, Config |
+| **Keycloak** | Authentication Server |
+| **HTML/CSS/JS** | Frontend Application |
+| **Docker** | All services (optional) |
+
+## 🎯 Key Highlights
+
+✅ **10 Microservices** working in harmony  
+✅ **2 Database Types**: PostgreSQL (relational) + MongoDB (document)  
+✅ **OLTP & OLAP**: Real-time processing + historical analytics  
+✅ **Cloud-Native**: Service discovery, config management, API gateway  
+✅ **Modern Frontend**: Responsive SPA with interactive visualizations  
+✅ **Production-Ready**: Health checks, monitoring, error handling  
+✅ **Developer-Friendly**: Hot reload, centralized config, easy testing  
+
+## 📚 Additional Documentation
+- **[QUICK_START.md](QUICK_START.md)**: Step-by-step startup guide
+- **[OLTP_OLAP_INTEGRATION_README.md](OLTP_OLAP_INTEGRATION_README.md)**: Detailed Payment & Analytics integration guide
+- **Frontend Documentation**: See `frontend/README.md` for UI details
+
+## 📞 Support & Issues
+For issues, questions, or contributions, please refer to the troubleshooting section or check the individual service documentation.
+
+---
+
+**Built with ❤️ using Spring Boot, MongoDB, PostgreSQL, and modern microservices architecture**
