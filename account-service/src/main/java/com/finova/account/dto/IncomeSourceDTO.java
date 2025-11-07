@@ -1,7 +1,6 @@
 package com.finova.account.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -11,20 +10,30 @@ import java.math.BigDecimal;
 public class IncomeSourceDTO {
     
     private Long id;
+    
+    @NotNull(message = "Account ID is required")
+    @Positive(message = "Account ID must be positive")
     private Long accountId;
     
     @NotBlank(message = "Source type is required")
+    @Pattern(regexp = "^(401k|ira|pension|social_security|annuity|other)$", 
+             message = "Source type must be one of: 401k, ira, pension, social_security, annuity, other")
     private String sourceType;
     
+    @Size(max = 100, message = "Source name must not exceed 100 characters")
     private String sourceName;
     
-    @PositiveOrZero(message = "Current balance must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Current balance must be zero or positive")
+    @DecimalMax(value = "10000000.0", message = "Current balance cannot exceed $10,000,000")
     private BigDecimal currentBalance;
     
-    @PositiveOrZero(message = "Projected monthly income must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Projected monthly income must be zero or positive")
+    @DecimalMax(value = "50000.0", message = "Projected monthly income cannot exceed $50,000")
     private BigDecimal projectedMonthlyIncome;
     
+    @Size(max = 100, message = "Provider name must not exceed 100 characters")
     private String provider;
+    
     private boolean active = true;
     
     // Constructors
