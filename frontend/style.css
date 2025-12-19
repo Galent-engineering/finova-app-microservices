@@ -23,6 +23,15 @@
     --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
     --border-radius: 8px;
     --transition: all 0.3s ease;
+    
+    /* Validation colors */
+    --validation-error: #F44336;
+    --validation-success: #4CAF50;
+    --validation-warning: #FF9800;
+    --validation-border-error: #F44336;
+    --validation-border-success: #4CAF50;
+    --validation-bg-error: #FFEBEE;
+    --validation-bg-success: #E8F5E8;
 }
 
 /* Reset and Base Styles */
@@ -951,5 +960,245 @@ h1, h2, h3, h4, h5, h6 {
     .modal-content {
         margin: 1rem;
         width: calc(100% - 2rem);
+    }
+}
+
+/* ==========================================================================
+   Form Validation Styles
+   ========================================================================== */
+
+/* Form field validation states */
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: var(--validation-border-error) !important;
+    background-color: var(--validation-bg-error) !important;
+    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2) !important;
+}
+
+.form-group input.success,
+.form-group select.success,
+.form-group textarea.success {
+    border-color: var(--validation-border-success) !important;
+    background-color: var(--validation-bg-success) !important;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2) !important;
+}
+
+/* Field error messages */
+.field-error {
+    color: var(--validation-error);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--validation-bg-error);
+    border-radius: 4px;
+    border-left: 3px solid var(--validation-error);
+    animation: slideIn 0.3s ease-out;
+}
+
+.field-success {
+    color: var(--validation-success);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--validation-bg-success);
+    border-radius: 4px;
+    border-left: 3px solid var(--validation-success);
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Form validation summary */
+.validation-summary {
+    background-color: var(--validation-bg-error);
+    border: 1px solid var(--validation-border-error);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.validation-summary h4 {
+    color: var(--validation-error);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.validation-summary ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.validation-summary li {
+    color: var(--validation-error);
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.validation-summary li::before {
+    content: "•";
+    color: var(--validation-error);
+    position: absolute;
+    left: 0;
+}
+
+/* Form group validation states */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea {
+    border-color: var(--validation-border-error);
+    background-color: var(--validation-bg-error);
+}
+
+.form-group.has-success input,
+.form-group.has-success select,
+.form-group.has-success textarea {
+    border-color: var(--validation-border-success);
+    background-color: var(--validation-bg-success);
+}
+
+/* Real-time validation indicators */
+.form-group {
+    position: relative;
+}
+
+.form-group .validation-icon {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.form-group.has-error .validation-icon {
+    color: var(--validation-error);
+    opacity: 1;
+}
+
+.form-group.has-success .validation-icon {
+    color: var(--validation-success);
+    opacity: 1;
+}
+
+/* Animation for validation messages */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.form-group input.error {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Focus states for validation */
+.form-group input:focus.error,
+.form-group select:focus.error,
+.form-group textarea:focus.error {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.3);
+}
+
+.form-group input:focus.success,
+.form-group select:focus.success,
+.form-group textarea:focus.success {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+/* Disabled form elements */
+.form-group input:disabled,
+.form-group select:disabled,
+.form-group textarea:disabled {
+    background-color: var(--finova-gray-lighter);
+    color: var(--finova-gray-medium);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Required field indicators */
+.form-group label.required::after {
+    content: " *";
+    color: var(--validation-error);
+    font-weight: bold;
+}
+
+/* Form submission states */
+.form-submitting {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.form-submitting .save-btn,
+.form-submitting .calculate-btn {
+    background-color: var(--finova-gray-medium);
+    cursor: not-allowed;
+}
+
+/* Success message styling */
+.success-message {
+    background-color: var(--validation-bg-success);
+    border: 1px solid var(--validation-border-success);
+    color: var(--validation-success);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+.success-message h4 {
+    color: var(--validation-success);
+    margin-bottom: 0.5rem;
+}
+
+/* Error message styling */
+.error-message {
+    background-color: var(--validation-bg-error);
+    border: 1px solid var(--validation-border-error);
+    color: var(--validation-error);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+    animation: slideIn 0.3s ease-out;
+}
+
+.error-message h4 {
+    color: var(--validation-error);
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive validation styles */
+@media (max-width: 768px) {
+    .field-error,
+    .field-success {
+        font-size: 0.8rem;
+        padding: 0.2rem 0.4rem;
+    }
+    
+    .validation-summary {
+        padding: 0.75rem;
+    }
+    
+    .validation-summary h4 {
+        font-size: 0.9rem;
+    }
+    
+    .validation-summary li {
+        font-size: 0.8rem;
     }
 }

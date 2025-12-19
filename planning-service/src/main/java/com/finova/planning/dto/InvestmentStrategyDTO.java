@@ -1,7 +1,7 @@
 package com.finova.planning.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import com.finova.planning.validation.ValidAllocation;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,27 +9,38 @@ import java.util.List;
 /**
  * DTO for investment strategy and portfolio allocation
  */
+@ValidAllocation
 public class InvestmentStrategyDTO {
     
     private Long id;
     
     @NotNull(message = "User ID is required")
+    @Positive(message = "User ID must be positive")
     private Long userId;
     
-    @PositiveOrZero(message = "Portfolio value must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Portfolio value must be zero or positive")
+    @DecimalMax(value = "10000000.0", message = "Portfolio value cannot exceed $10,000,000")
     private BigDecimal portfolioValue;
     
+    @Pattern(regexp = "^(Conservative|Moderate Growth|Aggressive Growth)$", 
+             message = "Current strategy must be one of: Conservative, Moderate Growth, Aggressive Growth")
     private String currentStrategy; // "Conservative", "Moderate Growth", "Aggressive Growth"
+    
+    @Pattern(regexp = "^(Low|Moderate|High)$", 
+             message = "Risk level must be one of: Low, Moderate, High")
     private String riskLevel; // "Low", "Moderate", "High"
     
     // Asset allocation percentages
-    @PositiveOrZero(message = "Stocks percentage must be positive or zero")
+    @Min(value = 0, message = "Stocks percentage must be zero or positive")
+    @Max(value = 100, message = "Stocks percentage cannot exceed 100")
     private Integer stocksPercentage;
     
-    @PositiveOrZero(message = "Bonds percentage must be positive or zero")
+    @Min(value = 0, message = "Bonds percentage must be zero or positive")
+    @Max(value = 100, message = "Bonds percentage cannot exceed 100")
     private Integer bondsPercentage;
     
-    @PositiveOrZero(message = "Cash percentage must be positive or zero")
+    @Min(value = 0, message = "Cash percentage must be zero or positive")
+    @Max(value = 100, message = "Cash percentage cannot exceed 100")
     private Integer cashPercentage;
     
     // Asset allocation amounts

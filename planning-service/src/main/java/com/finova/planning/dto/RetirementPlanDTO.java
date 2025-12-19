@@ -1,8 +1,6 @@
 package com.finova.planning.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -14,33 +12,46 @@ public class RetirementPlanDTO {
     private Long id;
     
     @NotNull(message = "User ID is required")
+    @Positive(message = "User ID must be positive")
     private Long userId;
     
     @Positive(message = "Current age must be positive")
+    @Min(value = 18, message = "Current age must be at least 18")
+    @Max(value = 100, message = "Current age cannot exceed 100")
     private Integer currentAge;
     
     @Positive(message = "Retirement age must be positive")
+    @Min(value = 55, message = "Retirement age must be at least 55")
+    @Max(value = 75, message = "Retirement age cannot exceed 75")
     private Integer retirementAge;
     
     @Positive(message = "Expected retirement duration must be positive")
+    @Min(value = 1, message = "Expected retirement duration must be at least 1 year")
+    @Max(value = 40, message = "Expected retirement duration cannot exceed 40 years")
     private Integer expectedRetirementDuration;
     
-    @PositiveOrZero(message = "Current savings must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Current savings must be zero or positive")
+    @DecimalMax(value = "10000000.0", message = "Current savings cannot exceed $10,000,000")
     private BigDecimal currentSavings;
     
-    @PositiveOrZero(message = "Monthly contribution must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Monthly contribution must be zero or positive")
+    @DecimalMax(value = "50000.0", message = "Monthly contribution cannot exceed $50,000")
     private BigDecimal monthlyContribution;
     
-    @PositiveOrZero(message = "Employer match must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Employer match must be zero or positive")
+    @DecimalMax(value = "100.0", message = "Employer match cannot exceed 100%")
     private BigDecimal employerMatch;
     
-    @PositiveOrZero(message = "Desired monthly income must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Desired monthly income must be zero or positive")
+    @DecimalMax(value = "100000.0", message = "Desired monthly income cannot exceed $100,000")
     private BigDecimal desiredMonthlyIncome;
     
-    @PositiveOrZero(message = "Expected return rate must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Expected return rate must be zero or positive")
+    @DecimalMax(value = "50.0", message = "Expected return rate cannot exceed 50%")
     private BigDecimal expectedReturnRate;
     
-    @PositiveOrZero(message = "Expected inflation rate must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Expected inflation rate must be zero or positive")
+    @DecimalMax(value = "20.0", message = "Expected inflation rate cannot exceed 20%")
     private BigDecimal expectedInflationRate;
     
     // Calculated results

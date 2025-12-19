@@ -1,7 +1,6 @@
 package com.finova.account.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,18 +11,29 @@ import java.time.LocalDate;
 public class ContributionDTO {
     
     private Long id;
+    
+    @NotNull(message = "Account ID is required")
+    @Positive(message = "Account ID must be positive")
     private Long accountId;
     
     @NotBlank(message = "Contribution type is required")
+    @Pattern(regexp = "^(pre_tax|roth|employer_match|catch_up|after_tax)$", 
+             message = "Contribution type must be one of: pre_tax, roth, employer_match, catch_up, after_tax")
     private String contributionType;
     
-    @PositiveOrZero(message = "Percentage must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Percentage must be zero or positive")
+    @DecimalMax(value = "100.0", message = "Percentage cannot exceed 100%")
     private BigDecimal percentage;
     
-    @PositiveOrZero(message = "Monthly amount must be positive or zero")
+    @DecimalMin(value = "0.0", message = "Monthly amount must be zero or positive")
+    @DecimalMax(value = "50000.0", message = "Monthly amount cannot exceed $50,000")
     private BigDecimal monthlyAmount;
     
+    @DecimalMin(value = "0.0", message = "Annual amount must be zero or positive")
+    @DecimalMax(value = "600000.0", message = "Annual amount cannot exceed $600,000")
     private BigDecimal annualAmount;
+    
+    @PastOrPresent(message = "Effective date must be in the past or present")
     private LocalDate effectiveDate;
     
     // Constructors
